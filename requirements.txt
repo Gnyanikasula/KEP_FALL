@@ -1,0 +1,6 @@
+owlready2
+groq
+python-dotenv
+sentence-transformers
+rdflib
+numpy
