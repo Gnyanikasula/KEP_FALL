@@ -1,0 +1,49 @@
+Step 1 Report — 2026-06-24T13:46:08
+Classes: 627  |  Properties: 13
+
+Namespace breakdown:
+  ext           627
+
+Object properties:
+  hasDataSubject                            https://w3id.org/dpv/owl#hasDataSubject
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#DataSubject
+  hasLegalBasis                             https://w3id.org/dpv/owl#hasLegalBasis
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#LegalBasis
+  hasNotice                                 https://w3id.org/dpv/owl#hasNotice
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#Notice
+  hasObligation                             https://w3id.org/dpv/owl#hasObligation
+    domain → https://w3id.org/dpv/owl#Entity
+    range  → https://w3id.org/dpv/owl#Obligation
+  hasOrganisationalMeasure                  https://w3id.org/dpv/owl#hasOrganisationalMeasure
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#OrganisationalMeasure
+  hasPersonalData                           https://w3id.org/dpv/owl#hasPersonalData
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#PersonalData
+  hasPurpose                                https://w3id.org/dpv/owl#hasPurpose
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#Purpose
+  hasRight                                  https://w3id.org/dpv/owl#hasRight
+    domain → https://w3id.org/dpv/owl#DataSubject
+    range  → https://w3id.org/dpv/owl#Right
+  hasRisk                                   https://w3id.org/dpv/owl#hasRisk
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#Risk
+  hasTechnicalMeasure                       https://w3id.org/dpv/owl#hasTechnicalMeasure
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#TechnicalMeasure
+  hasTechnicalOrganisationalMeasure         https://w3id.org/dpv/owl#hasTechnicalOrganisationalMeasure
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure
+  isMitigatedByMeasure                      https://w3id.org/dpv/owl#isMitigatedByMeasure
+    domain → https://w3id.org/dpv/owl#Risk
+    range  → https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure
+  hasRiskAssessment                         https://w3id.org/dpv/risk/owl#hasRiskAssessment
+    domain → https://w3id.org/dpv/owl#Processing
+    range  → https://w3id.org/dpv/risk/owl#RiskAssessment
+
+Warnings:
+  ✅  All checks passed
