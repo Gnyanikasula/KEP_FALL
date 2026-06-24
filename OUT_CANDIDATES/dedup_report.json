@@ -1,0 +1,17 @@
+[
+  {
+    "class_a": "ApplicableCriteria",
+    "class_b": "BodyCriteriaAssessment",
+    "similarity": 0.903
+  },
+  {
+    "class_a": "FinancialInstitutionInternalGovernance",
+    "class_b": "FinancialInstitutionGovernance",
+    "similarity": 0.875
+  },
+  {
+    "class_a": "Suture",
+    "class_b": "Staple",
+    "similarity": 0.824
+  }
+]

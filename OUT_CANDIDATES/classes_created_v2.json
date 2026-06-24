@@ -1,0 +1,4991 @@
+[
+  {
+    "name": "ArchivingPurpose",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art5_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "HistoricalResearchPurpose",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art5_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "IncompatibleProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art5_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "PublicInterestArchiving",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ArchivingPurpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "SecurityOfPersonalData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art5_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsentForSpecificPurpose",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Consent",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ContractualObligations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "VitalInterest",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ProcessingForPublicAuthorities",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "LawfulAndFairProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "MemberStateLaw",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "PublicInterestObjective",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "PurposeLink",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/pd/owl#Relationship",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "CriminalConvictionsAndOffencesProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para4_c",
+    "has_restriction": false
+  },
+  {
+    "name": "FurtherProcessingConsequence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para4_d",
+    "has_restriction": false
+  },
+  {
+    "name": "AppropriateSafeguard",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art6_Para4_e",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsentDemonstration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Consent",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsentRecord",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DataSubjectConsentStatus",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ConsentStatus",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "IntelligibleForm",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notice",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "EasilyAccessibleForm",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notice",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "WithdrawalOfConsent",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Consent",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToWithdrawConsent",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "WithdrawalOfConsentNotification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notice",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art7_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RacialOrEthnicOrigin",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#SpecialCategoryPersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PoliticalOpinions",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#SpecialCategoryPersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ReligiousOrPhilosophicalBeliefs",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#SpecialCategoryPersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionLawException",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ExplicitConsent",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Consent",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "SocialProtectionLawObligation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalObligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LegitimateActivity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_d",
+    "has_restriction": false
+  },
+  {
+    "name": "LegalClaimExercise",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_f",
+    "has_restriction": false
+  },
+  {
+    "name": "LegalClaimDefence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_f",
+    "has_restriction": false
+  },
+  {
+    "name": "JudicialCapacity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_f",
+    "has_restriction": false
+  },
+  {
+    "name": "HealthCareProvision",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_h",
+    "has_restriction": false
+  },
+  {
+    "name": "HealthProfessionalContract",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Contract",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para2_h",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionLawSecrecy",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "MemberStateLawSecrecy",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art9_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ControllerIdentity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/legal/eu/gdpr/owl#Controller",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "LegitimateInterestPursued",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegitimateInterest",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "AdequacyDecision",
+    "merged_into": "https://w3id.org/dpv/legal/eu/gdpr/owl#AdequacyDecision",
+    "merge_reason": "duplicate_of_existing_dpv",
+    "parent_used": null,
+    "source_chunk_id": "GDPR_Art13_Para1_f"
+  },
+  {
+    "name": "ThirdCountryTransfer",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Transfer",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToRestrictionOfProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsentWithdrawalNotice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notice",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "LawfulnessBeforeWithdrawal",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Lawfulness",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "AdditionalInformationForFurtherProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notification",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art13_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "LegitimateInterestPursuit",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegitimateInterest",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToRequestAccess",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToRequestRectification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToRequestErasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToRequestRestrictionOfProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToObjectToProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "MeaningfulInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#AutomatedDecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_g",
+    "has_restriction": false
+  },
+  {
+    "name": "LogicInvolved",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#MeaningfulInformation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para2_g",
+    "has_restriction": false
+  },
+  {
+    "name": "ReasonablePeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#StorageDuration",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "FirstDisclosure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notification",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "PriorNotificationForFurtherProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notification",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "DisproportionateEffort",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Justification",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para5_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ProfessionalSecrecy",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalObligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "StatutoryObligationOfSecrecy",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ProfessionalSecrecy",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art14_Para5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "RightOfAccess",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ThirdCountryRecipient",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Recipient",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "Profiling",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#AutomatedDecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para1_h",
+    "has_restriction": false
+  },
+  {
+    "name": "DataTransferNotificationRight",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "AppropriateSafeguards",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ElectronicForm",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Format",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art15_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "OfferOfInformationSocietyService",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "GDPR_Art17_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "RightToErasureCommunication",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RightExerciseActivity",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art17_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PubliclyAvailablePersonalDataErasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art17_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ControllerNotificationForErasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RightExerciseActivity",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art17_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "LegalObligationUnionLaw",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalObligation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art17_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "VerificationPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Duration",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art18_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "UnlawfulProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art18_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LegalClaim",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art18_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RestrictionForLegalClaims",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "GDPR_Art18_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RestrictionOfProcessingNotification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art18_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RestrictionLifting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art18_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ContractNecessity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art22_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ContractPerformance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art22_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionLawAuthorisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art22_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "MemberStateLawAuthorisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art22_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ExplicitConsentBasedDecision",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art22_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskOfVaryingLikelihoodAndSeverity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art25_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DataMinimisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art25_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "StateOfTheArt",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ImplementationCost",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "DataRestorability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "IncidentRestoration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentManagementProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "UnlawfulLoss",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedCodeOfConduct",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#CodeOfConduct",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "CodeOfConductCompliance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ComplianceStatus",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "AuthorizedPersonnel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Entity",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionOrMemberStateLawRequirement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "InstructionFromController",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ControllerProcessorAgreement",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art32_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DataProtectionOfficerAdvice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Consultation",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "LargeScaleSpecialCategoryDataProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LargeScaleCriminalConvictionsDataProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "PubliclyAccessibleArea",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Location",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "DataProtectionImpactAssessmentList",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "SupervisoryAuthorityList",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "ProcessingOperation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "NoDataProtectionImpactAssessmentRequired",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ListOfProcessingOperations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ListOfProcessingActivities",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "MonitoringOfBehaviour",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#BehaviourAnalysis",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "NecessityAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para7_b",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskMitigationSafeguard",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para7_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ComplianceDemonstration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para7_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ThirdPartyInterestProtection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para7_d",
+    "has_restriction": false
+  },
+  {
+    "name": "DataSubjectConsultation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ImpactAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "PublicInterestProtection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegitimateInterest",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "DataProtectionImpactAssessmentReview",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskChange",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "ProcessingRiskReassessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "GDPR_Art35_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "SubliminalTechnique",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art5_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "MaterialDistortion",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "InformedDecisionImpairment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "SignificantHarm",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "BehaviouralDistortion",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Prohibition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SocialBehaviourEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#EvaluationOfIndividuals",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "DetrimentalTreatment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Prohibition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_i",
+    "has_restriction": false
+  },
+  {
+    "name": "UnrelatedSocialContext",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Context",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_i",
+    "has_restriction": false
+  },
+  {
+    "name": "UnjustifiedTreatment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DetrimentalTreatment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_ii",
+    "has_restriction": false
+  },
+  {
+    "name": "ProfilingBasedRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "CriminalActivityInvolvementAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "FacialRecognitionDatabase",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "UntargetedScraping",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "FacialImage",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#PersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "CCTVFootage",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "ProhibitedAIpractice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Prohibition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "WorkplaceEmotionInference",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art5_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "MedicalEmotionInference",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art5_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "BiometricCategorisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Prohibition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_g",
+    "has_restriction": false
+  },
+  {
+    "name": "RacialBiometricCategorisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#BiometricCategorisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_g",
+    "has_restriction": false
+  },
+  {
+    "name": "SexLifeOrSexualOrientationBiometricCategorisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#BiometricCategorisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art5_Para1_g",
+    "has_restriction": false
+  },
+  {
+    "name": "SafetyComponent",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionHarmonisationLegislation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art6_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassificationRule",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PatternDetection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "SignificantRiskOfHarm",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para3_d",
+    "has_restriction": false
+  },
+  {
+    "name": "GuidelinesForHighRiskAI",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DelegatedActs",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art6_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "DelegatedAct",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art6_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "ConcreteEvidence",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art6_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "FundamentalRightsProtectionLevel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/risk/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art6_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsistencyWithDelegatedActs",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art6_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskManagementSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketMonitoringSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#RiskManagementSystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskManagementLifecycle",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#RiskManagementSystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskManagementMeasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para2_d",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskMitigationEligibility",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskMitigationCapability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "MitigatableRisk",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RequirementsCombination",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#RiskManagementMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "TechnicallyFeasibleRiskReduction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskMitigationMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para5_a",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskMitigationControl",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskMitigationMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para5_b",
+    "has_restriction": false
+  },
+  {
+    "name": "DeployersTraining",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskMitigationMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para5_c",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAiSystemTesting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "ConsistencyOfAiSystemPerformance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "RealWorldConditionTesting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "ProbabilisticThreshold",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art9_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "DataGovernancePractice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemDataGovernance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "TestingDataGovernance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#HighRiskAISystemDataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "DataOrigin",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "DataPreparationProcessingOperation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "DataGovernanceAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_e",
+    "has_restriction": false
+  },
+  {
+    "name": "DataSetAvailabilityAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_e",
+    "has_restriction": false
+  },
+  {
+    "name": "BiasExamination",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_f",
+    "has_restriction": false
+  },
+  {
+    "name": "DataBias",
+    "merged_into": "https://w3id.org/dpv/ai/owl#DataBias",
+    "merge_reason": "duplicate_of_existing_dpv",
+    "parent_used": null,
+    "source_chunk_id": "EUAI_Art10_Para2_f"
+  },
+  {
+    "name": "DiscriminationRisk",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_f",
+    "has_restriction": false
+  },
+  {
+    "name": "DataGap",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_h",
+    "has_restriction": false
+  },
+  {
+    "name": "DataShortcoming",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para2_h",
+    "has_restriction": false
+  },
+  {
+    "name": "RepresentativenessOfData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "CompletenessOfData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataGovernance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "GeographicalSetting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Context",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "ContextualSetting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Context",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "FunctionalSetting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Context",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "BiasDetectionCorrection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para5_a",
+    "has_restriction": false
+  },
+  {
+    "name": "PseudonymisationForBiasCorrection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Pseudonymisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para5_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SpecialCategoryDataProcessingCondition",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para5_c",
+    "has_restriction": false
+  },
+  {
+    "name": "SpecialCategoryDataProcessingRestriction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "SpecialCategoriesDataProcessingReason",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art10_Para5_f",
+    "has_restriction": false
+  },
+  {
+    "name": "TechnicalDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art11_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SimplifiedTechnicalDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#TechnicalDocumentation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art11_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SME",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Organisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art11_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "NotifiedBody",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Authority",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art11_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "NationalCompetentAuthority",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Authority",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art11_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ProductRelatedToUnionHarmonisationLegislation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art11_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexAmendment",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art11_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemLifetimeLogging",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SubstantialModification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketMonitoring",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LoggingCapability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "RecordedEvent",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemLogging",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemLoggingCapability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "VerificationResultVerifier",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Entity",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art12_Para3_d",
+    "has_restriction": false
+  },
+  {
+    "name": "DeployersInterpretability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#Capability",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemOutputInterpretability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#Capability",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "AppropriateTransparency",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeployersInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "AuthorisedRepresentative",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Representative",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemPerformance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemLimitation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#HighRiskAISystemPerformance",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemCybersecurity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_ii",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemTransparency",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_iv",
+    "has_restriction": false
+  },
+  {
+    "name": "AIOutputExplanation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art13_Para3_iv",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemTrainingData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_vi",
+    "has_restriction": false
+  },
+  {
+    "name": "PredeterminedSystemChanges",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemPerformanceChange",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanOversightMeasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_d",
+    "has_restriction": false
+  },
+  {
+    "name": "MaintenanceAndCareMeasures",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_e",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAILogMechanism",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_f",
+    "has_restriction": false
+  },
+  {
+    "name": "LogCollectionMechanism",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#HighRiskAILogMechanism",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_f",
+    "has_restriction": false
+  },
+  {
+    "name": "LogStorageMechanism",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#HighRiskAILogMechanism",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_f",
+    "has_restriction": false
+  },
+  {
+    "name": "LogInterpretationMechanism",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#HighRiskAILogMechanism",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art13_Para3_f",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanMachineInterface",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemAutonomyLevel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanOversight",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "DysfunctionMonitoring",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "LimitationUnderstanding",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#HumanInvolvement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Technology",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_b",
+    "has_restriction": false
+  },
+  {
+    "name": "InterpretationTool",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_c",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanOversightDecision",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_d",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemOverride",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art14_Para4_d",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanOversightAssignment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#EntityInvolvement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_d",
+    "has_restriction": false
+  },
+  {
+    "name": "SafeStateHalt",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_e",
+    "has_restriction": false
+  },
+  {
+    "name": "StopButton",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para4_e",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanOversightVerification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art14_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "Accuracy",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art15_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "Robustness",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art15_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "MeasurementMethodology",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "AccuracyMetric",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "FeedbackLoop",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "AIResilience",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "CybersecurityOfHighRiskAI",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DataPoisoning",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ModelPoisoning",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "AdversarialExamples",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ConfidentialityAttack",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art15_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ProviderObligations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAiSystemPackaging",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art16_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "QualityManagementSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAIIncidentLog",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemLogRetention",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAIConformityAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemProviderObligations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "EUDeclarationOfConformity",
+    "merged_into": "https://w3id.org/dpv/legal/eu/aiact/owl#EUDeclarationOfConformity",
+    "merge_reason": "duplicate_of_existing_dpv",
+    "parent_used": null,
+    "source_chunk_id": "EUAI_Art16_Para1_g"
+  },
+  {
+    "name": "HighRiskAISystemProvider",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Organisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_g",
+    "has_restriction": false
+  },
+  {
+    "name": "CEMarking",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_h",
+    "has_restriction": false
+  },
+  {
+    "name": "PackagingDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Location",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_h",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAIProviderObligation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_j",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAIConformityDemonstration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art16_Para1_k",
+    "has_restriction": false
+  },
+  {
+    "name": "AccessibilityRequirement",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art16_Para1_l",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemAccessibility",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art16_Para1_l",
+    "has_restriction": false
+  },
+  {
+    "name": "RegulatoryComplianceStrategy",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ModificationManagementProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "QualityControlProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "QualityAssuranceAction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "ExaminationProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ValidationProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "TestProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "TechnicalSpecification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "HarmonisedStandards",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalStandard",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "ComplianceMeans",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "WrittenPolicies",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_g",
+    "has_restriction": false
+  },
+  {
+    "name": "QualityManagementSystemDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_h",
+    "has_restriction": false
+  },
+  {
+    "name": "ResourceManagement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#QualityManagementSystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_l",
+    "has_restriction": false
+  },
+  {
+    "name": "SecurityOfSupply",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ResourceManagement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_l",
+    "has_restriction": false
+  },
+  {
+    "name": "AccountabilityFramework",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para1_m",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialInstitutionInternalGovernance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art17_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemDocumentationRetention",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "NationalCompetentAuthoritiesDocumentationAccess",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "NotifiedBodyApprovedChange",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "DocumentationRetentionPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "NotifiedBodyDecision",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "DocumentationKeepingPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para1_e",
+    "has_restriction": false
+  },
+  {
+    "name": "DocumentationRetentionCondition",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ProviderInsolvency",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/risk/owl#Incident",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "InternalGovernanceArrangements",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialInstitutionDocumentationKeeping",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art18_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAILog",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art19_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "LogRetentionPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Duration",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art19_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "LogControl",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art19_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialInstitutionGovernance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art19_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "AutomaticallyGeneratedLogs",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art19_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemWithdrawal",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art20_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemDisabling",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art20_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemRecall",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art20_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "MarketSurveillanceAuthority",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Authority",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art20_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAIConformityDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art21_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemLogs",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art21_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "CompetentAuthorityRequest",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/legal/eu/aiact/owl#NationalCompetentAuthority",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art21_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "DeployersObligations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemDeployer",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Entity",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemInputData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "InputDataRelevance",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "InputDataRepresentativeness",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "DeployerControlOverInputData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#EntityInvolvement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialInstitutionsInternalGovernance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialInstitutionsLogRequirement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemWorkplaceDeployment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Use",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "PublicAuthorityDeployer",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionInstitutionDeployer",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "EUdatabaseRegistrationObligation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "PostRemoteBiometricIdentification",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "AdverseLegalEffect",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art26_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "HighRiskAISystemDeployment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "LawEnforcementHighRiskAISystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "TransparencyObligation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "CooperationWithAuthority",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#EntityInvolvement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art26_Para12",
+    "has_restriction": false
+  },
+  {
+    "name": "NotifyingAuthority",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Authority",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art29_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "NotificationApplication",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Notification",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art29_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "NationalAccreditationBody",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernmentalOrganisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art29_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "DesignationUnderUnionLegislation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art29_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ConformityAssessmentBody",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Organisation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art29_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "LawfulAIExceptions",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PublicCriminalOffenceReporting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ArtificialContentDetection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ArtisticCreativeWork",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#PublicInterestOngoing",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "ClearAndDistinguishableInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#TransparencyObligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "AccessibilityRequirements",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art50_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "FirstInteractionExposure",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art50_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "CodeOfPractice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Guideline",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "TransparencyObligationImplementation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art50_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemicRisk",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ScientificPanelQualifiedAlert",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "CommissionDecisionExOfficio",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexXiiiCriteria",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "HighImpactCapability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "CumulativeComputation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art51_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ThresholdAmendment",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art51_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ExceptionalCase",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art52_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "GeneralPurposeAIModelWithSystemicRisk",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art52_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ReasonedRequest",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art52_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "TradeSecretProtection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ConfidentialData",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art53_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "AiModelLimitation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art53_Para1_i",
+    "has_restriction": false
+  },
+  {
+    "name": "ReservationOfRights",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Right",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art53_Para1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "GeneralPurposeAiModelTrainingDataSummary",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art53_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "AiOfficeTemplate",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art53_Para1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "AlternativeMeansOfCompliance",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_Art53_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "VerifiableDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_Art53_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "RemoteBiometricIdentificationSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#AISystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "SensitiveAttributeInference",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#InferredPersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ProtectedAttribute",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#SensitivePersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "CriticalInfrastructure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point2",
+    "has_restriction": false
+  },
+  {
+    "name": "CriticalDigitalInfrastructure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#CriticalInfrastructure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point2",
+    "has_restriction": false
+  },
+  {
+    "name": "RoadTrafficManagement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#CriticalInfrastructure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point2",
+    "has_restriction": false
+  },
+  {
+    "name": "UtilitySupply",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#CriticalInfrastructure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point2",
+    "has_restriction": false
+  },
+  {
+    "name": "EducationInstitutionAssignment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "AIforEducation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "LearningOutcomeEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "EducationalInstitution",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Location",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "StudentMonitoring",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ProhibitedBehaviourDetection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#StudentMonitoring",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point3_d",
+    "has_restriction": false
+  },
+  {
+    "name": "CandidateEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "WorkersManagement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point4_a",
+    "has_restriction": false
+  },
+  {
+    "name": "WorkRelatedRelationships",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point4_b",
+    "has_restriction": false
+  },
+  {
+    "name": "WorkTermDecisions",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point4_b",
+    "has_restriction": false
+  },
+  {
+    "name": "TaskAllocation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point4_b",
+    "has_restriction": false
+  },
+  {
+    "name": "EligibilityEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_a",
+    "has_restriction": false
+  },
+  {
+    "name": "EssentialPrivateServices",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Service",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_b",
+    "has_restriction": false
+  },
+  {
+    "name": "FinancialFraudDetectionExemption",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LifeAndHealthInsuranceRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_c",
+    "has_restriction": false
+  },
+  {
+    "name": "EmergencyFirstResponseService",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Service",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "EssentialPrivateService",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Service",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "EmergencyCallEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Service",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point5_d",
+    "has_restriction": false
+  },
+  {
+    "name": "VictimRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_a",
+    "has_restriction": false
+  },
+  {
+    "name": "LawEnforcementAI",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#AISystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_a",
+    "has_restriction": false
+  },
+  {
+    "name": "CriminalOffenceVictim",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DataSubject",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_a",
+    "has_restriction": false
+  },
+  {
+    "name": "LawEnforcementEvidenceEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_c",
+    "has_restriction": false
+  },
+  {
+    "name": "LawEnforcementProfiling",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_e",
+    "has_restriction": false
+  },
+  {
+    "name": "CriminalOffenceInvestigation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_e",
+    "has_restriction": false
+  },
+  {
+    "name": "NaturalPersonProfiling",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point6_e",
+    "has_restriction": false
+  },
+  {
+    "name": "AISystemforPolygraph",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/ai/owl#AISystem",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_a",
+    "has_restriction": false
+  },
+  {
+    "name": "HealthRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_b",
+    "has_restriction": false
+  },
+  {
+    "name": "IrregularMigrationRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_b",
+    "has_restriction": false
+  },
+  {
+    "name": "BorderControlManagement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_b",
+    "has_restriction": false
+  },
+  {
+    "name": "AsylumRiskAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_b",
+    "has_restriction": false
+  },
+  {
+    "name": "TravelDocumentVerificationExemption",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point7_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ElectionInfluence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point8_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ReferendumInfluence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point8_b",
+    "has_restriction": false
+  },
+  {
+    "name": "VotingBehaviourInfluence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point8_b",
+    "has_restriction": false
+  },
+  {
+    "name": "PoliticalCampaignOrganisation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIII_Point8_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SoftwareVersion",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "FirmwareVersion",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "VersionUpdateRequirement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point1_c",
+    "has_restriction": false
+  },
+  {
+    "name": "SoftwarePackage",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point1_d",
+    "has_restriction": false
+  },
+  {
+    "name": "Marking",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point1_f",
+    "has_restriction": false
+  },
+  {
+    "name": "ThirdPartySystemIntegration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#EntityInvolvement",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_a",
+    "has_restriction": false
+  },
+  {
+    "name": "TechnicalSolutionTradeOff",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SoftwareComponentIntegration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "TrainingDataSet",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_d",
+    "has_restriction": false
+  },
+  {
+    "name": "ValidationTestingData",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Data",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_g",
+    "has_restriction": false
+  },
+  {
+    "name": "RobustnessMetric",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_g",
+    "has_restriction": false
+  },
+  {
+    "name": "CybersecurityMeasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point2_h",
+    "has_restriction": false
+  },
+  {
+    "name": "AccuracyDegree",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point3",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskToFundamentalRights",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/risk/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point3",
+    "has_restriction": false
+  },
+  {
+    "name": "PerformanceMetric",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point4",
+    "has_restriction": false
+  },
+  {
+    "name": "PerformanceMetricAppropriateness",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point4",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemLifecycleChanges",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUAI_AnnexIV_Point6",
+    "has_restriction": false
+  },
+  {
+    "name": "SolutionAdopted",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point7",
+    "has_restriction": false
+  },
+  {
+    "name": "OtherRelevantStandard",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalStandard",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point7",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketMonitoringPlan",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point9",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketPerformanceEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUAI_AnnexIV_Point9",
+    "has_restriction": false
+  },
+  {
+    "name": "CoronavirusTestDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg2_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceForPerformanceEvaluation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg2_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PlacingOnTheMarket",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg2_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "CustomMadeDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg5_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "RelevantDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg5_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SystemOrProcedurePack",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg5_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SingleUseCombinationProduct",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg5_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "System",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg5_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "MedicalDeviceClassification",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "GeneralMedicalDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassI",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#MedicalDeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIa",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#MedicalDeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIb",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#MedicalDeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIII",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#MedicalDeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg7_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceClassificationDispute",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg7_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassificationCriteria",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg7_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "SecretaryOfStateDetermination",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg7_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "EssentialRequirements",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg8_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ApplicableRequirements",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg8_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceSupply",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg8_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "Regulation7222012",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg8_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "MedicalDeviceHazard",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg8_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "RelevantEssentialRequirements",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ReasonableGroundsForSuspicion",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg9_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "PatientPrescription",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIaDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIbDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIIDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexVIIIConditions",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "EssentialRequirementsCompliance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ComplianceAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg9_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "ReasonableGroundsforSuspection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_Reg9_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "MedicinalProduct",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "PersonalProtectiveEquipment",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_Reg9_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "FieldSafetyCorrectiveAction",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZC_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillance",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZD_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillancePlan",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZD_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZD_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "RegulatoryExemption",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZD_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "Device",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZD_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZD_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceType",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZE_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "TrendInIncidents",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentManagementProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZE_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "DevicePlacement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Processing",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZE_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ExceptionToPostMarketSurveillance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZE_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "PMSPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Duration",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZF_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZF_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedBodyReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZF_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "RiskIdentification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZG_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceNonConformity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZG_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "UKResponsiblePerson",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Authority",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZG_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceNotificationReview",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZG_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "TimeSensitiveReporting",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentReportingCommunication",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZH_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "SeriousDeterioration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZH_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedBodyInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZI_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "SeparateInvestigation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentManagementProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZI_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceInvestigation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZI_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerCooperation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZI_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "TimelyResponse",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZI_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceAlterationRestriction",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZI_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceDescription",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZJ_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerSubmission",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZJ_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceModel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZK_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceUser",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#HumanSubject",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZK_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "EstimatedNumberOfUsers",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZK_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceClassification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DevicePlacementOnMarket",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ServiceProvision",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassAorBDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DeviceClassification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "PreventiveAction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "CorrectiveAction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillancePeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Duration",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "UKCAmarking",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/legal/eu/aiact/owl#ConformityAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "Compatibility",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "PreventiveCorrectiveAction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceCertificate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#CertificationSeal",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DeclarationOfConformity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZL_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "PeriodicSafetyUpdateReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "SimilarDevices",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceUserPopulation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedBodyCertificate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Certification",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceUpdateReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "ConformityAssessmentProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "ImplantableDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DeviceType",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZM_Para12",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexIIDevice",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZM_Para12",
+    "has_restriction": false
+  },
+  {
+    "name": "WorkingDayResponseTime",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZM_Para13",
+    "has_restriction": false
+  },
+  {
+    "name": "StatisticalMethodology",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ErroneousResults",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "TrendInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "TrendInvestigation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "CorrectiveActions",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "FinalReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceUpdate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceDocument",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZN_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "RequestForPostMarketSurveillanceInformation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZN_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "TimeframeForProvidingPostMarketSurveillanceInformation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZN_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "SecretaryOfStateNotification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentReportingCommunication",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZO_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "SafetyConcern",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerInvestigation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "RetentionPeriod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Duration",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para3",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketSurveillanceTask",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedBodyDesignation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "TaskVariation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "DesignationRestriction",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "DesignationWithdrawal",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ApplicableCriteria",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "UKMDR_44ZP_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "RepresentationOpportunity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerInspection",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "BodyCriteriaAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "ApprovedBodyInformationRequest",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "UKMDR_44ZP_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "InvasiveDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art2_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "FalsifiedDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art2_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceDesign",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceManufacturing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceTechnicalDocumentation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#TechnicalDocumentation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexII",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DeviceTechnicalDocumentation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexIII",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#DeviceTechnicalDocumentation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "CEMarkingOfConformity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Certification",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "InvestigationalDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "UDICompliance",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para7",
+    "has_restriction": false
+  },
+  {
+    "name": "TechnicalDocumentationRetention",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "EUDeclarationOfConformityRetention",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "CertificateRetention",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RecordsOfActivities",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceModificationManagement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para9_a",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceDesignChange",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para9_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ConformityDeclaration",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para9_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ManagementResponsibility",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para9_c",
+    "has_restriction": false
+  },
+  {
+    "name": "PostMarketClinicalFollowUp",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para9_f",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceCharacteristicChange",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para9_f",
+    "has_restriction": false
+  },
+  {
+    "name": "Quality_Management_System",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para9_h",
+    "has_restriction": false
+  },
+  {
+    "name": "Conformity_Assessment_Procedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para9_h",
+    "has_restriction": false
+  },
+  {
+    "name": "HarmonisedStandardsChange",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para9_m",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerObligations",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceLabelInformation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "MemberStateLanguageDetermination",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceWithdrawal",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para12",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceRecall",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para12",
+    "has_restriction": false
+  },
+  {
+    "name": "IncidentRecordingSystem",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para13",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceDocumentation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para14",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceSample",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para14",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceRestriction",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art10_Para14",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceInformation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#PersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art10_Para15",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "BenefitRiskRatio",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para1",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalInvestigationProposal",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalEvaluationReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "ScientificLiteratureEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalInvestigation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "AlternativeTreatmentOption",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalEvaluationProcedure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "ClinicalInvestigationExemption",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceModification",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "EquivalenceDemonstration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para4",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceEquivalence",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Assessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "OriginalClinicalEvaluation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "ProductSpecificCS",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "Suture",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "Staple",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "DentalFilling",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "DentalBrace",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ToothCrown",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para6_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ExemptedDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para8",
+    "has_restriction": false
+  },
+  {
+    "name": "AnalogousMedicalDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "NonClinicalTestingMethod",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "JustificationForException",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Justification",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceHumanInteraction",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerClaim",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "PMCFPlan",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "PMCFEvaluationReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#ClinicalEvaluation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "UniformApplication",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#GovernanceProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art61_Para13",
+    "has_restriction": false
+  },
+  {
+    "name": "ImplementingActs",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para13",
+    "has_restriction": false
+  },
+  {
+    "name": "AnnexXIV",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_Art61_Para13",
+    "has_restriction": false
+  },
+  {
+    "name": "DeviceLifecycle",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Context",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para2",
+    "has_restriction": false
+  },
+  {
+    "name": "BenefitRiskDeterminationUpdate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "DesignUpdate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturingInformationUpdate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "LabellingUpdate",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "UsabilityImprovement",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Purpose",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_f",
+    "has_restriction": false
+  },
+  {
+    "name": "ManufacturerPostMarketObligation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Obligation",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art83_Para3_g",
+    "has_restriction": false
+  },
+  {
+    "name": "UnionMarketDevice",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#Device",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para1_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SeriousIncidentReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentReportingCommunication",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "SeriousIncidentTiming",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentManagementProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "UnanticipatedSeriousDeterioration",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#SeriousIncidentReport",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para5",
+    "has_restriction": false
+  },
+  {
+    "name": "InitialReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentReportingCommunication",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "CompleteReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentReportingCommunication",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para6",
+    "has_restriction": false
+  },
+  {
+    "name": "PeriodicSummaryReport",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#IncidentManagementProcedures",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para9",
+    "has_restriction": false
+  },
+  {
+    "name": "TargetedInformationCampaign",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#OrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para10",
+    "has_restriction": false
+  },
+  {
+    "name": "ExpectedUndesirableSideEffect",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#RiskAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_Art87_Para11",
+    "has_restriction": false
+  },
+  {
+    "name": "Repeatability",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_1",
+    "has_restriction": false
+  },
+  {
+    "name": "FaultCondition",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_1",
+    "has_restriction": false
+  },
+  {
+    "name": "PerformanceImpairment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Risk",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_1",
+    "has_restriction": false
+  },
+  {
+    "name": "SoftwareSecurity",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_2",
+    "has_restriction": false
+  },
+  {
+    "name": "MobileComputingPlatform",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Technology",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_3",
+    "has_restriction": false
+  },
+  {
+    "name": "VaryingEnvironment",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_AnnexI_S17_3",
+    "has_restriction": false
+  },
+  {
+    "name": "LightLevel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#VaryingEnvironment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_3",
+    "has_restriction": false
+  },
+  {
+    "name": "NoiseLevel",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#VaryingEnvironment",
+    "parent_resolved": true,
+    "source_chunk_id": "EUMDR_AnnexI_S17_3",
+    "has_restriction": false
+  },
+  {
+    "name": "UnauthorisedAccessProtection",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_AnnexI_S17_4",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIaSoftware",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_AnnexVIII_Rule11",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIbSoftware",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_AnnexVIII_Rule11",
+    "has_restriction": false
+  },
+  {
+    "name": "ClassIIIsoftware",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "EUMDR_AnnexVIII_Rule11",
+    "has_restriction": false
+  },
+  {
+    "name": "ExplicitConsentForAutomatedDecisionMaking",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22B_2",
+    "has_restriction": false
+  },
+  {
+    "name": "SignificantImpactAssessment",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ImpactAssessment",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22B_3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ContractPerformanceCondition",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#ProcessingCondition",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22B_3_i",
+    "has_restriction": false
+  },
+  {
+    "name": "Article9Point2GCondition",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#LegalBasis",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22B_3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "AutomatedDecisionMaking",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22C_1_a",
+    "has_restriction": false
+  },
+  {
+    "name": "ControllerIntervention",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_S80_Art22C_2_c",
+    "has_restriction": false
+  },
+  {
+    "name": "DecisionContestabilityMeasure",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#TechnicalOrganisationalMeasure",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22C_2_d",
+    "has_restriction": false
+  },
+  {
+    "name": "RegulatedAutomatedDecisionMaking",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#DecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22D_1",
+    "has_restriction": false
+  },
+  {
+    "name": "HumanInvolvementRegulation",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_S80_Art22D_1",
+    "has_restriction": false
+  },
+  {
+    "name": "AdditionalSafeguardMeasure",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_S80_Art22D_3_a",
+    "has_restriction": false
+  },
+  {
+    "name": "SupplementalSafeguardRequirements",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_S80_Art22D_3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "SafeguardImplementationRequirements",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/kep/fallrisk#SupplementalSafeguardRequirements",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22D_3_b",
+    "has_restriction": false
+  },
+  {
+    "name": "ExcludedMeasures",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#Safeguard",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22D_3_c",
+    "has_restriction": false
+  },
+  {
+    "name": "RegulationAmendmentRestriction",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_S80_Art22D_4",
+    "has_restriction": false
+  },
+  {
+    "name": "AutomatedDecisionMakingRegulation",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#AutomatedDecisionMaking",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22D_4",
+    "has_restriction": false
+  },
+  {
+    "name": "SensitiveProcessing",
+    "merged_into": null,
+    "parent_used": "https://w3id.org/dpv/owl#SpecialCategoryPersonalData",
+    "parent_resolved": true,
+    "source_chunk_id": "DUAA_S80_Art22D_5",
+    "has_restriction": false
+  },
+  {
+    "name": "Article22CRequirement",
+    "merged_into": null,
+    "parent_used": "http://www.w3.org/2002/07/owl#Thing",
+    "parent_resolved": false,
+    "source_chunk_id": "DUAA_Sch6",
+    "has_restriction": false
+  }
+]
