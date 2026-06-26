@@ -1,8 +1,22 @@
-Step 1 Report — 2026-06-24T13:46:08
-Classes: 627  |  Properties: 13
+Step 1 Report — 2026-06-24T18:52:25
+Classes: 641  |  Properties: 13
 
 Namespace breakdown:
   ext           627
+  dpv           13
+  dpv-risk      1
+
+Sample classes (name → label):
+  DataSubject                               DataSubject
+  Entity                                    Entity
+  LegalBasis                                LegalBasis
+  Notice                                    Notice
+  Obligation                                Obligation
+  OrganisationalMeasure                     OrganisationalMeasure
+  PersonalData                              PersonalData
+  Processing                                Processing
+  Purpose                                   Purpose
+  Right                                     Right
 
 Object properties:
   hasDataSubject                            https://w3id.org/dpv/owl#hasDataSubject

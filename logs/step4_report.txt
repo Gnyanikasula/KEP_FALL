@@ -1,0 +1,47 @@
+Step 4 — Reconciliation & Validation Report
+==================================================
+Triples processed     : 618
+
+Node-level typing:
+  Before              : 661/1236  (53%)
+  After reconcile     : 761/1236  (61%)
+  Nodes promoted      : 100
+
+Fully-typed triples (both subject+object):
+  Before              : 200  (32%)
+  After               : 240  (38%)
+
+Labels sanitized      : 11
+Domain/range warnings : 82
+
+Domain/range mismatches (informational, not rejected):
+  ⚠ PersonalData --hasObligation--> LawfulnessFairnessAndTransparency: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasObligation--> PurposeLimitation: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasObligation--> DataMinimisation: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasObligation--> Accuracy: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasObligation--> StorageLimitation: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasObligation--> SecurityOfPersonalData: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasTechnicalOrganisationalMeasure--> AppropriateTechnicalAndOrganisationalMeasures: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasRisk--> RiskOfVaryingLikelihoodAndSeverity: domain expected Processing, got PersonalData
+  ⚠ Entity --hasObligation--> Notice: range expected Obligation, got Notice
+  ⚠ PersonalData --hasPurpose--> Purpose: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasRisk--> RiskOfUnauthorizedAccess: domain expected Processing, got PersonalData
+  ⚠ Purpose --hasNotice--> DataSubjectInformation: domain expected Processing, got Purpose
+  ⚠ PersonalData --hasObligation--> DataRetentionPeriod: domain expected Entity, got PersonalData
+  ⚠ PersonalData --hasPurpose--> Purpose: domain expected Processing, got PersonalData
+  ⚠ ControllerIdentity --hasNotice--> DataSubject: range expected Notice, got DataSubject
+  ⚠ PersonalData --hasTechnicalOrganisationalMeasure--> SecurityMeasures: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasPurpose--> Processing: domain expected Processing, got PersonalData; range expected Purpose, got Processing
+  ⚠ PersonalData --hasNotice--> DataSubject: domain expected Processing, got PersonalData; range expected Notice, got DataSubject
+  ⚠ PersonalData --hasRisk--> Inaccuracy: domain expected Processing, got PersonalData
+  ⚠ DataSubject --hasObligation--> RequestRectification: domain expected Entity, got DataSubject
+  ⚠ PersonalData --hasRisk--> IncompleteData: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasPurpose--> Purpose: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasNotice--> Notice: domain expected Processing, got PersonalData
+  ⚠ Entity --hasTechnicalMeasure--> TechnicalMeasure: domain expected Processing, got Entity
+  ⚠ Processing --isMitigatedByMeasure--> OrganisationalMeasure: domain expected Risk, got Processing; range expected TechnicalOrganisationalMeasure, got OrganisationalMeasure
+  ⚠ PersonalData --hasRisk--> Risk: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasPurpose--> EstablishmentOfLegalClaims: domain expected Processing, got PersonalData
+  ⚠ PersonalData --hasPurpose--> ProtectionOfRightsOfAnotherPerson: domain expected Processing, got PersonalData
+  ⚠ DataSubject --hasObligation--> RequestRestrictionOfProcessing: domain expected Entity, got DataSubject
+  ⚠ AutomatedDecision --isMitigatedByMeasure--> OrganisationalMeasure: range expected TechnicalOrganisationalMeasure, got OrganisationalMeasure

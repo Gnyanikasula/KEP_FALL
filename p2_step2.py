@@ -1,4 +1,3 @@
-#smenatic retrival of classes for each article
 import json
 import logging
 from pathlib import Path
@@ -83,6 +82,7 @@ def retrieve_top_classes(
         top_classes = [
             {
                 "uri"  : classes[idx]["uri"],
+                "name" : classes[idx].get("name", classes[idx]["uri"].split("#")[-1]),
                 "label": classes[idx]["label"],
                 "score": float(round(similarity[i][idx], 4)),
             }

@@ -1,0 +1,222 @@
+{
+  "GDPR__Art5": {
+    "status": "done",
+    "triples": 11
+  },
+  "GDPR__Art6": {
+    "status": "done",
+    "triples": 9
+  },
+  "GDPR__Art7": {
+    "status": "done",
+    "triples": 9
+  },
+  "GDPR__Art9": {
+    "status": "done",
+    "triples": 12
+  },
+  "GDPR__Art13": {
+    "status": "done",
+    "triples": 12
+  },
+  "GDPR__Art14": {
+    "status": "done",
+    "triples": 10
+  },
+  "GDPR__Art15": {
+    "status": "done",
+    "triples": 9
+  },
+  "GDPR__Art16": {
+    "status": "done",
+    "triples": 12
+  },
+  "GDPR__Art17": {
+    "status": "done",
+    "triples": 12
+  },
+  "GDPR__Art18": {
+    "status": "done",
+    "triples": 12
+  },
+  "GDPR__Art22": {
+    "status": "done",
+    "triples": 11
+  },
+  "GDPR__Art25": {
+    "status": "done",
+    "triples": 10
+  },
+  "GDPR__Art32": {
+    "status": "done",
+    "triples": 5
+  },
+  "GDPR__Art35": {
+    "status": "done",
+    "triples": 10
+  },
+  "EU AI Act__Art5": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art6": {
+    "status": "done",
+    "triples": 6
+  },
+  "EU AI Act__Art9": {
+    "status": "done",
+    "triples": 8
+  },
+  "EU AI Act__Art10": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art11": {
+    "status": "done",
+    "triples": 11
+  },
+  "EU AI Act__Art12": {
+    "status": "done",
+    "triples": 8
+  },
+  "EU AI Act__Art13": {
+    "status": "done",
+    "triples": 6
+  },
+  "EU AI Act__Art14": {
+    "status": "done",
+    "triples": 9
+  },
+  "EU AI Act__Art15": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art16": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art17": {
+    "status": "done",
+    "triples": 6
+  },
+  "EU AI Act__Art18": {
+    "status": "done",
+    "triples": 9
+  },
+  "EU AI Act__Art19": {
+    "status": "done",
+    "triples": 7
+  },
+  "EU AI Act__Art20": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art21": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art26": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art29": {
+    "status": "done",
+    "triples": 11
+  },
+  "EU AI Act__Art50": {
+    "status": "done",
+    "triples": 9
+  },
+  "EU AI Act__Art51": {
+    "status": "done",
+    "triples": 10
+  },
+  "EU AI Act__Art52": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__Art53": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__ArtAnnex III": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU AI Act__ArtAnnex IV": {
+    "status": "done",
+    "triples": 5
+  },
+  "UK MDR 2002__Art2": {
+    "status": "done",
+    "triples": 31
+  },
+  "UK MDR 2002__Art5": {
+    "status": "done",
+    "triples": 9
+  },
+  "UK MDR 2002__Art7": {
+    "status": "done",
+    "triples": 5
+  },
+  "UK MDR 2002__Art8": {
+    "status": "done",
+    "triples": 11
+  },
+  "UK MDR 2002__Art9": {
+    "status": "done",
+    "triples": 12
+  },
+  "UK MDR 2002__ArtPart4A": {
+    "status": "done",
+    "triples": 38
+  },
+  "EU MDR 2017/745__Art2": {
+    "status": "done",
+    "triples": 23
+  },
+  "EU MDR 2017/745__Art10": {
+    "status": "done",
+    "triples": 22
+  },
+  "EU MDR 2017/745__Art61": {
+    "status": "done",
+    "triples": 10
+  },
+  "EU MDR 2017/745__Art83": {
+    "status": "done",
+    "triples": 6
+  },
+  "EU MDR 2017/745__Art87": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU MDR 2017/745__ArtAnnex I": {
+    "status": "done",
+    "triples": 12
+  },
+  "EU MDR 2017/745__ArtAnnex VIII": {
+    "status": "done",
+    "triples": 11
+  },
+  "DUAA 2025__ArtS80-22A": {
+    "status": "done",
+    "triples": 9
+  },
+  "DUAA 2025__ArtS80-22B": {
+    "status": "done",
+    "triples": 9
+  },
+  "DUAA 2025__ArtS80-22C": {
+    "status": "done",
+    "triples": 12
+  },
+  "DUAA 2025__ArtS80-22D": {
+    "status": "done",
+    "triples": 6
+  },
+  "DUAA 2025__ArtSchedule 6": {
+    "status": "done",
+    "triples": 11
+  }
+}
