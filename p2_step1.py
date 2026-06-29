@@ -93,7 +93,7 @@ def extract_classes(g: Graph) -> list[dict]:
             classes.append({
                 "uri"    : uri,
                 "name"   : name,
-                "label"  : name,   # no description available — use name itself
+                "label"  : name,   
                 "comment": "",
                 "ns"     : ns_for_uri(uri),
             })
@@ -140,8 +140,8 @@ def build_embeddings(classes: list[dict], model: SentenceTransformer) -> tuple[n
     desc_embs  = model.encode(desc_texts, batch_size=64, show_progress_bar=True,
                                normalize_embeddings=True, convert_to_numpy=True)
 
-    # name embeddings — CamelCase expanded to natural words, for Step 3 concept mapping
-    # "DataSubject" → "Data Subject", "PersonalData" → "Personal Data"
+    # name embeddings - CamelCase expanded to natural words, for Step 3 concept mapping
+    # "DataSubject" -> "Data Subject", "PersonalData" -> "Personal Data"
     # This ensures semantic similarity works correctly against LLM natural language terms
     name_texts = [expand_camel_case(c["name"]) for c in classes]
     name_embs  = model.encode(name_texts, batch_size=64, show_progress_bar=True,
@@ -182,21 +182,21 @@ def write_report(classes: list[dict], props: list[dict], warnings: list[str]) ->
     for ns, cnt in sorted(ns_counts.items(), key=lambda x: -x[1]):
         lines.append(f"  {ns:<12}  {cnt}")
 
-    lines += ["", "Sample classes (name → label):"]
+    lines += ["", "Sample classes (name -> label):"]
     for c in classes[:10]:
         lines.append(f"  {c['name']:<40}  {c['label'][:60]}")
 
     lines += ["", "Object properties:"]
     for p in props:
         lines.append(f"  {p['label']:<40}  {p['uri']}")
-        if p["domain"]: lines.append(f"    domain → {p['domain']}")
-        if p["range"]:  lines.append(f"    range  → {p['range']}")
+        if p["domain"]: lines.append(f"    domain -> {p['domain']}")
+        if p["range"]:  lines.append(f"    range  -> {p['range']}")
 
     lines += ["", "Warnings:"]
-    lines += [f"  ⚠  {w}" for w in warnings] if warnings else ["  ✅  All checks passed"]
+    lines += [f" ** {w}" for w in warnings] if warnings else [" _/  All checks passed"]
 
     LOG_OUT.write_text("\n".join(lines), encoding="utf-8")
-    log.info(f"Report → {LOG_OUT}")
+    log.info(f"Report -> {LOG_OUT}")
 
 
 def main():
@@ -231,20 +231,20 @@ def main():
 
     with open(VOCAB_OUT, "w", encoding="utf-8") as f:
         json.dump(vocab, f, indent=2, ensure_ascii=False)
-    log.info(f"Vocabulary → {VOCAB_OUT}")
+    log.info(f"Vocabulary -> {VOCAB_OUT}")
 
     np.save(str(EMBED_OUT), desc_embeddings)
-    log.info(f"Description embeddings → {EMBED_OUT}")
+    log.info(f"Description embeddings -> {EMBED_OUT}")
 
     np.save(str(EMBED_NAME_OUT), name_embeddings)
-    log.info(f"Name embeddings → {EMBED_NAME_OUT}")
+    log.info(f"Name embeddings -> {EMBED_NAME_OUT}")
 
     write_report(classes, props, warnings)
 
     print(f"\nClasses: {len(classes)}  |  Properties: {len(props)}")
     print(f"Description embeddings : {desc_embeddings.shape}")
     print(f"Name embeddings        : {name_embeddings.shape}")
-    print("Next → step2_semantic_retrieval.py")
+    print("Next -> step2_semantic_retrieval.py")
 
 
 if __name__ == "__main__":

@@ -1,17 +1,16 @@
-"""
-Step 3 — Schema-Constrained Triple Extraction (LLM-as-Typer)
-=============================================================
-Correct architecture:
-  - Embeddings RETRIEVE candidate classes (top-K per article)
-  - LLM SELECTS the exact class from candidates, or marks concept as NEW
-  - No blind nearest-neighbor mapping, no forced bad matches
 
-Each triple node is either:
-  typed=true   → matched a real ontology class (has URI)
-  typed=false  → new organic node (no URI, source="extracted")
+# Step 3 — Schema-Constrained Triple Extraction (LLM-as-Typer)
+# Correct architecture:
+#   - Embeddings RETRIEVE candidate classes (top-K per article)
+#   - LLM SELECTS the exact class from candidates, or marks concept as NEW
+#   - No blind nearest-neighbor mapping, no forced bad matches
 
-Resumable via checkpoint. Long articles handled by sliding window.
-"""
+# Each triple node is either:
+#   typed=true   -> matched a real ontology class (has URI)
+#   typed=false  -> new organic node (no URI, source="extracted")
+
+
+
 
 import json
 import logging
@@ -58,9 +57,8 @@ client   = Groq(api_key=os.getenv("GROQ_API_KEY"))
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # Triple schema
-# ─────────────────────────────────────────────────────────────────────────────
 
 class RawTriple(BaseModel):
     subject    : str
@@ -79,9 +77,8 @@ class RawTriple(BaseModel):
             return 0.0
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Candidate retrieval — embeddings choose what LLM sees
-# ─────────────────────────────────────────────────────────────────────────────
+
+# Candidate retrieval - embeddings choose what LLM sees
 
 def build_candidates(article: dict, vocab_classes: list[dict]) -> list[dict]:
     """
@@ -101,9 +98,7 @@ def build_candidates(article: dict, vocab_classes: list[dict]) -> list[dict]:
     return list(candidates.values())
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Prompt
-# ─────────────────────────────────────────────────────────────────────────────
+# prompt
 
 SYSTEM_PROMPT = """You are a legal knowledge extractor for data protection and AI regulation.
 
@@ -145,9 +140,7 @@ CANDIDATE CLASSES (use exact name, or "NEW" if none fit):
 Extract up to {MAX_TRIPLES} triples. Return JSON array only."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# LLM call
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 def call_llm(user_prompt: str, retries: int = 2) -> str | None:
     for attempt in range(retries):
@@ -194,9 +187,7 @@ def parse_response(raw: str) -> list[RawTriple]:
     return out
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Validation — LLM's type choice is trusted, only verified against candidates
-# ─────────────────────────────────────────────────────────────────────────────
 
 def normalize(s: str) -> str:
     return s.lower().replace(" ", "").replace("_", "").replace("-", "")
@@ -225,7 +216,7 @@ def resolve_node(concept: str, node_type: str,
                 "typed": True,
             }
 
-    # New organic node — no ontology match
+    # New organic node - no ontology match
     return {
         "label": slugify(concept),
         "uri"  : None,
@@ -287,10 +278,8 @@ def deduplicate(triples: list[dict]) -> list[dict]:
             seen[key] = t
     return list(seen.values())
 
+# Article processing - sliding window for long articles
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Article processing — sliding window for long articles
-# ─────────────────────────────────────────────────────────────────────────────
 
 def split_text(text: str) -> list[str]:
     words = text.split()
@@ -331,9 +320,7 @@ def process_article(article: dict, properties: list[dict], vocab_classes: list[d
     return deduped
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Checkpoint / IO
-# ─────────────────────────────────────────────────────────────────────────────
+# checkpoint
 
 def load_json(path: Path, default):
     if path.exists():
@@ -348,9 +335,7 @@ def save_json(path: Path, data):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────────────────────────────────────
+# main
 
 def main():
     articles = load_json(ARTICLES_PATH, [])
@@ -396,7 +381,7 @@ def main():
     print(f"  fully-typed      : {typed}")
     print(f"  with new node    : {new_n}")
     print(f"Output             : {OUTPUT_PATH}")
-    print("Next → step4_validation.py")
+    print("Next -> step4_validation.py")
 
 
 if __name__ == "__main__":

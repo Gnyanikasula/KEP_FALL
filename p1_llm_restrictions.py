@@ -1,7 +1,6 @@
 """
-phase1_llm_restrictions.py  —  v3 → v4  (LLM restriction pass)
-===============================================================
-Run this AFTER phase1_fix.py has produced v3.
+phase1_llm_restrictions.py  -  v3 -> v4  (LLM restriction pass)
+
 
 What this does:
   1. Loads DPV + v3 ontology
@@ -14,12 +13,9 @@ What this does:
        - property must be one of the 13 declared DPV properties
        - target must exist in ontology (KEP or DPV)
   6. Applies validated restrictions via owlready2
-  7. Runs HermiT — exits on any unsatisfiable class
-  8. Serializes clean output → v4 (same filter as phase1_fix.py)
-  9. Writes detailed restriction log
+  7. Runs HermiT - exits on any unsatisfiable class
+  8. Serializes clean output -> v4 (same filter as phase1_fix.py)
 
-Usage:
-  python phase1_llm_restrictions.py
 
 Input:
   OUT_CANDIDATES/dpv-fallrisk-ext-v3.rdf
@@ -50,7 +46,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ── paths ────────────────────────────────────────────────────────────────────
+# paths
 
 BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
 DPV_BASE      = os.environ.get("DPV_BASE", r"D:\dpv-2.2.1")
@@ -88,8 +84,8 @@ REQUEST_DELAY = 2.2
 MAX_RETRIES   = 5
 RETRY_BASE    = 15.0
 
-# The 13 allowed DPV properties — must match phase1_fix.py exactly.
-# Local name → full URI.  LLM is shown local names; validation uses full URIs.
+# The 13 allowed DPV properties - must match phase1_fix.py exactly.
+# Local name -> full URI.  LLM is shown local names; validation uses full URIs.
 ALLOWED_PROPERTIES = {
     "hasPersonalData":                DPV_NS      + "hasPersonalData",
     "hasOrganisationalMeasure":       DPV_NS      + "hasOrganisationalMeasure",
@@ -106,7 +102,7 @@ ALLOWED_PROPERTIES = {
     "isMitigatedByMeasure":           DPV_NS      + "isMitigatedByMeasure",
 }
 
-# ── LLM prompt ───────────────────────────────────────────────────────────────
+# LLM Prompt
 
 SYSTEM_PROMPT = """\
 You are an OWL ontology engineer.
@@ -121,11 +117,11 @@ You are given:
 
 Rules:
   1. A restriction is only valid if it is EXPLICITLY supported by the regulatory text.
-  2. Use ONLY property names from the allowed list — no others.
-  3. Use ONLY class names from the allowed targets — no others.
+  2. Use ONLY property names from the allowed list - no others.
+  3. Use ONLY class names from the allowed targets - no others.
   4. If a class already has the restriction, do NOT repeat it.
   5. If no restriction is warranted, return [].
-  6. Output ONLY a valid JSON array — no markdown, no explanation.
+  6. Output ONLY a valid JSON array - no markdown, no explanation.
 
 Schema:
 [
@@ -146,9 +142,7 @@ Output ONLY JSON. No markdown. No explanation.
 """
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # helpers
-# ─────────────────────────────────────────────────────────────────────────────
 
 def local(uri: str) -> str:
     return uri.split("#")[-1] if "#" in uri else uri.split("/")[-1]
@@ -194,15 +188,13 @@ def load_dpv():
     return {c.name: c for c in default_world.classes()}
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# step 1 — load v3 into owlready2
-# ─────────────────────────────────────────────────────────────────────────────
+# step 1 - load v3 into owlready2
 
 def load_v3(all_dpv):
     """
     Rebuild the v3 ontology in owlready2 from the RDF file.
     Returns (onto, new_classes, existing_restrictions)
-    existing_restrictions: dict  class_local → set of (prop_uri, target_uri)
+    existing_restrictions: dict  class_local -> set of (prop_uri, target_uri)
     """
     print("Loading v3 RDF …")
     g = Graph()
@@ -245,7 +237,7 @@ def load_v3(all_dpv):
             (str(props[0]), str(targets[0]))
         )
 
-    # pass 1 — create all classes with Thing
+    # pass 1 - create all classes with Thing
     with onto:
         for name, info in class_data.items():
             cls = types.new_class(name, (Thing,))
@@ -253,7 +245,7 @@ def load_v3(all_dpv):
             cls.comment = [info["comment"]]
             new_classes[name] = cls
 
-    # pass 2 — set parents
+    # pass 2 - set parents
     fixed = 0
     for name, info in class_data.items():
         p_uri = info["parent_uri"]
@@ -284,13 +276,11 @@ def load_v3(all_dpv):
     return onto, new_classes, existing_restrictions
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# step 2 — find classes without restrictions + group by chunk
-# ─────────────────────────────────────────────────────────────────────────────
+# step 2 - find classes without restrictions + group by chunk
 
 def find_unrestricted(new_classes, existing_restrictions, classes_json_path):
     """
-    Returns dict: chunk_id → list of class local names without restrictions.
+    Returns dict: chunk_id -> list of class local names without restrictions.
     Skips classes not in classes_created.json (domain classes added in fix step).
     """
     print("Finding classes without restrictions …")
@@ -317,9 +307,8 @@ def find_unrestricted(new_classes, existing_restrictions, classes_json_path):
     return chunk_to_classes
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# step 3 — LLM restriction extraction
-# ─────────────────────────────────────────────────────────────────────────────
+# step 3 - LLM restriction extraction
+
 
 def build_allowed_targets(new_classes, all_dpv):
     """
@@ -334,7 +323,7 @@ def build_allowed_targets(new_classes, all_dpv):
 def build_target_sample(new_classes):
     """
     Build a representative sample of target classes to include in the prompt.
-    Full list is too large — we give a meaningful subset + note that others exist.
+    Full list is too large - we give a meaningful subset + note that others exist.
     Prioritise classes most likely to be useful as restriction targets.
     """
     priority_targets = [
@@ -421,9 +410,7 @@ def extract_restrictions_for_chunk(
         return []
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# step 4 — validate + apply restrictions
-# ─────────────────────────────────────────────────────────────────────────────
+# step 4 - validate + apply restrictions
 
 def validate_and_apply(
         llm_results, onto, new_classes, all_dpv,
@@ -511,9 +498,7 @@ def validate_and_apply(
     return stats, applied_log
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # serialization (same filter logic as phase1_fix.py)
-# ─────────────────────────────────────────────────────────────────────────────
 
 def serialize_clean(onto):
     print("Serializing to v4 …")
@@ -568,13 +553,12 @@ def serialize_clean(onto):
 
     g_clean.serialize(destination=OUT_V4, format="xml")
     n = len(g_clean)
-    print(f"  {n} triples  →  {OUT_V4}\n")
+    print(f"  {n} triples  ->  {OUT_V4}\n")
     return n
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # main
-# ─────────────────────────────────────────────────────────────────────────────
 
 def main():
     if not GROQ_API_KEY:
@@ -636,7 +620,7 @@ def main():
         with open(OUT_RAW, "w", encoding="utf-8") as f:
             json.dump(all_llm_raw, f, indent=2, ensure_ascii=False)
 
-    print(f"\nLLM pass complete — {len(all_results)} total proposed\n")
+    print(f"\nLLM pass complete - {len(all_results)} total proposed\n")
 
     # validate + apply
     print("Validating and applying restrictions …")
@@ -662,7 +646,7 @@ def main():
         if unsat:
             for u in unsat:
                 print(f"  UNSAT: {u}")
-            sys.exit("Reasoner failed — check LLM-applied restrictions.")
+            sys.exit("Reasoner failed - check LLM-applied restrictions.")
     except Exception as e:
         print(f"  [error] {e}\n")
         sys.exit(1)
@@ -681,12 +665,12 @@ def main():
 
     # write log
     applied_lines = "\n".join(
-        f"  - {r['class']} → {r['property']} some {r['target']}\n"
+        f"  - {r['class']} -> {r['property']} some {r['target']}\n"
         f"    Rationale: {r['rationale']}"
         for r in applied_log
     )
     with open(OUT_LOG, "w", encoding="utf-8") as f:
-        f.write(f"""# Phase 1 LLM Restrictions Log  (v3 → v4)
+        f.write(f"""# Phase 1 LLM Restrictions Log  (v3 -> v4)
 
 ## Stats
 - Chunks processed      : {done_chunks}

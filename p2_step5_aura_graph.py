@@ -1,20 +1,19 @@
-"""
-Step 5 — AuraDB Population
-==========================
-Loads clean_triples.json into Neo4j AuraDB.
+# """
+# Step 5 - AuraDB Population
+# Loads clean_triples.json into Neo4j AuraDB.
 
-Schema:
-  (:Concept {key, label, uri, typed, source_reg})
-     -[:REL {predicate, predicate_uri, regulation, article_id, chunk_ids, confidence}]->
-  (:Concept {...})
+# Schema:
+#   (:Concept {key, label, uri, typed, source_reg})
+#      -[:REL {predicate, predicate_uri, regulation, article_id, chunk_ids, confidence}]->
+#   (:Concept {...})
 
-Node identity (MERGE key):
-  typed node  → key = uri        (deduplicates across articles)
-  new node    → key = "new:" + label
+# Node identity (MERGE key):
+#   typed node  -> key = uri        (deduplicates across articles)
+#   new node    -> key = "new:" + label
 
-Idempotent: re-running won't duplicate (MERGE on key + edge signature).
-Batched in groups of 50. Resumable — MERGE means partial runs are safe to re-run.
-"""
+# Idempotent: re-running won't duplicate (MERGE on key + edge signature).
+# Batched in groups of 50. Resumable — MERGE means partial runs are safe to re-run.
+
 
 import json
 import logging
@@ -124,7 +123,7 @@ def main():
         print(f"  typed          : {typed_count}")
         print(f"  new            : {node_count - typed_count}")
         print(f"Edges in graph   : {edge_count}")
-        print("Next → step6_graph_validation.py")
+        print("Next -> step6_graph_validation.py")
 
     finally:
         driver.close()

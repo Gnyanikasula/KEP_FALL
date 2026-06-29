@@ -32,15 +32,15 @@ DPV_MODULES = [
 # audit decisions for all 146 Thing-fallback classes from the current run
 # each DPV target was verified against the live DPV v2.2.1 ontology before use
 # DUPLICATE: class duplicates an existing DPV term — remove and redirect references to it
-# PARENT:    a real DPV parent was found — reparent under it
-# KEEP_THING: no good DPV anchor exists — confirmed correct to remain top-level
+# PARENT:    a real DPV parent was found - reparent under it
+# KEEP_THING: no good DPV anchor exists - confirmed correct to remain top-level
 AUDIT_DECISIONS = {
 
-    # GDPR Art.9 Para 3 — secrecy exceptions
+    # GDPR Art.9 Para 3 - secrecy exceptions
     "UnionLawSecrecy":               ("PARENT",    "Obligation"),
     "MemberStateLawSecrecy":         ("PARENT",    "Obligation"),
 
-    # GDPR Art.13 — transparency obligations
+    # GDPR Art.13 - transparency obligations
     "AdequacyDecision":              ("DUPLICATE", "AdequacyDecision"),
     "ThirdCountryTransfer":          ("PARENT",    "Transfer"),
     "AdditionalInformationForFurtherProcessing": ("PARENT", "Notification"),
@@ -64,12 +64,12 @@ AUDIT_DECISIONS = {
     "ListOfProcessingActivities":    ("PARENT",    "RecordsOfActivities"),
     "MonitoringOfBehaviour":         ("PARENT",    "BehaviourAnalysis"),
 
-    # EU AI Act Art.5 — prohibited practices
+    # EU AI Act Art.5 - prohibited practices
     "SubliminalTechnique":           ("KEEP_THING", "specific prohibited AI technique, no DPV anchor"),
     "WorkplaceEmotionInference":     ("KEEP_THING", "specific prohibited practice, no DPV anchor"),
     "MedicalEmotionInference":       ("KEEP_THING", "specific prohibited practice, no DPV anchor"),
 
-    # EU AI Act Art.6 — classification
+    # EU AI Act Art.6 - classification
     "UnionHarmonisationLegislation": ("KEEP_THING", "legislative instrument concept, no DPV anchor"),
     "DelegatedActs":                 ("KEEP_THING", "regulatory instrument concept, no DPV anchor"),
     "DelegatedAct":                  ("KEEP_THING", "regulatory instrument concept, no DPV anchor"),
@@ -77,26 +77,26 @@ AUDIT_DECISIONS = {
     "FundamentalRightsProtectionLevel": ("PARENT", "RiskAssessment"),
     "ConsistencyWithDelegatedActs":  ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.10 — data requirements
+    # EU AI Act Art.10 - data requirements
     "DataBias":                      ("DUPLICATE", "DataBias"),
 
-    # EU AI Act Art.11 — technical documentation
+    # EU AI Act Art.11 - technical documentation
     "ProductRelatedToUnionHarmonisationLegislation": ("KEEP_THING", "no DPV anchor"),
     "AnnexAmendment":                ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.13 — transparency
+    # EU AI Act Art.13 - transparency
     "AppropriateTransparency":       ("PARENT",    "Obligation"),
     "HighRiskAISystemTransparency":  ("PARENT",    "Obligation"),
     "AIOutputExplanation":           ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.14 — human oversight
+    # EU AI Act Art.14 - human oversight
     "HighRiskAISystemOverride":      ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.15 — accuracy and robustness
+    # EU AI Act Art.15 - accuracy and robustness
     "Accuracy":                      ("KEEP_THING", "no DPV anchor"),
     "Robustness":                    ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.16 — provider obligations
+    # EU AI Act Art.16 - provider obligations
     "ProviderObligations":           ("PARENT",    "Obligation"),
     "HighRiskAiSystemPackaging":     ("KEEP_THING", "no DPV anchor"),
     "HighRiskAISystemProviderObligations": ("PARENT", "Obligation"),
@@ -104,7 +104,7 @@ AUDIT_DECISIONS = {
     "AccessibilityRequirement":      ("KEEP_THING", "no DPV anchor"),
     "HighRiskAISystemAccessibility": ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.20 — corrective actions
+    # EU AI Act Art.20 - corrective actions
     "SystemWithdrawal":              ("KEEP_THING", "no DPV anchor"),
     "SystemDisabling":               ("KEEP_THING", "no DPV anchor"),
     "SystemRecall":                  ("KEEP_THING", "no DPV anchor"),
@@ -112,7 +112,7 @@ AUDIT_DECISIONS = {
     # EU AI Act Art.21
     "CompetentAuthorityRequest":     ("PARENT",    "NationalCompetentAuthority"),
 
-    # EU AI Act Art.26 — deployer obligations
+    # EU AI Act Art.26 - deployer obligations
     "DeployersObligations":          ("PARENT",    "Obligation"),
     "InputDataRelevance":            ("KEEP_THING", "no DPV anchor"),
     "InputDataRepresentativeness":   ("KEEP_THING", "no DPV anchor"),
@@ -121,22 +121,22 @@ AUDIT_DECISIONS = {
     "PostRemoteBiometricIdentification": ("KEEP_THING", "no DPV anchor"),
     "AdverseLegalEffect":            ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.29 — conformity assessment bodies
+    # EU AI Act Art.29 - conformity assessment bodies
     "NotificationApplication":       ("PARENT",    "Notification"),
     "DesignationUnderUnionLegislation": ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.50 — transparency for users
+    # EU AI Act Art.50 - transparency for users
     "AccessibilityRequirements":     ("KEEP_THING", "no DPV anchor"),
     "FirstInteractionExposure":      ("KEEP_THING", "no DPV anchor"),
     "TransparencyObligationImplementation": ("PARENT", "Obligation"),
 
-    # EU AI Act Art.51 — GPAI systemic risk
+    # EU AI Act Art.51 - GPAI systemic risk
     "ThresholdAmendment":            ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.52 — GPAI transparency
+    # EU AI Act Art.52 - GPAI transparency
     "ReasonedRequest":               ("KEEP_THING", "no DPV anchor"),
 
-    # EU AI Act Art.53 — GPAI obligations
+    # EU AI Act Art.53 - GPAI obligations
     "AiModelLimitation":             ("KEEP_THING", "no DPV anchor"),
     "GeneralPurposeAiModelTrainingDataSummary": ("KEEP_THING", "no DPV anchor"),
     "AiOfficeTemplate":              ("KEEP_THING", "no DPV anchor"),
@@ -156,26 +156,26 @@ AUDIT_DECISIONS = {
     "RiskToFundamentalRights":       ("PARENT",    "RiskAssessment"),
     "SystemLifecycleChanges":        ("KEEP_THING", "no DPV anchor"),
 
-    # UK MDR 2002 Reg.2 — definitions
+    # UK MDR 2002 Reg.2 - definitions
     "CoronavirusTestDevice":         ("KEEP_THING", "medical device specific, no DPV anchor"),
     "DeviceForPerformanceEvaluation": ("KEEP_THING", "medical device specific, no DPV anchor"),
     "PlacingOnTheMarket":            ("KEEP_THING", "medical device specific, no DPV anchor"),
 
-    # UK MDR 2002 Reg.5 — Part II interpretation
+    # UK MDR 2002 Reg.5 - Part II interpretation
     "CustomMadeDevice":              ("KEEP_THING", "medical device specific, no DPV anchor"),
     "RelevantDevice":                ("KEEP_THING", "medical device specific, no DPV anchor"),
     "SystemOrProcedurePack":         ("KEEP_THING", "medical device specific, no DPV anchor"),
     "SingleUseCombinationProduct":   ("KEEP_THING", "medical device specific, no DPV anchor"),
     "System":                        ("KEEP_THING", "too generic without more specific anchor"),
 
-    # UK MDR 2002 Reg.7 — classification
+    # UK MDR 2002 Reg.7 - classification
     "MedicalDeviceClassification":   ("KEEP_THING", "medical device specific, no DPV anchor"),
     "GeneralMedicalDevice":          ("KEEP_THING", "medical device specific, no DPV anchor"),
     "DeviceClassificationDispute":   ("KEEP_THING", "medical device specific, no DPV anchor"),
     "ClassificationCriteria":        ("KEEP_THING", "medical device specific, no DPV anchor"),
     "SecretaryOfStateDetermination": ("KEEP_THING", "UK regulatory authority action, no DPV anchor"),
 
-    # UK MDR 2002 Reg.8/9 — essential requirements
+    # UK MDR 2002 Reg.8/9 - essential requirements
     "EssentialRequirements":         ("KEEP_THING", "medical device regulatory concept, no DPV anchor"),
     "ApplicableRequirements":        ("KEEP_THING", "medical device regulatory concept, no DPV anchor"),
     "DeviceSupply":                  ("KEEP_THING", "medical device specific, no DPV anchor"),
@@ -190,7 +190,7 @@ AUDIT_DECISIONS = {
     "MedicinalProduct":              ("KEEP_THING", "medical regulatory specific, no DPV anchor"),
     "PersonalProtectiveEquipment":   ("KEEP_THING", "medical device specific, no DPV anchor"),
 
-    # UK MDR 2002 Part 4A — post-market surveillance
+    # UK MDR 2002 Part 4A - post-market surveillance
     "FieldSafetyCorrectiveAction":   ("KEEP_THING", "medical device specific, no DPV anchor"),
     "PostMarketSurveillance":        ("KEEP_THING", "medical device regulatory concept, no DPV anchor"),
     "RegulatoryExemption":           ("KEEP_THING", "no DPV anchor"),
@@ -211,7 +211,7 @@ AUDIT_DECISIONS = {
     "DesignationWithdrawal":         ("KEEP_THING", "no DPV anchor"),
     "ApplicableCriteria":            ("KEEP_THING", "no DPV anchor"),
 
-    # EU MDR 2017/745 Art.10 — manufacturer obligations
+    # EU MDR 2017/745 Art.10 - manufacturer obligations
     "DeviceDesignChange":            ("KEEP_THING", "medical device specific, no DPV anchor"),
     "ConformityDeclaration":         ("KEEP_THING", "medical device regulatory concept, no DPV anchor"),
     "PostMarketClinicalFollowUp":    ("KEEP_THING", "medical device specific, no DPV anchor"),
@@ -223,7 +223,7 @@ AUDIT_DECISIONS = {
     "DeviceDocumentation":           ("KEEP_THING", "medical device specific, no DPV anchor"),
     "DeviceRestriction":             ("KEEP_THING", "medical device specific, no DPV anchor"),
 
-    # EU MDR 2017/745 Art.61 — clinical evaluation
+    # EU MDR 2017/745 Art.61 - clinical evaluation
     "ClinicalInvestigationExemption": ("KEEP_THING", "medical device specific, no DPV anchor"),
     "ProductSpecificCS":             ("KEEP_THING", "medical device specific, no DPV anchor"),
     "Suture":                        ("KEEP_THING", "medical device specific product, no DPV anchor"),
@@ -234,16 +234,16 @@ AUDIT_DECISIONS = {
     "ImplementingActs":              ("KEEP_THING", "regulatory instrument concept, no DPV anchor"),
     "AnnexXIV":                      ("KEEP_THING", "EU MDR annex reference, no DPV anchor"),
 
-    # EU MDR 2017/745 Annex I §17 — software requirements
+    # EU MDR 2017/745 Annex I §17 - software requirements
     "VaryingEnvironment":            ("KEEP_THING", "no DPV anchor"),
     "UnauthorisedAccessProtection":  ("KEEP_THING", "no DPV anchor"),
 
-    # EU MDR 2017/745 Annex VIII Rule 11 — software classification
+    # EU MDR 2017/745 Annex VIII Rule 11 - software classification
     "ClassIIaSoftware":              ("KEEP_THING", "medical device classification, no DPV anchor"),
     "ClassIIbSoftware":              ("KEEP_THING", "medical device classification, no DPV anchor"),
     "ClassIIIsoftware":              ("KEEP_THING", "medical device classification, no DPV anchor"),
 
-    # DUAA 2025 s.80 — automated decision-making
+    # DUAA 2025 s.80 - automated decision-making
     "ControllerIntervention":        ("KEEP_THING", "Art.22C specific concept, no DPV anchor"),
     "HumanInvolvementRegulation":    ("KEEP_THING", "Art.22D regulatory power concept, no DPV anchor"),
     "AdditionalSafeguardMeasure":    ("KEEP_THING", "Art.22D specific concept, no DPV anchor"),
@@ -251,19 +251,19 @@ AUDIT_DECISIONS = {
     "RegulationAmendmentRestriction": ("KEEP_THING", "Art.22D specific concept, no DPV anchor"),
     "AutomatedDecisionMakingRegulation": ("PARENT", "AutomatedDecisionMaking"),
 
-    # DUAA 2025 Schedule 6 — transparency amendments
+    # DUAA 2025 Schedule 6 - transparency amendments
     "Article22CRequirement":         ("KEEP_THING", "DUAA Schedule 6 specific concept, no DPV anchor"),
 }
 
 # the 3 dedup pairs flagged by step 5 are all false positives:
-# ApplicableCriteria vs BodyCriteriaAssessment — different concepts (criteria set vs assessment body)
-# FinancialInstitutionInternalGovernance vs FinancialInstitutionGovernance — distinct granularity
-# Suture vs Staple — completely different medical device products
+# ApplicableCriteria vs BodyCriteriaAssessment - different concepts (criteria set vs assessment body)
+# FinancialInstitutionInternalGovernance vs FinancialInstitutionGovernance - distinct granularity
+# Suture vs Staple - completely different medical device products
 # so MERGES is intentionally empty for this run
 MERGES = {}
 
 # hasLegalBasis restrictions grounded in literal GDPR Art.6(1) and Art.9(2) text
-# these are kept from the design — if the class names don't appear in the current
+# these are kept from the design - if the class names don't appear in the current
 # run (the LLM may have used different names), the cleanup script skips them silently
 RESTRICTIONS = {
     "LegitimateInterest":          "A6-1-f",
