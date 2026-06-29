@@ -1,0 +1,36 @@
+# Runtime databases — created fresh on startup, never baked into the image
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# chroma_db is intentionally included — it must be pre-built by rag.py
+# before running docker build. Uncomment the line below ONLY if you want
+# the container to build the index on first startup (slow, costs API calls).
+# chroma_db/
+
+# Evaluation artefacts — not needed in production
+Results/
+eval_questions_full.json
+gold_standard_full.json
+eval_phase4*.py
+eval_phase4*.json
+
+# Large source files used only by rag.py offline — chroma_db replaces these
+regulatory_chunks.json
+summary_cache.json
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Secrets and local config
+.env
+*.env.*
+
+# Version control and tooling
+.git/
+.gitignore
+.github/
+*.md
