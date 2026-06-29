@@ -28,7 +28,7 @@ def extract_text(path):
 def clean_uk(text):
     text = re.sub(r"\r", "", text)
     text = re.sub(r"[ \t]+", " ", text)
-    text = re.sub(r"\[F\d+", "", text)  # strip [F123 tag marker, keep content
+    text = re.sub(r"\[F\d+", "", text)  
     text = re.sub(r"\]", "", text)
     text = re.sub(r"Document Generated:\s*\d{4}-\d{2}-\d{2}", "", text)
     text = re.sub(r"Changes to legislation:[^\n]*", "", text)
@@ -59,7 +59,7 @@ def extract_refs(text):
     return refs
 
 
-# splits "(a) text (b) text ..." — returns None if no points or if duplicate
+# splits "(a) text (b) text ..." - returns None if no points or if duplicate
 # letters appear (which means they're list items, not parallel normative alternatives)
 def split_lettered_points(text):
     POINT_RE = re.compile(r"(?:(?:^|\n)\s*)\(([a-z]{1,2})\)\s+", re.MULTILINE)
@@ -111,8 +111,6 @@ def make_chunks(regulation, article, title, para_num, para_text, id_prefix, ctx_
 
 
 # splits a UK MDR regulation body on (1), (2), (3)... paragraph markers
-# note: "X.—(1) text" format means (1) is NOT at line start, so the content
-# of paragraph (1) ends up in parts[0] — we must include it as Para1
 def split_uk_paragraphs(body):
     PARA_RE = re.compile(r"(?m)^\((\d+)\)\s+")
     parts = PARA_RE.split(body)
@@ -146,7 +144,7 @@ def parse_uk_mdr(text):
             continue
         seen_regs.add(reg_num)
 
-        # bound by the NEXT occurrence of the same regulation number (E+W+S only, not N.I.)
+        # bound by the NEXT occurrence of the same regulation number
         # if no duplicate exists, fall back to the next different regulation number
         same_reg_next = next(
             (j for j in range(idx + 1, len(matches)) if matches[j].group(1) == str(reg_num)),
@@ -165,7 +163,7 @@ def parse_uk_mdr(text):
         title_search = re.findall(r"\n([A-Z][^\n]{5,60})\s*$", before)
         title        = title_search[-1].strip() if title_search else f"Regulation {reg_num}"
 
-        # UK MDR uses (1)(2)(3) numbered paragraphs — split there, not at (a)(b)(c)
+        # UK MDR uses (1)(2)(3) numbered paragraphs - split there, not at (a)(b)(c)
         # lettered sub-points inside UK MDR definitions are list items, not parallel norms
         for pn, pt in split_uk_paragraphs(body) or [("1", body)]:
             cid = f"UKMDR_Reg{reg_num}_Para{pn}"
@@ -185,7 +183,7 @@ def parse_uk_mdr(text):
             chunks.append(c)
             print(f"  {cid}  ({c['word_count']} words)")
 
-    # Part 4A — regulations 44ZC through 44ZP
+    # Part 4A - regulations 44ZC through 44ZP
     m4a = re.search(r"PART 4A", text)
     if m4a:
         part4a    = text[m4a.start():]
@@ -196,7 +194,7 @@ def parse_uk_mdr(text):
         PROV_RE = re.compile(r"(?m)^(44Z[A-P])\.(?:—\((\d+)\))?\s*")
         provs   = list(PROV_RE.finditer(part4a))
 
-        # deduplicate provisions — consolidated PDF may have E+W+S and N.I. copies
+        # deduplicate provisions - consolidated PDF may have E+W+S and N.I. copies
         seen_provs = set()
         for i, pm in enumerate(provs):
             reg_id = pm.group(1)
@@ -354,7 +352,7 @@ def parse_duaa(text):
     print("[DUAA 2025]")
     chunks = []
 
-    # DUAA PDF has a table of contents — skip it and find the real substantive text
+    # DUAA PDF has a table of contents - skip it and find the real substantive text
     # identified by "(1) For Article 22" in the 200 chars after the heading
     all_m80 = list(re.compile(r"(?m)^80\s+Automated decision-making").finditer(text))
     real_m80 = next(
@@ -418,7 +416,7 @@ def parse_duaa(text):
                         chunks.append(c)
                         print(f"  {c['chunk_id']}  ({c['word_count']} words)")
 
-    # Schedule 6 — the real heading is "SCHEDULE 6 Section 80" (uppercase)
+    # Schedule 6 - the real heading is "SCHEDULE 6 Section 80" (uppercase)
     # multiple lowercase "Schedule 6" references exist in the PDF — skip them
     real_sch6 = re.search(r"SCHEDULE\s+6\s+Section 80", text)
     if real_sch6:
@@ -466,7 +464,7 @@ def main():
         print("[ERROR] no chunks produced")
         return
 
-    # global dedup by chunk_id — keep first occurrence
+    # global dedup by chunk_id - keep first occurrence
     seen = set()
     deduped = []
     for c in all_new:

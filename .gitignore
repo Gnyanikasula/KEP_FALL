@@ -1,2 +1,13 @@
 *.pdf
 .env
+.venv/
+fallenv
+__pycache__/
+*.pyc
+
+chroma_db/
+# Results/
+
+*.db
+*.db-wal
+*.db-shm

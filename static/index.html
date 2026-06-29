@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SHIELD — Healthcare AI Compliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-seal">§</span>
+        <div class="brand-text">
+          <span class="brand-name">SHIELD</span>
+          <span class="brand-sub">Compliance Engine</span>
+        </div>
+      </div>
+      <button id="new-session" class="btn-new">New consultation</button>
+      <div class="sessions-label">Consultations</div>
+      <ul id="session-list" class="session-list"></ul>
+      <div class="sidebar-footer">
+        <span class="reg-tag">GDPR</span><span class="reg-tag">EU AI Act</span>
+        <span class="reg-tag">EU MDR</span><span class="reg-tag">UK MDR</span>
+        <span class="reg-tag">DUAA</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div id="active-title" class="active-title">No consultation selected</div>
+        <a class="docs-link" href="#" id="docs-link" target="_blank">API reference ↗</a>
+      </header>
+
+      <div id="messages" class="messages">
+        <div class="empty-state">
+          <div class="empty-seal">§</div>
+          <h1>Regulatory verdicts, with the articles to back them.</h1>
+          <p>Describe an activity or ask about a rule. SHIELD returns a verdict,
+             the exact provisions it relied on, and the conditions that apply.</p>
+          <div class="examples">
+            <button class="example">Can my elderly-care assistant store fall-risk predictions and share them with caregivers?</button>
+            <button class="example">Can my diagnostic AI device store patient clinical data and share it with hospitals?</button>
+            <button class="example">What criteria determine whether an AI system is high-risk?</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="composer">
+        <textarea id="question" rows="1" placeholder="Describe an activity, or ask about a provision…"></textarea>
+        <button id="send" class="btn-send">Analyze</button>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

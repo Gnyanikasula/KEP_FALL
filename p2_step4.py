@@ -1,18 +1,16 @@
-"""
-Step 4 — Reconciliation, Sanitization & Validation
-===================================================
-Takes raw extracted triples and prepares them for Neo4j:
+# Step 4 - Reconciliation, Sanitization & Validation
+# Takes raw extracted triples and prepares them for Neo4j:
 
-  1. RECONCILE  — promote NEW nodes that exactly match a vocab class to typed
-  2. SANITIZE   — make every node label Neo4j-safe (no apostrophes, no leading digit)
-  3. VALIDATE   — soft domain/range check against property constraints (warn, don't reject)
-  4. REPORT     — before/after stats
+#   1. RECONCILE  - promote NEW nodes that exactly match a vocab class to typed
+#   2. SANITIZE   - make every node label Neo4j-safe (no apostrophes, no leading digit)
+#   3. VALIDATE   - soft domain/range check against property constraints (warn, don't reject)
+#   4. REPORT     - before/after stats
 
-Input : data/validated_triples.json   (Step 3 output)
-        data/vocab_index.json
-Output: data/clean_triples.json        (ready for Step 5 AuraDB load)
-        logs/step4_report.txt
-"""
+# Input : data/validated_triples.json   (Step 3 output)
+#         data/vocab_index.json
+# Output: data/clean_triples.json        (ready for Step 5 AuraDB load)
+#         logs/step4_report.txt
+
 
 import json
 import logging
@@ -72,12 +70,12 @@ def soft_domain_range_check(triple: dict, prop_constraints: dict) -> str | None:
         return None
 
     warnings = []
-    # Only check when the node is typed (we know its real class name)
+    # Only check when the node is typed (its real class name)
     if triple["subject_typed"]:
         exp = constraint["domain"]
         got = triple["subject_label"]
         if exp and norm(exp) != norm(got):
-            # only flag for the 14 base classes — ext subclasses can't be verified
+            # only flag for the 14 base classes 
             if got in BASE_CLASSES and norm(got) != norm(exp):
                 warnings.append(f"domain expected {exp}, got {got}")
 
@@ -168,7 +166,7 @@ def main():
     # Report
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     lines = [
-        "Step 4 — Reconciliation & Validation Report",
+        "Step 4 - Reconciliation & Validation Report",
         "=" * 50,
         f"Triples processed     : {len(clean)}",
         "",

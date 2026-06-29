@@ -1,28 +1,23 @@
 """
-phase1_fix.py  —  v2 → v3  (deterministic, no LLM)
+phase1_fix.py  -  v2 -> v3  (deterministic, no LLM)
 =====================================================
 Run this first. It produces dpv-fallrisk-ext-v3.rdf.
 Then run phase1_llm_restrictions.py to produce v4.
 
 What this does:
   1. Loads DPV modules via owlready2 (needed for parent + property resolution)
-  2. Reads v2 RDF (rdflib) — correct 621-class hierarchy + labels/comments
-  3. Reads v1 RDF (rdflib) — extracts 62 existing someValuesFrom restrictions
+  2. Reads v2 RDF (rdflib) - correct 621-class hierarchy + labels/comments
+  3. Reads v1 RDF (rdflib) - extracts 62 existing someValuesFrom restrictions
   4. Rebuilds ontology in owlready2 (two-pass: create all, then set parents)
-  5. Ports v1 restrictions — matched by local class name, skips removed classes
+  5. Ports v1 restrictions - matched by local class name, skips removed classes
   6. Adds 6 FallRisk domain-specific classes with their restrictions
-     (these never appear in regulatory text — added from project description)
-  7. Runs HermiT reasoner — exits on any unsatisfiable class
-  8. Serializes via owlready2 ntriples → rdflib filter → clean RDF/XML (v3)
-     Filter: KEP namespace + blank nodes only — no DPV individual leakage
+     (these never appear in regulatory text - added from project description)
+  7. Runs HermiT reasoner - exits on any unsatisfiable class
+  8. Serializes via owlready2 ntriples -> rdflib filter -> clean RDF/XML (v3)
+     Filter: KEP namespace + blank nodes only - no DPV individual leakage
   9. Declares 13 DPV object properties with domain + range in the v3 graph
 
-Usage:
-  python phase1_fix.py
 
-Output:
-  OUT_CANDIDATES/dpv-fallrisk-ext-v3.rdf
-  OUT_CANDIDATES/fix_log.md
 """
 
 import os
@@ -40,7 +35,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ── paths ────────────────────────────────────────────────────────────────────
+
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 DPV_BASE   = os.environ.get("DPV_BASE", r"D:\dpv-2.2.1")
@@ -98,7 +93,7 @@ OBJECT_PROPERTIES = [
         "range":   DPV_RISK_NS + "RiskAssessment",
         "comment": "Risk assessment associated with the processing activity.",
     },
-    # new — high value for compliance KG
+    # new - high value for compliance KG
     {
         "iri":     DPV_NS + "hasLegalBasis",
         "domain":  DPV_NS + "Processing",
@@ -162,12 +157,8 @@ OBJECT_PROPERTIES = [
     },
 ]
 
-# ── FallRisk domain-specific classes ─────────────────────────────────────────
+# FallRisk domain-specific classes
 # These concepts are NOT in any regulatory text.
-# They represent the SHIELD v2 / KEP Variant 5 application layer.
-# Added here manually — they will NEVER be extracted from regulatory chunks.
-# Parent class local names are resolved at runtime from DPV default_world.
-# Restrictions use confirmed DPV URIs verified from v1 RDF above.
 DOMAIN_CLASSES = [
     {
         "name":   "FallRiskPrediction",
@@ -231,10 +222,8 @@ DOMAIN_CLASSES = [
 ]
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# helpers
-# ─────────────────────────────────────────────────────────────────────────────
 
+# helpers
 def local(uri: str) -> str:
     """Return local name from a URI."""
     return uri.split("#")[-1] if "#" in uri else uri.split("/")[-1]
@@ -256,7 +245,7 @@ def read_v2_structure():
     """
     Read v2 RDF via rdflib.
     Returns:
-        kep_classes: dict  local_name → {parent_uri, label, comment}
+        kep_classes: dict  local_name -> {parent_uri, label, comment}
     """
     print("Reading v2 structure …")
     g = Graph()
@@ -282,7 +271,7 @@ def read_v2_structure():
 
 def read_v1_restrictions():
     """
-    Read v1 RDF via rdflib — extract all someValuesFrom restrictions.
+    Read v1 RDF via rdflib - extract all someValuesFrom restrictions.
     Returns list of {class_local, prop_uri, target_uri}
     """
     print("Reading v1 restrictions …")
@@ -423,7 +412,7 @@ def add_domain_classes(onto, new_classes, all_dpv):
                     continue
                 cls.is_a.append(prop.some(tgt))
                 restricted += 1
-                print(f"    → {local(prop_uri)} some {local(target_uri)}")
+                print(f"    -> {local(prop_uri)} some {local(target_uri)}")
 
     print(f"\n  added {added} domain classes  |  {restricted} restrictions applied\n")
     return added
@@ -452,7 +441,7 @@ def serialize_clean(onto):
     Serialize owlready2 ontology to a clean RDF/XML file.
 
     Problem in v2: owlready2 leaked DPV individuals into the output.
-    Fix: save as ntriples → parse with rdflib → keep only:
+    Fix: save as ntriples -> parse with rdflib -> keep only:
       - triples whose subject is in the KEP namespace
       - blank nodes transitively referenced by KEP subjects (restriction nodes)
     Then append property declarations (added via rdflib directly).
@@ -497,7 +486,7 @@ def serialize_clean(onto):
     onto_uri = URIRef(FALLRISK_NS.rstrip("#"))
     g_clean.add((onto_uri, RDF.type, OWL.Ontology))
 
-    # ── declare 13 DPV object properties with domain + range ──────────────
+    # declare 13 DPV object properties with domain + range
     # Added here (not in owlready2) to avoid property redefinition conflicts.
     verified = 0
     skipped  = 0
@@ -528,13 +517,12 @@ def serialize_clean(onto):
     g_clean.bind("aiact",    Namespace(DPV_AIACT_NS))
 
     g_clean.serialize(destination=OUT_V3, format="xml")
-    print(f"  {len(g_clean)} triples  →  {OUT_V3}\n")
+    print(f"  {len(g_clean)} triples  ->  {OUT_V3}\n")
     return len(g_clean), verified
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # main
-# ─────────────────────────────────────────────────────────────────────────────
 
 def main():
     t_start = time.time()
@@ -564,7 +552,7 @@ def main():
     n_obj_props = sum(1 for _ in g_check.subjects(RDF.type, OWL.ObjectProperty))
 
     with open(OUT_LOG, "w", encoding="utf-8") as f:
-        f.write(f"""# Phase 1 Fix Log  (v2 → v3)
+        f.write(f"""# Phase 1 Fix Log  (v2 -> v3)
 
 - Input v1 (restrictions source) : {IN_V1}
 - Input v2 (hierarchy source)    : {IN_V2}
@@ -587,7 +575,7 @@ def main():
 - {elapsed:.1f}s
 
 ## Next step
-Run phase1_llm_restrictions.py  →  v3 + LLM restriction pass  →  v4
+Run phase1_llm_restrictions.py  ->  v3 + LLM restriction pass  ->  v4
 """)
 
     print("=" * 60)

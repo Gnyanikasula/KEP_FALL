@@ -1,0 +1,1216 @@
+{
+  "metadata": {
+    "project": "KEP - LLM-Driven Ontology Construction for Compliance-Aware Knowledge Graphs in Healthcare AI Systems",
+    "variant": "Variant 5 - Fall-Risk Prediction from Wearables",
+    "version": "3.0",
+    "total_annotations": 45,
+    "deontic_types_used": [
+      "obligation",
+      "prohibition",
+      "permission",
+      "classification_rule"
+    ],
+    "temporal_scope_values": [
+      "design_time",
+      "pre_deployment",
+      "runtime",
+      "lifecycle"
+    ],
+    "gdpr_risk_level_values": [
+      "standard",
+      "high_risk_to_rights",
+      "special_category_data",
+      "not_applicable"
+    ],
+    "aiact_risk_level_values": [
+      "high_risk",
+      "limited_risk",
+      "minimal_risk",
+      "not_applicable"
+    ],
+    "actor_vocabulary": [
+      "data controller",
+      "data processor",
+      "joint controller",
+      "AI provider",
+      "AI deployer",
+      "AI distributor",
+      "notified body"
+    ],
+    "namespace_prefixes": {
+      "dpv": "https://w3id.org/dpv#",
+      "eu-gdpr": "https://w3id.org/dpv/legal/eu/gdpr#",
+      "eu-aiact": "https://w3id.org/dpv/legal/eu/aiact#",
+      "pd": "https://w3id.org/dpv/pd#",
+      "risk": "https://w3id.org/dpv/risk#",
+      "fr": "https://w3id.org/kep/fallrisk#"
+    },
+    "notes": "v2 annotations cover GDPR + EU AI Act (ANN_001-025). v3 adds EU MDR, UK MDR, DUAA 2025, and cross-regulation annotations (ANN_026-045) at article level matching Phase 3 ChromaDB chunk IDs."
+  },
+  "annotations": [
+    {
+      "annotation_id": "ANN_001",
+      "chunk_id": "GDPR_Art5_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 5(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "data_quality_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "process personal data lawfully, fairly, transparently, and only for specified purposes; ensure data minimisation, accuracy, storage limitation, and integrity",
+      "condition": "unconditional - applies to all processing of personal data",
+      "temporal_scope": "lifecycle",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:Processing",
+        "dpv:LegalBasis",
+        "dpv:Purpose",
+        "dpv:DataMinimisation",
+        "dpv:StorageLimitation"
+      ]
+    },
+    {
+      "annotation_id": "ANN_002",
+      "chunk_id": "GDPR_Art5_Para2",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 5(2)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "be responsible for and demonstrate compliance with the principles of Article 5(1)",
+      "condition": "unconditional - accountability principle applies always",
+      "temporal_scope": "lifecycle",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_001"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:DataController",
+        "dpv:Compliance"
+      ]
+    },
+    {
+      "annotation_id": "ANN_003",
+      "chunk_id": "GDPR_Art6_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 6(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "ensure at least one lawful basis exists before processing personal data",
+      "condition": "required for any processing of personal data",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:LegalBasis",
+        "eu-gdpr:A6-1-a",
+        "eu-gdpr:A6-1-b",
+        "eu-gdpr:A6-1-c",
+        "dpv:Consent"
+      ]
+    },
+    {
+      "annotation_id": "ANN_004",
+      "chunk_id": "GDPR_Art9_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 9(1)",
+      "deontic_type": "prohibition",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": "data processor",
+      "action": "process special categories of personal data including health data",
+      "condition": "prohibited unless an explicit exception under Article 9(2) applies",
+      "temporal_scope": "lifecycle",
+      "data_scope": "health data, biometric data, genetic data, special category data",
+      "gdpr_risk_level": "special_category_data",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "pd:HealthData",
+        "pd:BiometricData",
+        "dpv:SpecialCategoryData",
+        "eu-gdpr:A9-2-a"
+      ]
+    },
+    {
+      "annotation_id": "ANN_005",
+      "chunk_id": "GDPR_Art9_Para2",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 9(2)",
+      "deontic_type": "permission",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "process special category health data when explicit consent is given or another Art.9(2) condition is met",
+      "condition": "explicit consent of the data subject OR medical treatment, public health, or scientific research purposes as per Art.9(2)(a)-(j)",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "health data, biometric data, special category data",
+      "gdpr_risk_level": "special_category_data",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_004"
+      ],
+      "exception_to": "ANN_004",
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-gdpr:A9-2-a",
+        "eu-gdpr:A9-2-h",
+        "dpv:ExplicitConsent",
+        "pd:HealthData"
+      ]
+    },
+    {
+      "annotation_id": "ANN_006",
+      "chunk_id": "GDPR_Art13_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 13(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "transparency_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "provide data subjects with controller identity, contact details, processing purposes, legal basis, and recipients at the time data is collected",
+      "condition": "when personal data is collected directly from the data subject",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_003"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:DataController",
+        "dpv:Purpose",
+        "dpv:LegalBasis",
+        "dpv:DataSubject"
+      ]
+    },
+    {
+      "annotation_id": "ANN_007",
+      "chunk_id": "GDPR_Art13_Para2",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 13(2)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "transparency_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "additionally inform data subject of retention period, right to withdraw consent, right to lodge complaint, and existence of automated decision-making",
+      "condition": "when personal data is collected directly from the data subject",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_006"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:DataSubject",
+        "dpv:StorageLimitation",
+        "dpv:Consent",
+        "dpv:AutomatedDecisionMaking"
+      ]
+    },
+    {
+      "annotation_id": "ANN_008",
+      "chunk_id": "GDPR_Art25_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 25(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "technical_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "implement data protection by design - integrate appropriate technical and organisational measures to embody data protection principles into processing at design stage and at time of processing",
+      "condition": "at the time of determining means of processing and at time of processing itself",
+      "temporal_scope": "design_time",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_001"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:PrivacyByDesign",
+        "dpv:DataMinimisation",
+        "dpv:TechnicalMeasure",
+        "dpv:OrganisationalMeasure"
+      ]
+    },
+    {
+      "annotation_id": "ANN_009",
+      "chunk_id": "GDPR_Art35_Para1",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 35(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "carry out a Data Protection Impact Assessment (DPIA) prior to processing",
+      "condition": "when processing is likely to result in high risk to rights and freedoms of natural persons, especially using new technologies or systematic processing",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:DPIA",
+        "dpv:RiskAssessment",
+        "dpv:DataController"
+      ]
+    },
+    {
+      "annotation_id": "ANN_010",
+      "chunk_id": "GDPR_Art35_Para7",
+      "regulation": "GDPR",
+      "article_reference": "GDPR Article 35(7)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "document in the DPIA: description of processing, necessity assessment, risks to data subjects, and measures to address risks including safeguards and mechanisms",
+      "condition": "when conducting a DPIA under Article 35(1)",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_009"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "dpv:DPIA",
+        "dpv:Risk",
+        "dpv:RiskMitigation",
+        "dpv:DataController"
+      ]
+    },
+    {
+      "annotation_id": "ANN_011",
+      "chunk_id": "EUAI_Art6_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 6(1)",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "classify AI system as high-risk when it is a safety component of an Annex I product AND that product requires third-party conformity assessment",
+      "condition": "both conditions must be fulfilled: Annex I product scope AND mandatory third-party conformity assessment",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "not specified",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:HighRiskAISystem",
+        "eu-aiact:AIProvider",
+        "eu-aiact:ConformityAssessment"
+      ]
+    },
+    {
+      "annotation_id": "ANN_012",
+      "chunk_id": "EUAI_Art6_Para2",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 6(2)",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "classify AI systems listed in Annex III as high-risk by default",
+      "condition": "AI system falls within one of the eight domains listed in Annex III; subject to Art.6(3) derogation",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "not specified",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:HighRiskAISystem",
+        "eu-aiact:AIProvider",
+        "fr:FallRiskWearableAI"
+      ]
+    },
+    {
+      "annotation_id": "ANN_013",
+      "chunk_id": "EUAI_Art9_Para2",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 9(2)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "implement a risk management system that continuously identifies, analyses, estimates, evaluates, and mitigates reasonably foreseeable risks throughout the AI system lifecycle",
+      "condition": "for all high-risk AI systems; must be ongoing throughout the lifecycle",
+      "temporal_scope": "lifecycle",
+      "data_scope": "operational data, system outputs",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:RiskManagementSystem",
+        "eu-aiact:AIProvider",
+        "risk:RiskAssessment",
+        "risk:RiskMitigation"
+      ]
+    },
+    {
+      "annotation_id": "ANN_014",
+      "chunk_id": "EUAI_Art10_Para2",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 10(2)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "technical_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "ensure training, validation, and testing datasets meet quality criteria: relevance, representativeness, freedom from errors, and completeness appropriate to intended purpose",
+      "condition": "for all high-risk AI systems using machine learning techniques",
+      "temporal_scope": "design_time",
+      "data_scope": "training data, validation data, test data, physiological sensor data, health data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:DataGovernance",
+        "eu-aiact:AIProvider",
+        "fr:PhysiologicalSensorData",
+        "pd:HealthData"
+      ]
+    },
+    {
+      "annotation_id": "ANN_015",
+      "chunk_id": "EUAI_Art10_Para5",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 10(5)",
+      "deontic_type": "permission",
+      "obligation_subtype": null,
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "process special category data including health data for the purpose of detecting and correcting bias in datasets",
+      "condition": "strictly necessary for bias monitoring and correction; subject to appropriate safeguards including pseudonymisation; must not be used for other purposes",
+      "temporal_scope": "design_time",
+      "data_scope": "health data, biometric data, special category data",
+      "gdpr_risk_level": "special_category_data",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_004"
+      ],
+      "exception_to": "ANN_004",
+      "cross_regulation_ref": "GDPR Article 9(2)",
+      "ontology_hints": [
+        "pd:HealthData",
+        "eu-aiact:DataGovernance",
+        "dpv:SpecialCategoryData",
+        "eu-aiact:BiasControl"
+      ]
+    },
+    {
+      "annotation_id": "ANN_016",
+      "chunk_id": "EUAI_Art11_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 11(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "draw up and maintain technical documentation before placing high-risk AI system on the market or putting it into service",
+      "condition": "prior to market placement or putting into service; must be kept up to date throughout lifecycle",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "system design data, performance metrics, training data descriptions",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:TechnicalDocumentation",
+        "eu-aiact:AIProvider",
+        "eu-aiact:HighRiskAISystem"
+      ]
+    },
+    {
+      "annotation_id": "ANN_017",
+      "chunk_id": "EUAI_Art12_Para2",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 12(2)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "technical_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "ensure logging capabilities that automatically record events including operational periods, reference databases used, input data, and individual decisions or outputs",
+      "condition": "for all high-risk AI systems; logs must be retained for period appropriate to intended purpose",
+      "temporal_scope": "runtime",
+      "data_scope": "operational logs, input data, decision outputs, system event data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:Logging",
+        "eu-aiact:AIProvider",
+        "fr:FallRiskPredictionEvent"
+      ]
+    },
+    {
+      "annotation_id": "ANN_018",
+      "chunk_id": "EUAI_Art13_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 13(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "transparency_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "design high-risk AI systems to operate transparently - enable deployers to understand and correctly interpret system outputs",
+      "condition": "applies to all high-risk AI systems; transparency measures must be built into the system",
+      "temporal_scope": "design_time",
+      "data_scope": "system outputs, confidence scores, decision explanations",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:Transparency",
+        "eu-aiact:AIProvider",
+        "eu-aiact:AIDeployer",
+        "fr:ClinicalOversightWorkflow"
+      ]
+    },
+    {
+      "annotation_id": "ANN_019",
+      "chunk_id": "EUAI_Art14_Para3",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 14(3)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "technical_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "implement human oversight measures enabling natural persons to understand system capabilities and limitations, monitor operation, and intervene or override outputs",
+      "condition": "for high-risk AI systems; oversight tools must be built into the system design",
+      "temporal_scope": "design_time",
+      "data_scope": "system outputs, override logs, monitoring data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_018"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:HumanOversight",
+        "eu-aiact:AIProvider",
+        "fr:ClinicalOversightWorkflow",
+        "fr:ClinicalDecisionOverride"
+      ]
+    },
+    {
+      "annotation_id": "ANN_020",
+      "chunk_id": "EUAI_Art14_Para4",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 14(4)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "AI deployer",
+      "secondary_actor": null,
+      "action": "assign human oversight of the high-risk AI system to persons with necessary competence, training, and authority to intervene or override",
+      "condition": "during operation of high-risk AI systems; persons assigned must have sufficient training",
+      "temporal_scope": "runtime",
+      "data_scope": "system outputs, override decisions, monitoring records",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_019"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:AIDeployer",
+        "eu-aiact:HumanOversight",
+        "fr:ClinicalStaff",
+        "fr:ElderlyPatientMonitoring"
+      ]
+    },
+    {
+      "annotation_id": "ANN_021",
+      "chunk_id": "EUAI_Art15_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 15(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "technical_obligation",
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "design and develop high-risk AI systems to achieve appropriate levels of accuracy, robustness, and cybersecurity consistent throughout the intended lifecycle",
+      "condition": "applies to all high-risk AI systems; performance must be consistent across intended use cases",
+      "temporal_scope": "design_time",
+      "data_scope": "performance metrics, accuracy benchmarks, adversarial test data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:Accuracy",
+        "eu-aiact:Robustness",
+        "eu-aiact:AIProvider",
+        "eu-aiact:HighRiskAISystem"
+      ]
+    },
+    {
+      "annotation_id": "ANN_022",
+      "chunk_id": "EUAI_Art26_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 26(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "AI deployer",
+      "secondary_actor": null,
+      "action": "take appropriate technical and organisational measures to ensure use of the high-risk AI system is in accordance with the provider's instructions for use",
+      "condition": "when deploying and operating a high-risk AI system",
+      "temporal_scope": "runtime",
+      "data_scope": "operational data, deployment configuration data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:AIDeployer",
+        "eu-aiact:HighRiskAISystem",
+        "eu-aiact:TechnicalMeasure"
+      ]
+    },
+    {
+      "annotation_id": "ANN_023",
+      "chunk_id": "EUAI_Art26_Para5",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 26(5)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "AI deployer",
+      "secondary_actor": null,
+      "action": "conduct a Data Protection Impact Assessment where deployment of a high-risk AI system is likely to result in high risk to natural persons",
+      "condition": "when high-risk AI system processes personal data and DPIA is required under GDPR Article 35; deployer acts as data controller",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "personal data, health data, physiological sensor data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_009",
+        "ANN_022"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": "GDPR Article 35",
+      "ontology_hints": [
+        "eu-aiact:AIDeployer",
+        "dpv:DPIA",
+        "pd:HealthData",
+        "fr:ElderlyPatientMonitoring"
+      ]
+    },
+    {
+      "annotation_id": "ANN_024",
+      "chunk_id": "EUAI_Art50_Para1",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Article 50(1)",
+      "deontic_type": "obligation",
+      "obligation_subtype": "transparency_obligation",
+      "actor": "AI provider",
+      "secondary_actor": "AI deployer",
+      "action": "ensure AI systems intended to interact directly with natural persons disclose that the person is interacting with an AI system in a clear and distinguishable manner",
+      "condition": "unless obvious from context to a reasonably well-informed person",
+      "temporal_scope": "runtime",
+      "data_scope": "interaction data, user-facing outputs",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "limited_risk",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-aiact:Transparency",
+        "eu-aiact:AIProvider",
+        "dpv:DataSubject"
+      ]
+    },
+    {
+      "annotation_id": "ANN_025",
+      "chunk_id": "EUAI_AnnexIII_Point5",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Annex III, Point 5",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "AI provider",
+      "secondary_actor": null,
+      "action": "classify AI systems used in healthcare - including medical diagnostics, patient monitoring, and clinical decision support - as high-risk",
+      "condition": "when the AI system is used to predict health outcomes, detect diseases, or assist clinical decision-making for individual patients",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "health data, physiological sensor data, accelerometer data, heart rate data, gait analysis data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_012"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "fr:FallRiskWearableAI",
+        "eu-aiact:HighRiskAISystem",
+        "pd:HealthData",
+        "fr:PhysiologicalSensorData"
+      ]
+    },
+    {
+      "annotation_id": "ANN_026",
+      "chunk_id": "EUMDR_Art61",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Art. 61 + EU AI Act Art. 6 + GDPR Art. 9",
+      "deontic_type": "obligation",
+      "obligation_subtype": "conformity_obligation",
+      "actor": "AI provider",
+      "secondary_actor": "manufacturer",
+      "action": "conduct clinical evaluation, satisfy EU AI Act high-risk requirements, and obtain lawful basis for health data processing when deploying AI as a medical device",
+      "condition": "when software constitutes both a high-risk AI system and a medical device",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "health data, clinical data",
+      "gdpr_risk_level": "special_category_data",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_004",
+        "ANN_011"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": "GDPR Article 9; EU AI Act Article 6",
+      "ontology_hints": [
+        "eu-aiact:HighRiskAISystem",
+        "dpv:HealthData",
+        "eu-mdr:MedicalDevice",
+        "eu-mdr:ClinicalEvaluation"
+      ]
+    },
+    {
+      "annotation_id": "ANN_027",
+      "chunk_id": "EUAI_Art11",
+      "regulation": "EU AI Act",
+      "article_reference": "EU AI Act Art. 11 + EU MDR Art. 10",
+      "deontic_type": "obligation",
+      "obligation_subtype": "documentation_obligation",
+      "actor": "AI provider",
+      "secondary_actor": "manufacturer",
+      "action": "prepare technical documentation satisfying both EU AI Act Art.11 requirements and EU MDR Art.10 technical file requirements",
+      "condition": "when product is classified as both a high-risk AI system and a medical device",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "technical documentation",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "high_risk",
+      "depends_on": [
+        "ANN_016"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": "EU MDR Article 10",
+      "ontology_hints": [
+        "eu-aiact:TechnicalDocumentation",
+        "eu-mdr:TechnicalFile",
+        "eu-aiact:AIProvider",
+        "eu-mdr:Manufacturer"
+      ]
+    },
+    {
+      "annotation_id": "ANN_028",
+      "chunk_id": "DUAA_ArtS80-22B",
+      "regulation": "DUAA 2025",
+      "article_reference": "DUAA Art. S80-22B + GDPR Art. 22",
+      "deontic_type": "prohibition",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "make solely automated significant decisions affecting care home residents without providing human review, contestation, and expression rights",
+      "condition": "applies in UK to automated significant decisions with legal or similarly significant effects on individuals",
+      "temporal_scope": "runtime",
+      "data_scope": "health data, personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": "GDPR Article 22",
+      "ontology_hints": [
+        "dpv:AutomatedDecisionMaking",
+        "dpv:DataSubject",
+        "duaa:SignificantDecision",
+        "duaa:HumanReview"
+      ]
+    },
+    {
+      "annotation_id": "ANN_029",
+      "chunk_id": "EUMDR_Art2",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Article 2",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "determine whether a product meets the definition of a medical device based on its intended purpose",
+      "condition": "intended purpose must be for diagnosis, prevention, monitoring, prediction, prognosis, treatment, or alleviation of disease in humans",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:MedicalDevice",
+        "eu-mdr:IntendedPurpose",
+        "eu-mdr:SoftwareMedicalDevice"
+      ]
+    },
+    {
+      "annotation_id": "ANN_030",
+      "chunk_id": "EUMDR_Art10",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Article 10",
+      "deontic_type": "obligation",
+      "obligation_subtype": "governance_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "implement a quality management system, maintain technical documentation, conduct post-market surveillance, and report serious incidents",
+      "condition": "unconditional - applies to all manufacturers placing devices on EU market",
+      "temporal_scope": "lifecycle",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:Manufacturer",
+        "eu-mdr:QualityManagementSystem",
+        "eu-mdr:TechnicalDocumentation",
+        "eu-mdr:PostMarketSurveillance"
+      ]
+    },
+    {
+      "annotation_id": "ANN_031",
+      "chunk_id": "EUMDR_Art61",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Article 61",
+      "deontic_type": "obligation",
+      "obligation_subtype": "conformity_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "conduct and maintain clinical evaluation based on clinical data demonstrating safety, performance, and clinical benefit",
+      "condition": "required before placing device on market and throughout device lifetime",
+      "temporal_scope": "lifecycle",
+      "data_scope": "clinical data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_030"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:ClinicalEvaluation",
+        "eu-mdr:ClinicalData",
+        "eu-mdr:Manufacturer",
+        "eu-mdr:SafetyPerformance"
+      ]
+    },
+    {
+      "annotation_id": "ANN_032",
+      "chunk_id": "EUMDR_Art83",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Article 83",
+      "deontic_type": "obligation",
+      "obligation_subtype": "monitoring_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "implement and maintain a post-market surveillance system to proactively collect and review post-market experience",
+      "condition": "unconditional; Class IIb and III additionally require post-market clinical follow-up",
+      "temporal_scope": "runtime",
+      "data_scope": "post-market clinical data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_030"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:PostMarketSurveillance",
+        "eu-mdr:PMCF",
+        "eu-mdr:Manufacturer"
+      ]
+    },
+    {
+      "annotation_id": "ANN_033",
+      "chunk_id": "EUMDR_Art87",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Article 87",
+      "deontic_type": "obligation",
+      "obligation_subtype": "reporting_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "report serious incidents and field safety corrective actions to competent authorities within applicable time limits",
+      "condition": "when a serious incident occurs or when a field safety corrective action is taken",
+      "temporal_scope": "runtime",
+      "data_scope": "incident data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_032"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:Vigilance",
+        "eu-mdr:SeriousIncident",
+        "eu-mdr:FieldSafetyCorrective",
+        "eu-mdr:CompetentAuthority"
+      ]
+    },
+    {
+      "annotation_id": "ANN_034",
+      "chunk_id": "EUMDR_ArtAnnexI",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Annex I",
+      "deontic_type": "obligation",
+      "obligation_subtype": "safety_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "design and manufacture devices that are safe and achieve intended clinical benefit; reduce risks to acceptable level",
+      "condition": "unconditional - applies to all devices",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:GeneralSafetyRequirements",
+        "eu-mdr:RiskManagement",
+        "eu-mdr:ClinicalBenefit"
+      ]
+    },
+    {
+      "annotation_id": "ANN_035",
+      "chunk_id": "EUMDR_ArtAnnexVIII",
+      "regulation": "EU MDR 2017/745",
+      "article_reference": "EU MDR Annex VIII",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "classify device into Class I, IIa, IIb, or III based on intended purpose, invasiveness, duration, and anatomy",
+      "condition": "classification determines applicable conformity assessment route",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_029"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "eu-mdr:DeviceClassification",
+        "eu-mdr:ClassIIb",
+        "eu-mdr:ClassIII",
+        "eu-mdr:SoftwareClassification"
+      ]
+    },
+    {
+      "annotation_id": "ANN_036",
+      "chunk_id": "UKMDR_Art2",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Reg. 2",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "determine whether a product meets the UK MDR definition of a medical device based on intended purpose",
+      "condition": "intended purpose for diagnosis, prevention, monitoring, treatment, or alleviation of disease in humans",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:MedicalDevice",
+        "uk-mdr:IntendedPurpose",
+        "uk-mdr:SoftwareMedicalDevice"
+      ]
+    },
+    {
+      "annotation_id": "ANN_037",
+      "chunk_id": "UKMDR_Art5",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Reg. 5",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "apply interpretation rules for Part II including reference to Schedule 1 essential requirements",
+      "condition": "applies in England, Wales, and Scotland to general medical devices under Part II",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_036"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:EssentialRequirements",
+        "uk-mdr:PartII",
+        "uk-mdr:Schedule1"
+      ]
+    },
+    {
+      "annotation_id": "ANN_038",
+      "chunk_id": "UKMDR_Art7",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Reg. 7",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "classify general medical devices into Classes I, IIa, IIb, or III using classification rules",
+      "condition": "classification determines conformity assessment route and applicable requirements",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_036"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:DeviceClassification",
+        "uk-mdr:ClassIIb",
+        "uk-mdr:RiskLevel"
+      ]
+    },
+    {
+      "annotation_id": "ANN_039",
+      "chunk_id": "UKMDR_Art8",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Reg. 8",
+      "deontic_type": "obligation",
+      "obligation_subtype": "safety_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": null,
+      "action": "ensure devices meet essential requirements in Schedule 1 covering design, manufacture, safety, and performance",
+      "condition": "unconditional \u2014 applies to all general medical devices placed on Great Britain market",
+      "temporal_scope": "design_time",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_037"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:EssentialRequirements",
+        "uk-mdr:SafetyPerformance",
+        "uk-mdr:Manufacturer"
+      ]
+    },
+    {
+      "annotation_id": "ANN_040",
+      "chunk_id": "UKMDR_Art9",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Reg. 9",
+      "deontic_type": "obligation",
+      "obligation_subtype": "conformity_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": "UK Approved Body",
+      "action": "undergo appropriate conformity assessment and affix UKCA marking before placing device on Great Britain market",
+      "condition": "higher-risk classes require UK Approved Body involvement; Class I self-certification permitted",
+      "temporal_scope": "pre_deployment",
+      "data_scope": "not_applicable",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_038",
+        "ANN_039"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:UKCAMarking",
+        "uk-mdr:ConformityAssessment",
+        "uk-mdr:UKApprovedBody",
+        "uk-mdr:GreatBritain"
+      ]
+    },
+    {
+      "annotation_id": "ANN_041",
+      "chunk_id": "UKMDR_ArtPart4A",
+      "regulation": "UK MDR 2002",
+      "article_reference": "UK MDR 2002 Part 4A",
+      "deontic_type": "obligation",
+      "obligation_subtype": "reporting_obligation",
+      "actor": "manufacturer",
+      "secondary_actor": "MHRA",
+      "action": "report serious incidents to MHRA within applicable time limits; issue field safety corrective actions; maintain post-market surveillance system",
+      "condition": "when serious incident occurs or when field safety corrective action is required",
+      "temporal_scope": "runtime",
+      "data_scope": "incident data",
+      "gdpr_risk_level": "not_applicable",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_040"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "uk-mdr:MHRA",
+        "uk-mdr:Vigilance",
+        "uk-mdr:SeriousIncident",
+        "uk-mdr:PostMarketSurveillance"
+      ]
+    },
+    {
+      "annotation_id": "ANN_042",
+      "chunk_id": "DUAA_ArtS80-22A",
+      "regulation": "DUAA 2025",
+      "article_reference": "DUAA 2025 s.80 Art. 22A",
+      "deontic_type": "classification_rule",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "determine whether automated processing produces a significant decision with legal or similarly significant effect on the data subject",
+      "condition": "significant effect includes effects on individual's rights, opportunities, or circumstances",
+      "temporal_scope": "design_time",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [],
+      "exception_to": null,
+      "cross_regulation_ref": "GDPR Article 22",
+      "ontology_hints": [
+        "duaa:SignificantDecision",
+        "duaa:AutomatedProcessing",
+        "dpv:AutomatedDecisionMaking",
+        "dpv:DataSubject"
+      ]
+    },
+    {
+      "annotation_id": "ANN_043",
+      "chunk_id": "DUAA_ArtS80-22B",
+      "regulation": "DUAA 2025",
+      "article_reference": "DUAA 2025 s.80 Art. 22B",
+      "deontic_type": "prohibition",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "make solely automated significant decisions without ensuring the data subject can contest, request human review, and express their view",
+      "condition": "prohibition applies unless controller ensures all three safeguard rights are available to data subject",
+      "temporal_scope": "runtime",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_042"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": "GDPR Article 22",
+      "ontology_hints": [
+        "duaa:AutomatedDecisionRestriction",
+        "duaa:HumanReview",
+        "duaa:ContestRight",
+        "dpv:DataSubjectRights"
+      ]
+    },
+    {
+      "annotation_id": "ANN_044",
+      "chunk_id": "DUAA_ArtS80-22C",
+      "regulation": "DUAA 2025",
+      "article_reference": "DUAA 2025 s.80 Art. 22C",
+      "deontic_type": "obligation",
+      "obligation_subtype": "data_subject_rights_obligation",
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "implement suitable safeguards including informing data subject of decision, providing contestation mechanism, enabling human review request, and allowing expression of view",
+      "condition": "required when making automated significant decisions",
+      "temporal_scope": "runtime",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "high_risk_to_rights",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_043"
+      ],
+      "exception_to": null,
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "duaa:Safeguards",
+        "duaa:HumanReview",
+        "duaa:ContestRight",
+        "dpv:DataSubjectRights"
+      ]
+    },
+    {
+      "annotation_id": "ANN_045",
+      "chunk_id": "DUAA_ArtSchedule6",
+      "regulation": "DUAA 2025",
+      "article_reference": "DUAA 2025 Schedule 6",
+      "deontic_type": "permission",
+      "obligation_subtype": null,
+      "actor": "data controller",
+      "secondary_actor": null,
+      "action": "apply exemptions to automated decision-making restrictions for authorised statistical or scientific research purposes",
+      "condition": "exemption subject to appropriate safeguards; minor data subjects retain enhanced protections",
+      "temporal_scope": "runtime",
+      "data_scope": "personal data",
+      "gdpr_risk_level": "standard",
+      "aiact_risk_level": "not_applicable",
+      "depends_on": [
+        "ANN_042"
+      ],
+      "exception_to": "ANN_043",
+      "cross_regulation_ref": null,
+      "ontology_hints": [
+        "duaa:Exemption",
+        "duaa:StatisticalResearch",
+        "duaa:MinorDataSubject",
+        "dpv:ResearchPurpose"
+      ]
+    }
+  ]
+}

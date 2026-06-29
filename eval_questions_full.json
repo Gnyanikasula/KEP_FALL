@@ -1,0 +1,542 @@
+[
+  {
+    "cq_id": "A01",
+    "question": "What legal bases can justify the processing of personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 6",
+    "key_concepts": "LegalBasis; Consent; Contract; LegalObligation",
+    "expected_answer": "Six lawful bases: consent, contract, legal obligation, vital interests, public task, legitimate interests",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A02",
+    "question": "When is consent required for processing personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 6(1)(a); Art. 7",
+    "key_concepts": "Consent; LegalBasis",
+    "expected_answer": "Required when no other legal basis applies; must be freely given, specific, informed, explicit, and withdrawal must be as easy as giving consent",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "A03",
+    "question": "How must sensitive health data be processed under data protection law?",
+    "regulation": "GDPR",
+    "articles": "Art. 9",
+    "key_concepts": "HealthData; SpecialCategoryData; ExplicitConsent",
+    "expected_answer": "Processing prohibited unless explicit consent or Art. 9(2) exceptions apply",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A04",
+    "question": "What principles govern lawful and fair processing of personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 5",
+    "key_concepts": "PersonalData; ProcessingPrinciple",
+    "expected_answer": "Lawfulness, fairness, transparency, purpose limitation, data minimisation, accuracy, storage limitation, integrity",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A05",
+    "question": "What obligations apply to ensure data minimisation in data collection?",
+    "regulation": "GDPR",
+    "articles": "Art. 5(1)(c)",
+    "key_concepts": "DataMinimisation; Purpose",
+    "expected_answer": "Only necessary data for specified purpose should be collected",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A06",
+    "question": "How long can personal data be retained for a specific purpose?",
+    "regulation": "GDPR",
+    "articles": "Art. 5(1)(e)",
+    "key_concepts": "StorageLimitation",
+    "expected_answer": "Data must not be kept longer than necessary",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A07",
+    "question": "What information must be provided to individuals at the time of collecting personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 13; 14",
+    "key_concepts": "Transparency; DataSubject",
+    "expected_answer": "Identity of controller, purpose, legal basis, rights, recipients, retention period",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "A08",
+    "question": "What measures are required to implement data protection by design and by default?",
+    "regulation": "GDPR",
+    "articles": "Art. 25",
+    "key_concepts": "PrivacyByDesign; Processing",
+    "expected_answer": "Technical and organisational measures integrated into system design",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A09",
+    "question": "What security measures are required to protect personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 32",
+    "key_concepts": "SecurityMeasure; Integrity",
+    "expected_answer": "Appropriate safeguards such as encryption, confidentiality, resilience",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A10",
+    "question": "What records must be maintained for data processing activities?",
+    "regulation": "GDPR",
+    "articles": "Art. 30",
+    "key_concepts": "RecordOfProcessing; Controller",
+    "expected_answer": "Maintain records of processing including purposes, categories, recipients",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A11",
+    "question": "What are the notification obligations following a personal data breach and who must be informed?",
+    "regulation": "GDPR",
+    "articles": "Art. 33; 34",
+    "key_concepts": "DataBreach; Notification",
+    "expected_answer": "Notify supervisory authority within 72 hours; inform data subjects if high risk",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "A12",
+    "question": "When is a data protection impact assessment required for a system?",
+    "regulation": "GDPR",
+    "articles": "Art. 35",
+    "key_concepts": "DPIA; RiskAssessment",
+    "expected_answer": "Required when processing is likely to result in high risk",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A13",
+    "question": "What rights do individuals have to access their personal data?",
+    "regulation": "GDPR",
+    "articles": "Art. 15",
+    "key_concepts": "RightOfAccess; DataSubject",
+    "expected_answer": "Individuals can access and obtain copies of their data",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "A14",
+    "question": "When can individuals request deletion or restriction of their data?",
+    "regulation": "GDPR",
+    "articles": "Art. 17; 18",
+    "key_concepts": "Erasure; Restriction",
+    "expected_answer": "When data is no longer needed, consent withdrawn, or processing unlawful",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "A15",
+    "question": "What rights do individuals have regarding automated decision-making and profiling?",
+    "regulation": "GDPR",
+    "articles": "Art. 22",
+    "key_concepts": "AutomatedDecisionMaking; Profiling",
+    "expected_answer": "Right not to be subject to solely automated decisions with significant effects",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B16",
+    "question": "How are AI systems classified based on risk levels?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5; Art. 6; Art. 50",
+    "key_concepts": "RiskLevel; AIClassification",
+    "expected_answer": "AI systems are categorized as prohibited, high-risk, limited, or minimal risk across these provisions",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "B17",
+    "question": "What criteria determine whether an AI system is classified as high-risk?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 6; Annex III",
+    "key_concepts": "HighRiskSystem; ApplicationDomain",
+    "expected_answer": "High-risk classification depends on domains such as biometrics, critical infrastructure, education, employment, essential services",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "B18",
+    "question": "Under what conditions can an AI system listed as high-risk be excluded from that classification?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 6(3)",
+    "key_concepts": "Derogation; RiskAssessment",
+    "expected_answer": "Excluded if narrow procedural task, improves human activity, no material influence",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B19",
+    "question": "How does the application domain influence whether an AI system is considered high-risk?",
+    "regulation": "EU AI Act",
+    "articles": "Annex III",
+    "key_concepts": "Domain; HighRiskSystem",
+    "expected_answer": "Specific domains listed in Annex III determine high-risk classification",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B20",
+    "question": "What types of AI practices are prohibited under regulation?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5",
+    "key_concepts": "ProhibitedAI; Manipulation",
+    "expected_answer": "Manipulative, exploitative, social scoring, and harmful practices are banned",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B21",
+    "question": "Why are AI systems for social scoring restricted?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5(1)(c)",
+    "key_concepts": "SocialScoring; Harm",
+    "expected_answer": "They lead to unfair discrimination and societal harm",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B22",
+    "question": "What restrictions apply to AI systems that infer emotions in workplace or educational settings?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5(1)(f)",
+    "key_concepts": "EmotionRecognition",
+    "expected_answer": "Prohibited except when used for medical or safety reasons",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B23",
+    "question": "What restrictions apply to AI systems that perform biometric categorisation of individuals?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5(1)(g)",
+    "key_concepts": "BiometricCategorisation",
+    "expected_answer": "Prohibited when inferring traits such as race, political opinion, religion, or sexual orientation",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B24",
+    "question": "When is real-time remote biometric identification in public spaces prohibited or allowed?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 5(1)(h)",
+    "key_concepts": "BiometricSurveillance",
+    "expected_answer": "Prohibited except narrow law enforcement exceptions",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B25",
+    "question": "What requirements must high-risk AI systems satisfy before deployment?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 9; 10; 11; 12; 13; 14; 15",
+    "key_concepts": "HighRiskRequirement",
+    "expected_answer": "Must satisfy risk management, data governance, documentation, logging, transparency, oversight, robustness",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "B26",
+    "question": "How should a risk management system be implemented for high-risk AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 9",
+    "key_concepts": "RiskManagement",
+    "expected_answer": "Continuous identification and mitigation of risks",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B27",
+    "question": "What data governance and data quality requirements apply to AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 10",
+    "key_concepts": "DataGovernance; BiasControl",
+    "expected_answer": "Datasets must be high-quality, representative, and bias-controlled",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B28",
+    "question": "What technical documentation must be maintained for high-risk AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 11",
+    "key_concepts": "TechnicalDocumentation",
+    "expected_answer": "Detailed system documentation including design and performance",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B29",
+    "question": "What logging and record-keeping requirements apply to AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 12",
+    "key_concepts": "Logging",
+    "expected_answer": "Automatic recording of system events",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B30",
+    "question": "What role does human oversight play in the operation of AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 14",
+    "key_concepts": "HumanOversight",
+    "expected_answer": "Humans must supervise and intervene when necessary",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B31",
+    "question": "What accuracy, robustness, and cybersecurity requirements must AI systems meet?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 15",
+    "key_concepts": "Robustness; Security; Accuracy",
+    "expected_answer": "Systems must be accurate, resilient, and secure against adversarial attacks",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B32",
+    "question": "What transparency obligations apply when users interact with an AI system?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 50(1)",
+    "key_concepts": "Transparency; Disclosure",
+    "expected_answer": "Users must be informed they are interacting with AI",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "B33",
+    "question": "What obligations apply when AI systems generate synthetic content such as deepfakes or AI-generated content?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 50(2); 50(3); 50(4)",
+    "key_concepts": "Deepfake; SyntheticContent",
+    "expected_answer": "AI-generated content must be clearly disclosed",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "C34",
+    "question": "What combined obligations arise when an AI system processes personal health data?",
+    "regulation": "GDPR + EU AI Act",
+    "articles": "GDPR Art. 9; AI Act Art. 10(5)",
+    "key_concepts": "HealthData; Bias; SpecialCategory",
+    "expected_answer": "Requires explicit consent and safeguards for bias and sensitive data handling",
+    "question_type": "cross_regulation"
+  },
+  {
+    "cq_id": "C35",
+    "question": "What responsibilities do providers and deployers have when developing and using high-risk AI systems?",
+    "regulation": "EU AI Act",
+    "articles": "Art. 16; 26",
+    "key_concepts": "Provider; Deployer; Monitoring",
+    "expected_answer": "Providers ensure compliance; deployers monitor operation and report risks or incidents",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "C36",
+    "question": "What combined obligations apply when AI software used for clinical decision support is also classified as a medical device?",
+    "regulation": "GDPR + EU AI Act + EU MDR 2017/745",
+    "articles": "GDPR Art. 9; EU AI Act Art. 6; EU MDR Art. 61; EU MDR Annex VIII",
+    "key_concepts": "HighRiskAI; MedicalDevice; ClinicalEvaluation; HealthData; SpecialCategory",
+    "expected_answer": "Must meet GDPR Art.9 for health data; high-risk AI obligations under EU AI Act Art.6; clinical evaluation and conformity assessment under EU MDR; all three frameworks apply simultaneously",
+    "question_type": "cross_regulation"
+  },
+  {
+    "cq_id": "C37",
+    "question": "What overlapping documentation requirements apply to manufacturers who develop both a high-risk AI system and a medical device?",
+    "regulation": "EU AI Act + EU MDR 2017/745",
+    "articles": "EU AI Act Art. 11; EU MDR Art. 10",
+    "key_concepts": "TechnicalDocumentation; Manufacturer; HighRiskAI; MedicalDevice",
+    "expected_answer": "EU AI Act requires technical documentation per Art.11; EU MDR requires a technical file per Art.10; obligations are complementary and must both be satisfied",
+    "question_type": "cross_regulation"
+  },
+  {
+    "cq_id": "C38",
+    "question": "What safeguards must a UK operator implement when using AI to make automated health-related decisions about care home residents?",
+    "regulation": "GDPR + DUAA 2025 + UK MDR 2002",
+    "articles": "GDPR Art. 22; DUAA Art. S80-22B; DUAA Art. S80-22C",
+    "key_concepts": "AutomatedDecision; SignificantDecision; Safeguards; HumanReview; UKCompliance",
+    "expected_answer": "GDPR Art.22 right to human review; DUAA s.80 restrictions on solely automated significant decisions; DUAA Art.22C safeguards including right to contest and express view",
+    "question_type": "cross_regulation"
+  },
+  {
+    "cq_id": "D39",
+    "question": "What is the definition of a medical device under EU MDR 2017/745?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 2",
+    "key_concepts": "MedicalDevice; Definition; IntendedPurpose; Software",
+    "expected_answer": "Any instrument, apparatus, appliance, software, implant, or material intended by the manufacturer for human beings for purposes such as diagnosis, prevention, monitoring, prediction, or treatment of disease",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D40",
+    "question": "What general obligations apply to manufacturers placing medical devices on the EU market?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 10",
+    "key_concepts": "Manufacturer; QualityManagementSystem; TechnicalDocumentation; PostMarketSurveillance",
+    "expected_answer": "Manufacturers must implement a quality management system, maintain technical documentation, conduct post-market surveillance, report serious incidents, and register devices in EUDAMED",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D41",
+    "question": "When is clinical evaluation required for a medical device and what must it demonstrate?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 61",
+    "key_concepts": "ClinicalEvaluation; ClinicalData; SafetyPerformance; ClinicalBenefit",
+    "expected_answer": "Clinical evaluation required before placing device on market and updated throughout its lifetime; must demonstrate safety, performance, and clinical benefit based on clinical data",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D42",
+    "question": "What post-market surveillance obligations apply to medical device manufacturers under EU MDR?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 83",
+    "key_concepts": "PostMarketSurveillance; PMCF; Manufacturer; RiskManagement",
+    "expected_answer": "Manufacturers must implement a systematic procedure to proactively collect and review post-market experience; Class IIb and III devices require post-market clinical follow-up",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D43",
+    "question": "What are the reporting obligations following a serious incident involving a medical device?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 87",
+    "key_concepts": "Vigilance; SeriousIncident; FieldSafety; CompetentAuthority",
+    "expected_answer": "Manufacturers must report serious incidents and field safety corrective actions to competent authorities; time limits vary by severity; immediate reporting for life-threatening situations",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D44",
+    "question": "What general safety and performance requirements must medical devices satisfy?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Annex I",
+    "key_concepts": "SafetyPerformance; RiskManagement; ClinicalBenefit; GeneralRequirements",
+    "expected_answer": "Devices must be safe and achieve intended clinical benefit; risks must be reduced to acceptable levels; devices must meet performance specifications throughout intended lifetime",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D45",
+    "question": "How are medical devices classified by risk level under EU MDR 2017/745?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Annex VIII",
+    "key_concepts": "DeviceClassification; ClassI; ClassIIa; ClassIIb; ClassIII; RiskLevel",
+    "expected_answer": "Four classes (I, IIa, IIb, III) based on intended purpose, invasiveness, duration of contact, and anatomical location; software follows special classification rules",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D46",
+    "question": "Under what conditions is software classified as a medical device under EU MDR 2017/745?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 2",
+    "key_concepts": "SoftwareMedicalDevice; IntendedPurpose; Diagnosis; Treatment",
+    "expected_answer": "Software is a medical device when intended by the manufacturer for diagnosis, prevention, monitoring, prediction, prognosis, treatment, or alleviation of disease in humans",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D47",
+    "question": "What quality management system requirements must medical device manufacturers implement?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Art. 10",
+    "key_concepts": "QualityManagementSystem; Manufacturer; Conformity; Documentation",
+    "expected_answer": "QMS must cover conformity assessment procedures, documentation control, risk management, post-market surveillance, vigilance, and PMCF; must be proportionate to device class",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "D48",
+    "question": "What safety and performance obligations apply specifically to software-based medical devices including AI systems?",
+    "regulation": "EU MDR 2017/745",
+    "articles": "EU MDR Annex I; EU MDR Art. 61",
+    "key_concepts": "SoftwareMedicalDevice; SafetyPerformance; ClinicalEvaluation; AISystem",
+    "expected_answer": "Software must meet Annex I general safety requirements; clinical evaluation must assess software performance; validation and verification evidence required; lifecycle maintenance obligations apply",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "E49",
+    "question": "How does the UK MDR 2002 define a medical device and when does software qualify?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 2",
+    "key_concepts": "MedicalDevice; Definition; Software; IntendedPurpose",
+    "expected_answer": "A device intended for human use for diagnosis, prevention, monitoring, treatment, or alleviation of disease; software qualifies when its intended purpose meets this definition",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E50",
+    "question": "What interpretation rules apply to Part II of the UK MDR 2002?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 5",
+    "key_concepts": "Interpretation; EssentialRequirements; PartII",
+    "expected_answer": "Part II interpretation provisions define scope and application of essential requirements; reference to Schedule 1 essential requirements; applies in England, Wales, and Scotland",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E51",
+    "question": "How are general medical devices classified under the UK MDR 2002?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 7",
+    "key_concepts": "Classification; RiskLevel; ClassI; ClassIIa; ClassIIb; ClassIII",
+    "expected_answer": "Devices classified into four classes based on risk using classification rules; class determines conformity assessment route and level of scrutiny required",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E52",
+    "question": "What essential requirements must general medical devices meet for the Great Britain market?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 8",
+    "key_concepts": "EssentialRequirements; SafetyPerformance; GreatBritain; Compliance",
+    "expected_answer": "Devices must meet essential requirements covering safety, performance, and design; meet applicable standards or justify alternative approach; requirements are in Schedule 1",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E53",
+    "question": "What conformity assessment requirements apply to medical devices placed on the Great Britain market?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 9",
+    "key_concepts": "ConformityAssessment; UKCAMarking; GreatBritain; MHRA; NotifiedBody",
+    "expected_answer": "Manufacturers must undergo conformity assessment; UKCA marking required for Great Britain market; higher-risk classes require involvement of UK Approved Body; CE marking accepted transitionally",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E54",
+    "question": "What post-market surveillance and vigilance requirements apply under UK MDR 2002 Part 4A?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Part4A",
+    "key_concepts": "PostMarketSurveillance; Vigilance; MHRA; SeriousIncident; FieldSafety",
+    "expected_answer": "Manufacturers must report serious incidents to MHRA; field safety corrective actions required; post-market surveillance system must be maintained; time limits on reporting apply",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E55",
+    "question": "What are the MHRA notification obligations following a serious incident with a UK medical device?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Part4A",
+    "key_concepts": "MHRA; SeriousIncident; Notification; FieldSafetyCorrectiveAction",
+    "expected_answer": "Manufacturers must notify MHRA of serious incidents within defined time limits; field safety corrective actions must be reported and communicated to users and customers",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "E56",
+    "question": "What requirements govern AI-enabled software classified as a medical device in the UK market?",
+    "regulation": "UK MDR 2002",
+    "articles": "UK MDR Art. 2; UK MDR Art. 8; UK MDR Art. 9",
+    "key_concepts": "SoftwareMedicalDevice; AISystem; EssentialRequirements; UKCAMarking; ConformityAssessment",
+    "expected_answer": "Software must qualify as medical device under Art.2; meet essential requirements under Art.8; undergo appropriate conformity assessment and obtain UKCA marking for Great Britain",
+    "question_type": "multi_article"
+  },
+  {
+    "cq_id": "F57",
+    "question": "What automated processing activities constitute a significant decision under DUAA 2025?",
+    "regulation": "DUAA 2025",
+    "articles": "DUAA Art. S80-22A",
+    "key_concepts": "SignificantDecision; AutomatedProcessing; LegalEffect; DataSubject",
+    "expected_answer": "Automated processing that produces a decision with legal or similarly significant effect on an individual's rights, opportunities, or circumstances, including decisions about eligibility for services or assessments of personal characteristics",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "F58",
+    "question": "What restrictions apply to solely automated significant decision-making under DUAA 2025?",
+    "regulation": "DUAA 2025",
+    "articles": "DUAA Art. S80-22B",
+    "key_concepts": "AutomatedDecision; Restriction; OptOut; HumanReview; Contest",
+    "expected_answer": "Controllers cannot make solely automated significant decisions unless they ensure the data subject can contest the decision, request human review, and express their point of view",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "F59",
+    "question": "What safeguards must controllers provide when making automated significant decisions under DUAA 2025?",
+    "regulation": "DUAA 2025",
+    "articles": "DUAA Art. S80-22C",
+    "key_concepts": "Safeguards; HumanReview; Contest; DataSubjectRights; AutomatedDecision",
+    "expected_answer": "Suitable safeguards must include: informing the individual about the decision, the right to contest, the right to request human review, and the right to express their view",
+    "question_type": "single_article"
+  },
+  {
+    "cq_id": "F60",
+    "question": "What exemptions and special cases govern automated decision-making under Schedule 6 of DUAA 2025?",
+    "regulation": "DUAA 2025",
+    "articles": "DUAA Art. Schedule 6",
+    "key_concepts": "Exemption; MinorDataSubject; StatisticalResearch; AutomatedDecision; SpecialCase",
+    "expected_answer": "Schedule 6 provides exemptions including for authorised statistical or scientific research; minor data subjects have enhanced protections; certain consequential amendments to related legislation apply",
+    "question_type": "single_article"
+  }
+]
