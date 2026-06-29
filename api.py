@@ -1,15 +1,4 @@
-"""
-SHIELD API — FastAPI wrapper around the existing pipeline.
 
-Adds no compliance logic. Imports and calls:
-    route.understand_query()
-    verdict.analyze_with_history()
-Endpoints:
-    GET  /health, /health/deep
-    POST /query           — blocking request/response
-    POST /query/stream    — SSE: streams routing → retrieving → synthesizing → done
-    sessions CRUD + history + feedback
-"""
 import json, logging, os, sys, time, uuid, asyncio
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -28,7 +17,7 @@ from route import understand_query
 from history import SQLiteHistoryStore
 
 
-# ── logging ───────────────────────────────────────────────────────────────────
+# logging
 class JsonFormatter(logging.Formatter):
     RESERVED = {"name","msg","args","levelname","levelno","pathname","filename",
                 "module","exc_info","exc_text","stack_info","lineno","funcName",
@@ -55,7 +44,7 @@ HISTORY_DB = os.getenv("HISTORY_DB_PATH", "data/shield_history.db")
 store = SQLiteHistoryStore(HISTORY_DB)
 
 
-# ── models ────────────────────────────────────────────────────────────────────
+# models
 class QueryRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     session_id: str | None = None
@@ -87,7 +76,7 @@ class Feedback(BaseModel):
     notes:      str = ""
 
 
-# ── chroma bootstrap (Phase 3 aligned) ────────────────────────────────────────
+# chroma bootstrap (Phase 3 aligned)
 def ensure_chroma_index() -> None:
     """Verify the Phase 3 article-level index exists. Does NOT rebuild — the
     index is built by rag.py and shipped in ./chroma_db. If missing, log a
@@ -133,7 +122,7 @@ async def add_request_id(request: Request, call_next):
     return resp
 
 
-# ── health ────────────────────────────────────────────────────────────────────
+# health
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -156,7 +145,7 @@ def health_deep():
     return {"status": "ok" if ok else "degraded", "checks": checks}
 
 
-# ── sessions ──────────────────────────────────────────────────────────────────
+# sessions
 @app.post("/sessions", response_model=SessionSummary, status_code=201)
 def create_session(req: CreateSession):
     return store.create_session(req.title)
@@ -178,7 +167,7 @@ def get_history(session_id: str):
     return {"session_id": session_id, "messages": store.get_messages(session_id)}
 
 
-# ── shared query core ─────────────────────────────────────────────────────────
+# shared query core
 def _resolve_session(req: QueryRequest) -> str:
     if req.session_id and store.session_exists(req.session_id):
         return req.session_id
@@ -203,7 +192,7 @@ def _persist(sid: str, result, parsed: dict) -> None:
     })
 
 
-# ── blocking query ────────────────────────────────────────────────────────────
+# blocking query
 @app.post("/query", response_model=QueryResponse)
 def query(req: QueryRequest, request: Request):
     rid = request.state.request_id
@@ -227,7 +216,7 @@ def query(req: QueryRequest, request: Request):
     )
 
 
-# ── streaming query (SSE) ─────────────────────────────────────────────────────
+# streaming query (SSE) 
 def _sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
 
@@ -286,7 +275,7 @@ async def query_stream(req: QueryRequest, request: Request):
                                       "X-Accel-Buffering": "no"})
 
 
-# ── feedback ──────────────────────────────────────────────────────────────────
+# feedback
 @app.post("/feedback")
 def feedback(fb: Feedback):
     store.add_feedback(fb.session_id, fb.question, fb.verdict, fb.rating, fb.notes)
