@@ -435,25 +435,25 @@
     "cq_id": "E49",
     "question": "How does the UK MDR 2002 define a medical device and when does software qualify?",
     "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 2",
+    "articles": "UK MDR Reg. 2",
     "key_concepts": "MedicalDevice; Definition; Software; IntendedPurpose",
     "expected_answer": "A device intended for human use for diagnosis, prevention, monitoring, treatment, or alleviation of disease; software qualifies when its intended purpose meets this definition",
     "question_type": "single_article"
   },
   {
-    "cq_id": "E50",
-    "question": "What interpretation rules apply to Part II of the UK MDR 2002?",
-    "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 5",
-    "key_concepts": "Interpretation; EssentialRequirements; PartII",
-    "expected_answer": "Part II interpretation provisions define scope and application of essential requirements; reference to Schedule 1 essential requirements; applies in England, Wales, and Scotland",
-    "question_type": "single_article"
+  "cq_id": "E50",
+  "question": "How does Regulation 5 of the UK MDR 2002 define key terms used in Part II?",
+  "regulation": "UK MDR 2002",
+  "articles": "UK MDR Reg. 5",
+  "key_concepts": "Interpretation; CustomMadeDevice; ClinicalInvestigation; RelevantDevice; SystemOrProcedurePack",
+  "expected_answer": "Regulation 5 provides definitions for key terms used in Part II, including 'custom-made device', 'intended for clinical investigation', 'relevant device', and 'system or procedure pack', together with other Part II-specific interpretive provisions.",
+  "question_type": "single_article"
   },
   {
     "cq_id": "E51",
     "question": "How are general medical devices classified under the UK MDR 2002?",
     "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 7",
+    "articles": "UK MDR Reg. 7",
     "key_concepts": "Classification; RiskLevel; ClassI; ClassIIa; ClassIIb; ClassIII",
     "expected_answer": "Devices classified into four classes based on risk using classification rules; class determines conformity assessment route and level of scrutiny required",
     "question_type": "single_article"
@@ -462,7 +462,7 @@
     "cq_id": "E52",
     "question": "What essential requirements must general medical devices meet for the Great Britain market?",
     "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 8",
+    "articles": "UK MDR Reg. 8",
     "key_concepts": "EssentialRequirements; SafetyPerformance; GreatBritain; Compliance",
     "expected_answer": "Devices must meet essential requirements covering safety, performance, and design; meet applicable standards or justify alternative approach; requirements are in Schedule 1",
     "question_type": "single_article"
@@ -471,7 +471,7 @@
     "cq_id": "E53",
     "question": "What conformity assessment requirements apply to medical devices placed on the Great Britain market?",
     "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 9",
+    "articles": "UK MDR Reg. 9",
     "key_concepts": "ConformityAssessment; UKCAMarking; GreatBritain; MHRA; NotifiedBody",
     "expected_answer": "Manufacturers must undergo conformity assessment; UKCA marking required for Great Britain market; higher-risk classes require involvement of UK Approved Body; CE marking accepted transitionally",
     "question_type": "single_article"
@@ -498,9 +498,9 @@
     "cq_id": "E56",
     "question": "What requirements govern AI-enabled software classified as a medical device in the UK market?",
     "regulation": "UK MDR 2002",
-    "articles": "UK MDR Art. 2; UK MDR Art. 8; UK MDR Art. 9",
+    "articles": "UK MDR Reg. 2; UK MDR Reg. 8; UK MDR Reg. 9",
     "key_concepts": "SoftwareMedicalDevice; AISystem; EssentialRequirements; UKCAMarking; ConformityAssessment",
-    "expected_answer": "Software must qualify as medical device under Art.2; meet essential requirements under Art.8; undergo appropriate conformity assessment and obtain UKCA marking for Great Britain",
+    "expected_answer": "Software must qualify as medical device under Reg. 2; meet essential requirements under Art.8; undergo appropriate conformity assessment and obtain UKCA marking for Great Britain",
     "question_type": "multi_article"
   },
   {

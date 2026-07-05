@@ -1,17 +1,16 @@
-#!/usr/bin/env python3
-"""
-eval_phase4.py — SHIELD Phase 4 Evaluation
-60 CQs x 3 modes (hybrid / kg_only / rag_only)
+# #!/usr/bin/env python3
+# eval_phase4.py - SHIELD Phase 4 Evaluation
+# 60 CQs x 3 modes (hybrid / kg_only / rag_only)
 
-Checkpoints after every question. Safe to interrupt and resume at any time.
+# Checkpoints after every question. Safe to interrupt and resume at any time.
 
-Usage:
-  python eval_phase4.py               # full run, auto-resumes if checkpoint exists
-  python eval_phase4.py --quick       # first 5 CQs (dev)
-  python eval_phase4.py --group D     # one regulation group
-  python eval_phase4.py --mode hybrid # one mode only
-  python eval_phase4.py --reset       # delete checkpoint and start fresh
-"""
+# Usage:
+#   python eval_phase4.py               # full run, auto-resumes if checkpoint exists
+#   python eval_phase4.py --quick       # first 5 CQs (dev)
+#   python eval_phase4.py --group D     # one regulation group
+#   python eval_phase4.py --mode hybrid # one mode only
+#   python eval_phase4.py --reset       # delete checkpoint and start fresh
+
 
 import os, re, sys, json, time, csv, argparse
 from pathlib import Path
@@ -92,18 +91,71 @@ def ckpt_save(results: list[dict], path: str) -> None:
     json.dump(results, open(path, "w", encoding="utf-8"), indent=2)
 
 
+# def _extract_articles(text: str) -> set[str]:
+#     found = set()
+#     for m in re.finditer(r'[Aa]rt(?:icle)?\.?\s*(\d+)', text):
+#         found.add(m.group(1))
+#     for m in re.finditer(r'[Aa]nnex\s+(I{1,3}V?|VI*|[IV]+|\d+)', text):
+#         found.add("annex " + m.group(1).lower())
+#     for m in re.finditer(r'[Ss]80[-\s]?22([A-Da-d])', text):
+#         found.add("s80-22" + m.group(1).lower())
+#     for m in re.finditer(r'[Ss]chedule\s+(\d+)', text):
+#         found.add("schedule " + m.group(1))
+#     for m in re.finditer(r'[Pp]art\s*(4A|\d+[A-Z]?)', text):
+#         found.add("part " + m.group(1).lower())
+#     return found
+
+# def _extract_articles(text: str) -> set[str]:
+#     found = set()
+#     # Article N  /  Art. N
+#     for m in re.finditer(r'[Aa]rt(?:icle)?\.?\s*(\d+)', text):
+#         found.add(m.group(1))
+#     # Regulation N  (UK MDR provisions are cited as "Regulation N", not "Article N")
+#     # Guard: skip "Regulation (EU) 2016/679" style — a digit must follow directly.
+#     for m in re.finditer(r'[Rr]egulation\s+(\d+)\b', text):
+#         found.add(m.group(1))
+#     # DUAA s.80 22A-D
+#     for m in re.finditer(r'[Ss](?:80[-\s]?)?22([A-Da-d])\b', text):
+#         found.add("s80-22" + m.group(1).lower())
+#     for m in re.finditer(r'[Aa]nnex\s+(I{1,3}V?|VI*|[IV]+|\d+)', text):
+#         found.add("annex " + m.group(1).lower())
+#     for m in re.finditer(r'[Ss]chedule\s+(\d+)', text):
+#         found.add("schedule " + m.group(1))
+#     for m in re.finditer(r'[Pp]art\s*(4A|\d+[A-Z]?)', text):
+#         found.add("part " + m.group(1).lower())
+#     return found
+
 def _extract_articles(text: str) -> set[str]:
     found = set()
-    for m in re.finditer(r'[Aa]rt(?:icle)?\.?\s*(\d+)', text):
-        found.add(m.group(1))
-    for m in re.finditer(r'[Aa]nnex\s+(I{1,3}V?|VI*|[IV]+|\d+)', text):
-        found.add("annex " + m.group(1).lower())
-    for m in re.finditer(r'[Ss]80[-\s]?22([A-Da-d])', text):
+    work = text  # we blank out DUAA spans so the generic \d+ regex can't re-grab "22"
+
+    # --- DUAA s.80 22A–22D : ALL spellings collapse to one canonical token ---
+    # Catches: "ArtS80-22C", "S80-22C", "Article 22C", "Art. 22C", bare "22C"
+    duaa_pat = re.compile(r'(?:art(?:icle)?\.?\s*)?(?:s\.?\s*80[-\s]*)?22\s*([A-Da-d])', re.I)
+    for m in duaa_pat.finditer(work):
         found.add("s80-22" + m.group(1).lower())
-    for m in re.finditer(r'[Ss]chedule\s+(\d+)', text):
+    work = duaa_pat.sub(" ", work)   # erase matched spans so "22C" can't bleed into Article regex below
+
+    # Schedule N
+    for m in re.finditer(r'[Ss]chedule\s+(\d+)', work):
         found.add("schedule " + m.group(1))
-    for m in re.finditer(r'[Pp]art\s*(4A|\d+[A-Z]?)', text):
+
+    # Article N / Art. N  (runs on blanked text — "22" is already gone)
+    for m in re.finditer(r'[Aa]rt(?:icle)?\.?\s*(\d+)', work):
+        found.add(m.group(1))
+
+    # Regulation N / Reg. N  (UK MDR — matches full word AND abbreviation)
+    for m in re.finditer(r'[Rr]eg(?:ulation)?\.?\s+(\d+)\b', work):
+        found.add(m.group(1))
+
+    # Annex (Roman or numeric)
+    for m in re.finditer(r'[Aa]nnex\s+(I{1,3}V?|VI*|[IV]+|\d+)', work):
+        found.add("annex " + m.group(1).lower())
+
+    # Part 4A / Part N style
+    for m in re.finditer(r'[Pp]art\s*(4A|\d+[A-Z]?)', work):
         found.add("part " + m.group(1).lower())
+
     return found
 
 
@@ -311,7 +363,7 @@ def print_results(results: list[dict], agg: dict, modes: list[str]) -> None:
     print("  SHIELD Phase 4 — Ablation Study Results")
     print("=" * W)
 
-    print("\n-- OVERALL -------------------------------------------------------------------")
+    print("\n-- OVERALL------")
     print(f"{'Mode':<12} {'n':>3}  {'IntAcc':>7} {'CitF1':>7} {'Prec':>6} "
           f"{'Rec':>6} {'ConCov':>7} {'KGHit%':>7} {'Conf':>6} {'Deon':>6}")
     print("-" * W)
@@ -325,7 +377,7 @@ def print_results(results: list[dict], agg: dict, modes: list[str]) -> None:
               f"{m['concept_cov']:>7.1%} {m['kg_hit_rate']:>7.1%} "
               f"{m['avg_confidence']:>5.0f}% {deo:>6}")
 
-    print("\n-- BY GROUP ------------------------------------------------------------------")
+    print("\n-- BY GROUP ---------")
     for g in sorted(agg["by_group"].keys()):
         print(f"\n  {GROUP_LABELS.get(g, g)}")
         print(f"  {'Mode':<12} {'CitF1':>7} {'ConCov':>7} {'KGHit%':>7} "
@@ -338,7 +390,7 @@ def print_results(results: list[dict], agg: dict, modes: list[str]) -> None:
                   f"{m['kg_hit_rate']:>7.1%} {m['avg_kg_triples']:>6.1f} "
                   f"{m['avg_rag_chunks']:>7.1f} {m['avg_confidence']:>5.0f}%")
 
-    print("\n-- PER-QUESTION --------------------------------------------------------------")
+    print("\n-- PER-QUESTION ----")
     for r in results:
         if "error" in r:
             print(f"  [{r['cq_id']}] ERROR: {r['error']}")

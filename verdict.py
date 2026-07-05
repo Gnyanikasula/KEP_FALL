@@ -246,10 +246,40 @@ def _expand_legal_terms(text: str) -> list[str]:
 # Phase 3: KG retrieval helpers
 
 # Retrieval: Knowledge Graph
-def _kg_keyword(text: str) -> str:
-    """Strip generic stop-words and return the first meaningful keyword."""
-    words = [w for w in text.lower().split() if w not in GENERIC_WORDS]
-    return words[0] if words else text.lower().split()[0]
+# def _kg_keyword(text: str) -> str:
+#     """Strip generic stop-words and return the first meaningful keyword."""
+#     words = [w for w in text.lower().split() if w not in GENERIC_WORDS]
+#     return words[0] if words else text.lower().split()[0]
+_KG_STOPWORDS = {
+    "data", "personal", "information", "the", "a", "an", "of", "for", "and",
+    "or", "to", "in", "on", "under", "with", "system", "systems", "processing",
+}
+
+def _kg_keywords(*sources: str) -> list[str]:
+    """
+    Build a keyword list for graph anchoring from any number of payload fields.
+
+    Node labels in the graph are PascalCase single tokens
+    (e.g. 'AutomatedDecisionMaking', 'LawfulnessFairnessAndTransparency'),
+    and the Cypher match does a lowercased substring CONTAINS. A single
+    first-word keyword therefore misses most nodes. We emit, per source:
+      - the whole lowercased phrase           ('automated decision' )
+      - each meaningful word  (len >= 4)       ('automated', 'decision')
+    Deduplicated, stopwords removed. Order preserved for stable Cypher.
+    """
+    seen: set[str] = set()
+    out: list[str] = []
+    for src in sources:
+        if not src:
+            continue
+        phrase = " ".join(src.lower().split())
+        candidates = [phrase] + phrase.split()
+        for c in candidates:
+            c = c.strip(".,;:()")
+            if len(c) >= 4 and c not in _KG_STOPWORDS and c not in seen:
+                seen.add(c)
+                out.append(c)
+    return out
 
 
 def _article_id_to_citation(article_id: str) -> str:
@@ -292,16 +322,25 @@ def kg_retrieve(payload: QueryPayload) -> List[dict]:
       5. Return structured rows the LLM can cite directly
     """
     # 1. Build keyword list
-    keyword_sources = [
+    # keyword_sources = [
+    #     payload.data_type,
+    #     payload.system_type,
+    #     payload.topic,
+    # ]
+    # keywords = list({
+    #     _kg_keyword(src)
+    #     for src in keyword_sources
+    #     if src  # skip None
+    # })
+    # if not keywords:
+    #     return []
+    keywords = _kg_keywords(
         payload.data_type,
         payload.system_type,
         payload.topic,
-    ]
-    keywords = list({
-        _kg_keyword(src)
-        for src in keyword_sources
-        if src  # skip None
-    })
+        payload.purpose,
+        payload.action,
+    )
     if not keywords:
         return []
 
@@ -1135,11 +1174,18 @@ def analyze(
             retrieval_payload = inherited
 
     # Synthesis
+    # if payload.intent == "knowledge":
+    #     rag = rag_knowledge(retrieval_payload)
+    #     prompt = (f"QUESTION: {question}\n\n"
+    #               f"TOPIC: {payload.topic}\n\n"
+    #               f"CONTEXT:\n{build_context([], rag)}")
+    #     return _synthesize(SYSTEM_KNOWLEDGE + memory_suffix, prompt, history_msgs or None)
     if payload.intent == "knowledge":
+        kg  = kg_retrieve(retrieval_payload)
         rag = rag_knowledge(retrieval_payload)
         prompt = (f"QUESTION: {question}\n\n"
                   f"TOPIC: {payload.topic}\n\n"
-                  f"CONTEXT:\n{build_context([], rag)}")
+                  f"CONTEXT:\n{build_context(kg, rag)}")
         return _synthesize(SYSTEM_KNOWLEDGE + memory_suffix, prompt, history_msgs or None)
 
     # scenario
@@ -1181,12 +1227,20 @@ def analyze_trace(question: str) -> dict:
     result = _canned_response(payload)
 
     if result is None:
+        # if payload.intent == "knowledge":
+        #     rag          = rag_knowledge(payload)
+        #     trace["rag"] = rag
+        #     prompt       = (f"QUESTION: {question}\n\n"
+        #                     f"TOPIC: {payload.topic}\n\n"
+        #                     f"CONTEXT:\n{build_context([], rag)[:6000]}")
+        #     result       = _synthesize(SYSTEM_KNOWLEDGE, prompt)
         if payload.intent == "knowledge":
+            kg           = kg_retrieve(payload)
             rag          = rag_knowledge(payload)
-            trace["rag"] = rag
+            trace["kg"], trace["rag"] = kg, rag
             prompt       = (f"QUESTION: {question}\n\n"
                             f"TOPIC: {payload.topic}\n\n"
-                            f"CONTEXT:\n{build_context([], rag)[:6000]}")
+                            f"CONTEXT:\n{build_context(kg, rag)[:6000]}")
             result       = _synthesize(SYSTEM_KNOWLEDGE, prompt)
         else:  # scenario
             kg  = kg_retrieve(payload)
