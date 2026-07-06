@@ -190,5 +190,5 @@ wrapt==2.2.1
 xxhash==3.7.0
 yarl==1.24.2
 zstandard==0.25.0
-streamlit==1.45.1 
-starlette==0.41.3
+# streamlit==1.45.1 
+# starlette==0.41.3
