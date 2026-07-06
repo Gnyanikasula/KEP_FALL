@@ -1,3 +1,12 @@
+---
+title: KEP FALL
+emoji: 🛡️
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
 # SHIELD — Structured Healthcare Intelligence for Ethical and Legal Decisions
 
 > A Knowledge-Graph-augmented RAG system for healthcare AI compliance, covering GDPR, EU AI Act, EU MDR 2017/745, UK MDR 2002, and the Data (Use and Access) Act 2025 (DUAA 2025).
