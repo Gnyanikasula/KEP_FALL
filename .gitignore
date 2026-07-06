@@ -11,3 +11,5 @@ chroma_db/
 *.db
 *.db-wal
 *.db-shm
+
+*.npy
