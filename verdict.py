@@ -81,13 +81,29 @@ def _embed(text: str) -> list[float]:
 
 
 # Verdict schema
+class Citation(BaseModel):
+    """
+    Structured citation. The evaluator reads THIS, not the prose.
+
+    Scraping article numbers out of `reasoning` with a regex is lossy and was
+    the source of the DUAA scoring bug (bare "22" matched out of "Article 22C").
+    Making the model emit the citation as data removes the regex from the
+    primary scoring path entirely.
+    """
+    regulation: Optional[str] = None   # "GDPR" | "EU AI Act" | "DUAA 2025" | ...
+    provision:  str                    # "Article 9" | "Article 22C" | "Regulation 8" | "Annex I"
+
+
 class Verdict(BaseModel):
     verdict:    Literal["Allowed", "Conditionally Allowed", "Prohibited",
                         "Unclear", "Informational", "Out of Scope"]
-    rules:      List[str]     
-    reasoning:  str              
-    conditions: List[str] = []                       
-    confidence: int              
+    rules:      List[str]
+    reasoning:  str
+    conditions: List[str] = []
+    confidence: int
+    # Optional so every existing caller and canned response keeps working
+    # unchanged. Absent -> the evaluator falls back to prose extraction.
+    citations:  List[Citation] = []
 
     @field_validator("confidence")
     @classmethod
@@ -259,27 +275,60 @@ def _kg_keywords(*sources: str) -> list[str]:
     """
     Build a keyword list for graph anchoring from any number of payload fields.
 
-    Node labels in the graph are PascalCase single tokens
-    (e.g. 'AutomatedDecisionMaking', 'LawfulnessFairnessAndTransparency'),
-    and the Cypher match does a lowercased substring CONTAINS. A single
-    first-word keyword therefore misses most nodes. We emit, per source:
-      - the whole lowercased phrase           ('automated decision' )
-      - each meaningful word  (len >= 4)       ('automated', 'decision')
-    Deduplicated, stopwords removed. Order preserved for stable Cypher.
+    Node labels are PascalCase CONCATENATIONS ('LawfulnessFairnessAndTransparency',
+    'LegalBasis') and predicates are camelCase ('hasLegalBasis'). The Cypher match
+    is a lowercased substring CONTAINS. So for the phrase "legal basis":
+
+        'legal basis' in 'legalbasis'   -> False   (spaces kill it)
+        'legalbasis'  in 'legalbasis'   -> True
+        'legal'       in 'haslegalbasis' -> True
+
+    v1 emitted only the spaced phrase and the individual words, so multi-word
+    concepts never matched a node label. We now emit, per source:
+      - the spaced phrase          'legal basis'
+      - the DE-SPACED phrase       'legalbasis'      <- new, matches node labels
+      - each meaningful word >= 4  'legal', 'basis'  <- matches predicates
+    Deduplicated, stopwords removed, order preserved for stable Cypher.
     """
     seen: set[str] = set()
     out: list[str] = []
-    for src in sources:
-        if not src:
+    for src_field in sources:
+        if not src_field:
             continue
-        phrase = " ".join(src.lower().split())
-        candidates = [phrase] + phrase.split()
+        phrase = " ".join(src_field.lower().split())
+        words = [w.strip(".,;:()") for w in phrase.split()]
+        despaced = "".join(w for w in words if w not in _KG_STOPWORDS)
+
+        candidates = [phrase, despaced] + words
         for c in candidates:
             c = c.strip(".,;:()")
             if len(c) >= 4 and c not in _KG_STOPWORDS and c not in seen:
                 seen.add(c)
                 out.append(c)
     return out
+
+
+def _rank_triples(rows: list[dict], keywords: list[str]) -> list[dict]:
+    """
+    Rank retrieved triples by how well they match the query, then by the
+    extraction confidence and whether the endpoints are ontology-typed.
+
+    WHY: the Cypher returns up to 50 rows in arbitrary keyword-match order.
+    Dumping 50 triples into the prompt dilutes the context with edges from
+    unrelated articles, which is what makes the hybrid arm underperform
+    rag_only. Ranking does not add information; it orders what was already
+    retrieved. The cut-off itself is exposed as `top_k` so it can be ablated
+    rather than silently tuned.
+    """
+    def score(r: dict) -> tuple:
+        hay = " ".join(str(r.get(f) or "").lower()
+                       for f in ("subject", "object", "predicate",
+                                 "subject_uri", "object_uri"))
+        matches = sum(1 for kw in keywords if kw in hay)
+        typed = bool(r.get("subject_typed")) + bool(r.get("object_typed"))
+        return (matches, r.get("confidence") or 0.0, typed)
+
+    return sorted(rows, key=score, reverse=True)
 
 
 def _article_id_to_citation(article_id: str) -> str:
@@ -307,7 +356,7 @@ def _article_id_to_citation(article_id: str) -> str:
     return f"{reg}, {art}"
 
 
-def kg_retrieve(payload: QueryPayload) -> List[dict]:
+def kg_retrieve(payload: QueryPayload, top_k: int = 12) -> List[dict]:
     """
     Phase 3 KG retrieval — queries the Phase 2 AuraDB schema:
       Node  :Concept  { label, uri, typed, source_reg }
@@ -350,42 +399,58 @@ def kg_retrieve(payload: QueryPayload) -> List[dict]:
     #   Pass B – incoming edges to anchor   (anchor IS the object)
     # This catches both "HealthData --hasLegalBasis--> Consent"
     # and "Processing --appliesTo--> HealthData" patterns.
+    # Every RETURN column must exist in BOTH branches of the UNION, or Cypher
+    # errors. Added since v1: subject_typed / object_typed (needed for the
+    # ontology ablation, which filters on typed nodes), and deontic /
+    # deontic_source / canonical_id, written onto the edge by p2_step5.
     cypher = """
-        // Pass A — anchor is the subject
+        // Pass A - anchor is the subject
         MATCH (s:Concept)-[r:REL]->(o:Concept)
         WHERE any(kw IN $keywords
-                  WHERE toLower(s.label) CONTAINS kw
+                  WHERE toLower(s.label)   CONTAINS kw
+                     OR toLower(r.predicate) CONTAINS kw
                      OR (s.uri IS NOT NULL AND toLower(s.uri) CONTAINS kw))
-        RETURN s.label        AS subject,
-               s.uri          AS subject_uri,
-               s.typed        AS typed,
-               r.predicate    AS predicate,
-               o.label        AS object,
-               o.uri          AS object_uri,
-               r.regulation   AS regulation,
-               r.article_id   AS article_id,
-               r.chunk_ids    AS chunk_ids,
-               r.confidence   AS confidence
+        RETURN s.label          AS subject,
+               s.uri            AS subject_uri,
+               s.typed          AS subject_typed,
+               o.typed          AS object_typed,
+               s.typed          AS typed,
+               r.predicate      AS predicate,
+               o.label          AS object,
+               o.uri            AS object_uri,
+               r.regulation     AS regulation,
+               r.article_id     AS article_id,
+               r.canonical_id   AS canonical_id,
+               r.chunk_ids      AS chunk_ids,
+               r.confidence     AS confidence,
+               r.deontic        AS deontic,
+               r.deontic_source AS deontic_source
         ORDER BY r.confidence DESC, s.typed DESC
         LIMIT 30
 
         UNION
 
-        // Pass B — anchor is the object
+        // Pass B - anchor is the object
         MATCH (s:Concept)-[r:REL]->(o:Concept)
         WHERE any(kw IN $keywords
-                  WHERE toLower(o.label) CONTAINS kw
+                  WHERE toLower(o.label)   CONTAINS kw
+                     OR toLower(r.predicate) CONTAINS kw
                      OR (o.uri IS NOT NULL AND toLower(o.uri) CONTAINS kw))
-        RETURN s.label        AS subject,
-               s.uri          AS subject_uri,
-               s.typed        AS typed,
-               r.predicate    AS predicate,
-               o.label        AS object,
-               o.uri          AS object_uri,
-               r.regulation   AS regulation,
-               r.article_id   AS article_id,
-               r.chunk_ids    AS chunk_ids,
-               r.confidence   AS confidence
+        RETURN s.label          AS subject,
+               s.uri            AS subject_uri,
+               s.typed          AS subject_typed,
+               o.typed          AS object_typed,
+               s.typed          AS typed,
+               r.predicate      AS predicate,
+               o.label          AS object,
+               o.uri            AS object_uri,
+               r.regulation     AS regulation,
+               r.article_id     AS article_id,
+               r.canonical_id   AS canonical_id,
+               r.chunk_ids      AS chunk_ids,
+               r.confidence     AS confidence,
+               r.deontic        AS deontic,
+               r.deontic_source AS deontic_source
         ORDER BY r.confidence DESC, s.typed DESC
         LIMIT 20
     """
@@ -395,8 +460,12 @@ def kg_retrieve(payload: QueryPayload) -> List[dict]:
             cypher, keywords=keywords, database_=NEO4J_DATABASE
         ).records
     except Exception as exc:
-        # Never hard-fail — RAG still runs if KG is unavailable
-        log.warning("kg_retrieve failed: %s", exc) if (log := _get_log()) else None
+        # Never hard-fail — RAG still runs if KG is unavailable.
+        # If this fires with "Unknown property r.deontic", the graph predates
+        # p2_step5 v2. Re-run `python p2_step5_aura_graph.py`.
+        log = _get_log()
+        if log:
+            log.warning("kg_retrieve failed: %s", exc)
         return []
 
     # --- 4. Deduplicate + format -----------------------------------------
@@ -411,7 +480,21 @@ def kg_retrieve(payload: QueryPayload) -> List[dict]:
         row["citation"] = _article_id_to_citation(r["article_id"] or "")
         results.append(row)
 
-    return results
+    # Loud, once: a graph loaded by p2_step5 v1 has no deontic property.
+    # Silently scoring deontic as None across every arm is the failure mode
+    # this guard exists to prevent.
+    if results and not any(r.get("deontic") for r in results):
+        log = _get_log()
+        if log:
+            log.warning(
+                "KG edges carry no `deontic` property — the graph was loaded by "
+                "p2_step5 v1. Re-run `python p2_step5_aura_graph.py` before "
+                "evaluating, or deontic_align will be null for every arm."
+            )
+
+    # 5. Rank, then cap. top_k=0 disables the cap (returns everything ranked).
+    results = _rank_triples(results, keywords)
+    return results[:top_k] if top_k else results
 
 
 def _get_log():
@@ -611,8 +694,11 @@ def build_context(kg: List[dict], rag: List[dict]) -> str:
             chunk_ref = f" [chunks: {', '.join(chunks[:2])}]" if chunks else ""
             typed_tag = "" if typed else " ⚠ untyped"
 
+            deon     = r.get("deontic")
+            deon_tag = f" [{deon}]" if deon else ""
+
             lines.append(
-                f"- {subj} --[{pred}]--> {obj}"
+                f"- {subj} --[{pred}]--> {obj}{deon_tag}"
                 f"{(' (' + cite + ')') if cite else ''}"
                 f"{chunk_ref}{typed_tag}"
             )
@@ -627,7 +713,7 @@ def build_context(kg: List[dict], rag: List[dict]) -> str:
 
 
 # LLM system prompts
-SYSTEM = """You are a regulatory compliance engine covering GDPR, the EU AI Act,
+SYSTEM_VERDICT = """You are a regulatory compliance engine covering GDPR, the EU AI Act,
 medical-device regulation (EU MDR 2017/745 and UK MDR 2002), and the
 Data (Use and Access) Act 2025 (DUAA 2025).
 Decide whether the user's described activity is Allowed, Conditionally Allowed,
@@ -734,6 +820,12 @@ EXACT FIELD TYPES - do not deviate:
   "reasoning"  : string - ONE paragraph of prose. NEVER a list or array.
   "conditions" : array of strings - specific steps when Conditionally Allowed, else []
   "confidence" : integer - 0 to 100
+  "citations"  : array of objects - EVERY provision you relied on, as structured
+                 data. One object per provision. Split multi-article citations
+                 into separate objects. Use the exact regulation names:
+                 "GDPR", "EU AI Act", "EU MDR 2017/745", "UK MDR 2002", "DUAA 2025".
+                 UK MDR uses "Regulation N", not "Article N".
+                 DUAA uses "Article 22A" / "22B" / "22C" / "22D" / "Schedule 6".
 
 Example shape (values are illustrative only):
 {
@@ -741,8 +833,15 @@ Example shape (values are illustrative only):
   "rules": ["GDPR, Article 9", "EU AI Act, Article 6"],
   "reasoning": "The system processes special category health data and must meet strict conditions before deployment.",
   "conditions": ["Obtain explicit consent (GDPR, Art.9(2)(a))", "Conduct DPIA (GDPR, Art.35)"],
-  "confidence": 82
+  "confidence": 82,
+  "citations": [
+    {"regulation": "GDPR", "provision": "Article 9"},
+    {"regulation": "EU AI Act", "provision": "Article 6"}
+  ]
 }"""
+
+# Backward-compat alias. api.py and analyze() import `SYSTEM`.
+SYSTEM = SYSTEM_VERDICT
 
 SYSTEM_KNOWLEDGE = """You are a regulatory information assistant for GDPR, the EU AI Act,
 the MDR (EU MDR 2017/745 and UK MDR 2002), and the Data (Use and Access) Act 2025 (DUAA 2025).
@@ -783,6 +882,13 @@ EXACT FIELD TYPES:
   "reasoning"  : string - ONE paragraph or numbered prose. NEVER a list or array.
   "conditions" : array - always [] for knowledge responses
   "confidence" : integer - 0 to 100
+  "citations"  : array of objects - EVERY provision you relied on, as structured
+                 data. One object per provision. Split multi-article citations
+                 into separate objects. Use the exact regulation names:
+                 "GDPR", "EU AI Act", "EU MDR 2017/745", "UK MDR 2002", "DUAA 2025".
+                 UK MDR uses "Regulation N", not "Article N".
+                 DUAA uses "Article 22A" / "22B" / "22C" / "22D" / "Schedule 6".
+                 Cite ONLY provisions that appear in the CONTEXT. Never invent one.
 
 Example shape:
 {
@@ -790,7 +896,11 @@ Example shape:
   "rules": ["EU AI Act, Article 6"],
   "reasoning": "High-risk AI systems are those listed in Annex III or that serve as safety components.",
   "conditions": [],
-  "confidence": 78
+  "confidence": 78,
+  "citations": [
+    {"regulation": "EU AI Act", "provision": "Article 6"},
+    {"regulation": "EU AI Act", "provision": "Annex III"}
+  ]
 }"""
 
 # Appended to system prompt when conversation history is present.
