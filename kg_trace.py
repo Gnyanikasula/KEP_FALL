@@ -1,5 +1,5 @@
 """
-kg_trace.py — watch a question travel through the knowledge graph.
+kg_trace.py - watch a question travel through the knowledge graph.
 
 Shows every stage of KG retrieval, in order:
 
@@ -24,6 +24,15 @@ so it is free to run and does not touch your Groq token budget.
 
 import argparse
 import sys
+
+# Windows consoles default to cp1252, which cannot encode the box-drawing and
+# check characters this trace prints. Force UTF-8 so output never crashes with
+# UnicodeEncodeError, regardless of console or redirection.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 # Import the REAL pipeline functions so the trace matches production exactly.
 from route import understand_query
@@ -57,7 +66,7 @@ def render_cypher(keywords):
     kw_repr = "[" + ", ".join(f'"{k}"' for k in keywords) + "]"
     return f"""// $keywords = {kw_repr}
 //
-// PASS A — anchor node is the SUBJECT of the edge
+// PASS A - anchor node is the SUBJECT of the edge
 MATCH (s:Concept)-[r:REL]->(o:Concept)
 WHERE any(kw IN $keywords
           WHERE toLower(s.label)     CONTAINS kw
@@ -72,7 +81,7 @@ LIMIT 30
 
 UNION
 
-// PASS B — anchor node is the OBJECT of the edge
+// PASS B - anchor node is the OBJECT of the edge
 MATCH (s:Concept)-[r:REL]->(o:Concept)
 WHERE any(kw IN $keywords
           WHERE toLower(o.label)     CONTAINS kw
@@ -96,11 +105,11 @@ def _rank_score(row, keywords):
     return matches, round(row.get("confidence") or 0.0, 2), typed
 
 
-def trace(question, top_k=12, show_context=True):
+def trace(question, top_k=12, show_context=True, use_bridge=True):
     print(f"\n{C.BOLD}QUESTION:{C.END} {question}")
 
     # ── STAGE 1 : router ──────────────────────────────────────────────────
-    banner(1, "ROUTER  —  question parsed into a structured payload")
+    banner(1, "ROUTER  -  question parsed into a structured payload")
     payload = understand_query(question)
     if payload is None:
         print(f"{C.R}Router returned None (LLM parse failed). Stop.{C.END}")
@@ -119,14 +128,23 @@ def trace(question, top_k=12, show_context=True):
         val = getattr(payload, fld, None)
         mark = C.G if val else C.DIM
         print(f"    {mark}{fld:20}{C.END} = {mark}{val!r}{C.END}")
+    concepts = getattr(payload, "concepts", None)
+    cmark = C.G if concepts else C.R
+    print(f"    {cmark}{'concepts':20}{C.END} = {cmark}{concepts!r}{C.END}"
+          f"{'  <- KG anchors on these' if concepts else '  <- EMPTY: KG falls back to topic words'}")
+    refs = getattr(payload, "article_refs", None)
+    rmark = C.G if refs else C.DIM
+    print(f"    {rmark}{'article_refs':20}{C.END} = {rmark}{refs!r}{C.END}"
+          f"{'  <- fetched directly (Solution E)' if refs else ''}")
 
     # ── STAGE 2 : keyword construction ────────────────────────────────────
-    banner(2, "KEYWORDS  —  which fields anchor the graph search")
+    banner(2, "KEYWORDS  -  which fields anchor the graph search")
     # The exact sources kg_retrieve feeds to _kg_keywords:
-    sources = [payload.data_type, payload.system_type, payload.topic,
-               payload.purpose, payload.action]
+    concept_list = getattr(payload, "concepts", None) or []
+    sources = [*concept_list, payload.data_type, payload.system_type,
+               payload.topic, payload.purpose, payload.action]
     print(f"  {C.DIM}source fields passed to _kg_keywords "
-          f"(data_type, system_type, topic, purpose, action):{C.END}")
+          f"(concepts FIRST, then data_type, system_type, topic, purpose, action):{C.END}")
     for s in sources:
         if s:
             print(f"    - {s!r}")
@@ -137,7 +155,7 @@ def trace(question, top_k=12, show_context=True):
                 else "phrase" if " " in kw else "word")
         print(f"    {C.G}{kw!r:32}{C.END} {C.DIM}({kind}){C.END}")
     if not keywords:
-        print(f"  {C.R}No keywords — KG retrieval returns []. Stop.{C.END}")
+        print(f"  {C.R}No keywords - KG retrieval returns []. Stop.{C.END}")
         return
     print(f"\n  {C.DIM}Match rule: node label / predicate / uri CONTAINS any keyword "
           f"(lowercased).\n  Node labels are PascalCase concatenations, so the "
@@ -145,30 +163,33 @@ def trace(question, top_k=12, show_context=True):
           f"'LegalBasis'.{C.END}")
 
     # ── STAGE 3 : the Cypher ──────────────────────────────────────────────
-    banner(3, "CYPHER  —  the exact query sent to Neo4j")
+    banner(3, "CYPHER  -  the exact query sent to Neo4j")
     print(C.B + render_cypher(keywords) + C.END)
 
     # ── STAGE 4 : raw hits ────────────────────────────────────────────────
-    banner(4, "RAW HITS  —  every triple the graph returned, pre-ranking")
-    # Call the REAL retriever with top_k=0 to get the full ranked set, but we
-    # also want the pre-rank order, so we reproduce the query path here by
-    # calling kg_retrieve with a large cap and then re-sorting for display.
-    all_hits = V.kg_retrieve(payload, top_k=0)   # ranked, uncapped
+    banner(4, "RAW HITS  -  every triple the graph returned, pre-ranking")
+    all_hits = V.kg_retrieve(payload, top_k=0, bridge=use_bridge)   # full ranked set
     if not all_hits:
         print(f"  {C.R}0 triples. The graph has nothing anchored on these "
               f"keywords.{C.END}")
-        print(f"  {C.DIM}This is the 'answerability = 0' case — the gold "
+        print(f"  {C.DIM}This is the 'answerability = 0' case - the gold "
               f"article is unreachable.{C.END}")
         return
     print(f"  {len(all_hits)} distinct triples matched "
           f"(shown ranked; STAGE 5 explains the order).")
 
-    # ── STAGE 5 : ranked + cut ────────────────────────────────────────────
-    banner(5, f"RANKED  —  ordered by (keyword matches, confidence, typed);  "
-              f"top_k = {top_k}")
-    print(f"  {C.DIM}{'#':>3}  {'kwHit':>5} {'conf':>5} {'typed':>5}  "
+    # THE ACTUAL kept set - call the real retriever at the real top_k, so the
+    # diversity / round-robin logic runs exactly as it does in production.
+    # (Previously this stage did all_hits[:top_k], which bypassed diversify.)
+    kept = V.kg_retrieve(payload, top_k=top_k, bridge=use_bridge)
+    kept_keys = {f"{r.get('subject')}|{r.get('predicate')}|{r.get('object')}"
+                 for r in kept}
+
+    # ── STAGE 5 : ranked, with the REAL kept/cut marking ──────────────────
+    banner(5, f"RANKED  -  full list; [KEEP] = kept by kg_retrieve(top_k={top_k}) "
+              f"after diversity")
+    print(f"  {C.DIM}{'keep':>4} {'#':>3}  {'kwHit':>5} {'conf':>5} {'typed':>5}  "
           f"triple  [deontic]  (article){C.END}")
-    cut = top_k if top_k else len(all_hits)
     for i, r in enumerate(all_hits, 1):
         m, conf, typed = _rank_score(r, keywords)
         subj = (r.get("subject") or "?")[:22]
@@ -176,17 +197,31 @@ def trace(question, top_k=12, show_context=True):
         obj  = (r.get("object") or "?")[:22]
         deon = r.get("deontic")
         deon_s = f" {C.Y}[{deon}]{C.END}" if deon else ""
+        br_s = (f" {C.G}<BRIDGE>{C.END}" if r.get("bridge") else
+                f" {C.G}<BY-ARTICLE>{C.END}" if r.get("by_article") else "")
         art  = r.get("article_id") or ""
-        line = (f"  {i:>3}  {m:>5} {conf:>5} {typed:>5}  "
-                f"{subj} {C.DIM}--{pred}-->{C.END} {obj}{deon_s} "
+        k = f"{r.get('subject')}|{r.get('predicate')}|{r.get('object')}"
+        is_kept = k in kept_keys
+        keep_mark = f"{C.G}KEEP{C.END}" if is_kept else f"{C.DIM} .  {C.END}"
+        line = (f"  {keep_mark} {i:>3}  {m:>5} {conf:>5} {typed:>5}  "
+                f"{subj} {C.DIM}--{pred}-->{C.END} {obj}{deon_s}{br_s} "
                 f"{C.DIM}({art}){C.END}")
-        if i == cut + 1:
-            print(f"  {C.R}{'-'*70} top_k cut{C.END}")
-        print(line if i <= cut else C.DIM + line + C.END)
+        print(line if is_kept else C.DIM + line + C.END)
 
-    kept = all_hits[:cut]
-    print(f"\n  {C.BOLD}{len(kept)} triples pass to the LLM. "
-          f"{len(all_hits)-len(kept)} discarded by the cut.{C.END}")
+    print(f"\n  {C.BOLD}{len(kept)} triples kept by diversity-aware retrieval "
+          f"(KEEP), out of {len(all_hits)} matched.{C.END}")
+    regs = sorted({r.get("regulation") for r in kept if r.get("regulation")})
+    n_bridge = sum(1 for r in kept if r.get("bridge"))
+    print(f"  {C.BOLD}regulations in the kept set: {regs}{C.END}")
+    if n_bridge and len(regs) > 1:
+        print(f"  {C.G}CROSS-REGULATION via BRIDGE: {n_bridge} triple(s) "
+              f"followed a shared concept into another regulation.{C.END}")
+    elif len(regs) > 1:
+        print(f"  {C.G}CROSS-REGULATION reached ({len(regs)} regulations kept) "
+              f"- via keyword/concept match + diversity.{C.END}")
+    else:
+        print(f"  {C.Y}single regulation ({regs[0] if regs else 'none'}) in "
+              f"kept set.{C.END}")
 
     # answerability hint
     reached = {(r.get("article_id") or "") for r in kept}
@@ -195,7 +230,7 @@ def trace(question, top_k=12, show_context=True):
 
     # ── STAGE 6 : context block ───────────────────────────────────────────
     if show_context:
-        banner(6, "CONTEXT  —  the KG block the LLM receives (RAG omitted)")
+        banner(6, "CONTEXT  -  the KG block the LLM receives (RAG omitted)")
         ctx = V.build_context(kept, [])   # [] = no RAG, KG only, for clarity
         print(C.DIM + ctx + C.END)
 
@@ -207,10 +242,12 @@ def main():
                     help="ranking cut (default 12; 0 = no cut)")
     ap.add_argument("--no-context", action="store_true",
                     help="skip the STAGE 6 context block")
+    ap.add_argument("--no-bridge", action="store_true",
+                    help="disable the cross-regulation bridge hop (ablation)")
     args = ap.parse_args()
 
     if args.question:
-        trace(" ".join(args.question), args.top_k, not args.no_context)
+        trace(" ".join(args.question), args.top_k, not args.no_context, not args.no_bridge)
         return
 
     print("Interactive KG trace. Blank line or 'quit' to exit.")
@@ -221,7 +258,7 @@ def main():
             break
         if not q or q.lower() in ("quit", "exit", "q"):
             break
-        trace(q, args.top_k, not args.no_context)
+        trace(q, args.top_k, not args.no_context, not args.no_bridge)
 
 
 if __name__ == "__main__":

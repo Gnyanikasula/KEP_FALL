@@ -36,7 +36,7 @@ import re
 import sys
 import json
 import time
-from typing import Optional, Literal
+from typing import Optional, List, Literal
 from dotenv import load_dotenv
 from pydantic import BaseModel, field_validator, ValidationError
 
@@ -76,6 +76,21 @@ class QueryPayload(BaseModel):
 
     #  Knowledge field (knowledge intent only) 
     topic:              Optional[str] = None   
+
+    #  Concept anchors (BOTH intents). A list of the substantive legal concepts
+    #  the question is about, one entry per regulation it touches. This is what
+    #  the KG retriever anchors on. Critical for cross-regulation questions:
+    #  a question spanning GDPR + EU AI Act must surface BOTH sides here, or the
+    #  graph only ever retrieves one regulation. See route prompt for examples.
+    concepts:           Optional[List[str]] = None
+
+    #  Explicit article references the question NAMES (not inferred concepts).
+    #  Canonical form: "<REG>:<ARTICLE>" e.g. "EUAI:9", "EUAI:10", "GDPR:22",
+    #  "UKMDR:8". When a question says "Articles 9 to 15 of the EU AI Act" the
+    #  router expands the range to each article. The retriever then anchors on
+    #  article_id directly, bypassing keyword luck for multi-article questions.
+    article_refs:       Optional[List[str]] = None
+
     # Shared optional 
     jurisdiction:       Optional[str] = None  
 
@@ -256,6 +271,74 @@ REMAINING INTENTS
   or healthcare compliance. Food, sport, entertainment, personal opinions.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONCEPT EXTRACTION  (fill "concepts" for EVERY scenario and knowledge question)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"concepts" is a LIST of the substantive legal concepts the question is about.
+The downstream knowledge graph is indexed by CONCRETE legal concepts
+(e.g. "data minimisation", "human oversight", "bias detection"), NOT by
+abstract framing words ("principles", "requirements", "Chapter III").
+
+TWO RULES — these fix the retriever's two biggest failure modes:
+
+RULE 1 — extract CONCEPTS, not SCAFFOLDING.
+  Never emit meta-vocabulary like "principles", "requirements", "provisions",
+  "Chapter III", "Section 2", "rules". Name the actual concepts instead.
+    "What principles govern processing?"
+      concepts: ["lawfulness fairness transparency", "purpose limitation",
+                 "data minimisation", "accuracy", "storage limitation",
+                 "integrity confidentiality", "accountability"]
+      (NOT ["GDPR principles"])
+    "What requirements apply to high-risk AI under Chapter III?"
+      concepts: ["risk management", "data governance", "technical documentation",
+                 "record keeping", "transparency", "human oversight",
+                 "accuracy robustness cybersecurity"]
+      (NOT ["Chapter III requirements"])
+
+RULE 2 — for CROSS-REGULATION questions, include a concept for EVERY
+regulation the question touches. If you name only one side, the graph can
+only retrieve one regulation.
+    "On what basis may special category data be processed to detect bias in a
+     high-risk AI system?"  (spans GDPR + EU AI Act)
+      concepts: ["special category data", "explicit consent",
+                 "bias detection", "high-risk AI system", "data governance"]
+      (special category data + explicit consent = GDPR Art 9 side;
+       bias detection + data governance = EU AI Act Art 10(5) side.
+       Emitting only the GDPR side loses Art 10 entirely.)
+    "How do GDPR and DUAA differ on solely automated decisions?"
+      concepts: ["automated decision making", "profiling", "significant decision",
+                 "human intervention", "special category data"]
+    "What obligations arise when a diagnostic AI processes patient health data
+     as a medical device?"  (spans GDPR + EU AI Act + EU MDR)
+      concepts: ["health data", "high-risk AI system", "medical device",
+                 "clinical evaluation", "conformity assessment"]
+
+Keep each concept 1-4 words, lowercase, no regulation names inside the concept
+string. 3-7 concepts is typical. null only for non-substantive intents
+(greeting/help/out_of_scope/sensitive).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ARTICLE REFERENCES  (fill "article_refs" ONLY when the question names specific
+articles/regulations/provisions explicitly)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"article_refs" is a LIST of the SPECIFIC provisions the question explicitly
+names. Use canonical prefixes:
+  GDPR -> "GDPR:<n>"        EU AI Act -> "EUAI:<n>"   EU MDR -> "EUMDR:<n>"
+  UK MDR -> "UKMDR:<n>"     DUAA -> "DUAA:<n>"
+Annexes: "EUAI:AnnexIII", "EUMDR:AnnexVIII". DUAA new articles: "DUAA:22A".
+
+EXPAND RANGES to each article:
+  "What must a high-risk AI system satisfy under Articles 9 to 15?"
+    article_refs: ["EUAI:9","EUAI:10","EUAI:11","EUAI:12","EUAI:13","EUAI:14","EUAI:15"]
+  "obligations under GDPR Article 13 and 14"
+    article_refs: ["GDPR:13","GDPR:14"]
+  "Regulation 8 of the UK MDR"
+    article_refs: ["UKMDR:8"]
+
+Leave article_refs null when the question is CONCEPTUAL and names no specific
+article ("what principles govern processing?" -> null; use concepts instead).
+Both concepts AND article_refs may be filled if the question does both.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 OUTPUT FORMAT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Return STRICT JSON only - no prose, no markdown:
@@ -268,6 +351,8 @@ Return STRICT JSON only - no prose, no markdown:
   "purpose": null or "...",
   "deployment_context": null or "...",
   "topic": null or "...",
+  "concepts": null or ["concept 1", "concept 2", ...],
+  "article_refs": null or ["EUAI:9", "EUAI:10", ...],
   "jurisdiction": null or "..."
 }"""
 

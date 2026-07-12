@@ -13,3 +13,5 @@ chroma_db/
 *.db-shm
 
 *.npy
+
+*.txt

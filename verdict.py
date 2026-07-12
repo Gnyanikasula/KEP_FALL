@@ -356,7 +356,241 @@ def _article_id_to_citation(article_id: str) -> str:
     return f"{reg}, {art}"
 
 
-def kg_retrieve(payload: QueryPayload, top_k: int = 12) -> List[dict]:
+_BRIDGE_CYPHER = """
+    // Second hop: for each anchor concept (matched by label OR shared URI),
+    // pull edges in OTHER regulations that touch the SAME concept node.
+    // This is what turns single-hop lookup into cross-regulation traversal:
+    // e.g. anchor 'AutomatedDecision' in GDPR -> its DUAA edges.
+    UNWIND $anchor_labels AS alabel
+    MATCH (s:Concept)-[r:REL]->(o:Concept)
+    WHERE (toLower(s.label) = toLower(alabel) OR toLower(o.label) = toLower(alabel))
+      AND NOT r.regulation IN $seen_regs
+    RETURN s.label          AS subject,
+           s.uri            AS subject_uri,
+           s.typed          AS subject_typed,
+           o.typed          AS object_typed,
+           s.typed          AS typed,
+           r.predicate      AS predicate,
+           o.label          AS object,
+           o.uri            AS object_uri,
+           r.regulation     AS regulation,
+           r.article_id     AS article_id,
+           r.canonical_id   AS canonical_id,
+           r.chunk_ids      AS chunk_ids,
+           r.confidence     AS confidence,
+           r.deontic        AS deontic,
+           r.deontic_source AS deontic_source
+    ORDER BY r.confidence DESC, s.typed DESC
+    LIMIT 25
+"""
+
+
+_GENERIC_BRIDGE_NODES = frozenset({
+    # These appear in nearly every regulation and link everything to
+    # everything. Anchoring a cross-regulation hop on them produces noise,
+    # not a meaningful legal connection. Excluded from bridge traversal.
+    "Entity", "Obligation", "Risk", "LegalBasis", "TechnicalMeasure",
+    "OrganisationalMeasure", "RiskAssessment", "TechnicalOrganisationalMeasure",
+    "Right", "Purpose", "Notice", "PersonalData", "DataSubject", "Processing",
+    "Documentation", "ProcessingOperation", "CorrectiveActions",
+    "ProvideInformation",
+})
+
+
+def _bridge_hop(anchor_rows: List[dict]) -> List[dict]:
+    """
+    Second traversal hop across shared 'bridge' concept nodes.
+
+    A bridge node is a concept that appears in more than one regulation (the
+    graph has ~20 meaningful ones, e.g. AutomatedDecision, DemonstrateConformity,
+    QualityManagementSystem — mostly ontology-typed). The first hop lands the
+    retriever on one regulation's version of a concept; this hop follows the
+    shared node into the OTHER regulations that use it.
+
+    Without this, a cross-regulation question (e.g. 'how do GDPR and DUAA differ
+    on automated decisions?') finds the GDPR side and stops. This is the step
+    that makes the graph actually *traversed* rather than merely *looked up*.
+    """
+    if not anchor_rows:
+        return []
+
+    # Concept labels the first hop actually landed on, and the regs already covered.
+    anchor_labels = list(
+        ({r.get("subject") for r in anchor_rows if r.get("subject")}
+         | {r.get("object") for r in anchor_rows if r.get("object")})
+        - _GENERIC_BRIDGE_NODES)
+    seen_regs = list({r.get("regulation") for r in anchor_rows if r.get("regulation")})
+    if not anchor_labels:
+        return []
+
+    try:
+        recs = _driver().execute_query(
+            _BRIDGE_CYPHER,
+            anchor_labels=anchor_labels,
+            seen_regs=seen_regs,
+            database_=NEO4J_DATABASE,
+        ).records
+    except Exception as exc:
+        log = _get_log()
+        if log:
+            log.warning("bridge hop failed (non-fatal): %s", exc)
+        return []
+
+    out = []
+    for r in recs:
+        row = dict(r)
+        row["citation"] = _article_id_to_citation(r["article_id"] or "")
+        row["bridge"] = True          # tag so the trace / context can mark it
+        out.append(row)
+    return out
+
+
+def _diversify_by_article(ranked: List[dict], top_k: int,
+                          per_article_cap: int = 4,
+                          cross_regulation: bool = False) -> List[dict]:
+    """
+    Reorder the ranked triples so the top-k spans multiple articles/regulations
+    instead of being monopolised by one article's redundant edges.
+
+    Two modes:
+
+    cross_regulation=False (single-reg / abstract questions) — GENTLE:
+        Round-robin one triple per ARTICLE per cycle, in rank order. A dominant
+        article still gets the most slots (it appears in every cycle) but a
+        minority article that ranks lower still gets picked up on cycle 1.
+        Preserves strong recall on the primary article.
+
+    cross_regulation=True (router emitted concepts spanning >1 regulation) —
+    STRICT: round-robin one triple per REGULATION per cycle first, so EVERY
+        regulation named in the question is guaranteed a slot before any
+        regulation gets a second. This is what forces EU AI Act Art 10 into the
+        top-k on a GDPR+AI-Act question, instead of being buried under eleven
+        GDPR Art 9 edges.
+
+    Reorders only; never invents. Falls back to rank order to fill any
+    remaining slots.
+    """
+    from collections import defaultdict, OrderedDict
+
+    key = (lambda r: r.get("regulation") or "?") if cross_regulation \
+          else (lambda r: r.get("article_id") or "?")
+
+    # bucket triples by the grouping key, preserving rank order within a bucket
+    buckets: "OrderedDict[str, list]" = OrderedDict()
+    for r in ranked:
+        buckets.setdefault(key(r), []).append(r)
+
+    kept: List[dict] = []
+    # Round-robin across buckets until top_k is filled or all buckets drained.
+    while len(kept) < top_k and any(buckets.values()):
+        for k in list(buckets.keys()):
+            if buckets[k]:
+                kept.append(buckets[k].pop(0))
+                if len(kept) >= top_k:
+                    break
+
+    # In cross-reg mode, still respect a soft per-article cap WITHIN a
+    # regulation so one article of a reg doesn't dominate that reg's share.
+    if cross_regulation and per_article_cap:
+        capped, seen = [], defaultdict(int)
+        overflow = []
+        for r in kept:
+            a = r.get("article_id") or "?"
+            if seen[a] < per_article_cap:
+                capped.append(r); seen[a] += 1
+            else:
+                overflow.append(r)
+        for r in overflow:
+            if len(capped) >= top_k:
+                break
+            capped.append(r)
+        kept = capped[:top_k]
+
+    return kept[:top_k]
+
+
+_REF_PREFIX_TO_REG = {
+    "GDPR":  "GDPR",
+    "EUAI":  "EU AI Act",
+    "EUMDR": "EU MDR 2017/745",
+    "UKMDR": "UK MDR 2002",
+    "DUAA":  "DUAA 2025",
+}
+
+def _article_refs_to_kg_ids(refs: list) -> list:
+    """
+    Map router article_refs ("EUAI:9", "GDPR:22", "EUAI:AnnexIII") to the KG's
+    article_id form ("EU AI Act__Art9"). Solution E: lets a multi-article
+    question anchor on the articles it NAMES, instead of hoping keywords hit
+    each of Articles 9-15 individually.
+    """
+    out = []
+    for ref in refs or []:
+        if ":" not in ref:
+            continue
+        pfx, art = ref.split(":", 1)
+        reg = _REF_PREFIX_TO_REG.get(pfx.upper())
+        if not reg:
+            continue
+        art = art.strip()
+        # normalise "AnnexIII" -> "Annex III", "S80-22B" stays, plain "9" -> "9"
+        if art.lower().startswith("annex"):
+            art = "Annex " + art[5:].strip()
+        # DUAA new automated-decision articles are stored as S80-22A..D
+        if reg == "DUAA 2025" and art.upper() in ("22A", "22B", "22C", "22D"):
+            art = "S80-" + art.upper()
+        out.append(f"{reg}__Art{art}")
+    return out
+
+
+_BY_ARTICLE_CYPHER = """
+    UNWIND $article_ids AS aid
+    MATCH (s:Concept)-[r:REL {article_id: aid}]->(o:Concept)
+    RETURN s.label          AS subject,
+           s.uri            AS subject_uri,
+           s.typed          AS subject_typed,
+           o.typed          AS object_typed,
+           s.typed          AS typed,
+           r.predicate      AS predicate,
+           o.label          AS object,
+           o.uri            AS object_uri,
+           r.regulation     AS regulation,
+           r.article_id     AS article_id,
+           r.canonical_id   AS canonical_id,
+           r.chunk_ids      AS chunk_ids,
+           r.confidence     AS confidence,
+           r.deontic        AS deontic,
+           r.deontic_source AS deontic_source
+    ORDER BY r.confidence DESC, s.typed DESC
+"""
+
+
+def _fetch_by_article(refs: list) -> List[dict]:
+    """Solution E: direct article-anchored retrieval for named provisions."""
+    kg_ids = _article_refs_to_kg_ids(refs)
+    if not kg_ids:
+        return []
+    try:
+        recs = _driver().execute_query(
+            _BY_ARTICLE_CYPHER, article_ids=kg_ids,
+            database_=NEO4J_DATABASE,
+        ).records
+    except Exception as exc:
+        log = _get_log()
+        if log:
+            log.warning("article-anchored fetch failed (non-fatal): %s", exc)
+        return []
+    out = []
+    for r in recs:
+        row = dict(r)
+        row["citation"] = _article_id_to_citation(r["article_id"] or "")
+        row["by_article"] = True
+        out.append(row)
+    return out
+
+
+def kg_retrieve(payload: QueryPayload, top_k: int = 12,
+                bridge: bool = True) -> List[dict]:
     """
     Phase 3 KG retrieval — queries the Phase 2 AuraDB schema:
       Node  :Concept  { label, uri, typed, source_reg }
@@ -383,7 +617,13 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12) -> List[dict]:
     # })
     # if not keywords:
     #     return []
+    # Concepts (from the router) are the PRIMARY anchor for cross-regulation
+    # and abstract questions — they carry the substantive legal terms the graph
+    # is indexed by. topic/data_type/etc. are kept as a fallback for older
+    # router outputs that predate the `concepts` field.
+    concept_list = getattr(payload, "concepts", None) or []
     keywords = _kg_keywords(
+        *concept_list,
         payload.data_type,
         payload.system_type,
         payload.topic,
@@ -492,9 +732,68 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12) -> List[dict]:
                 "evaluating, or deontic_align will be null for every arm."
             )
 
-    # 5. Rank, then cap. top_k=0 disables the cap (returns everything ranked).
+    # Did the router name explicit articles? If so, the question has declared
+    # its own scope, and we must NOT wander outside it (no bridge into other
+    # regulations, no cross-reg round-robin that evicts the named articles).
+    refs = getattr(payload, "article_refs", None)
+    ref_kg_ids = set(_article_refs_to_kg_ids(refs)) if refs else set()
+    ref_regs = {rid.split("__")[0] for rid in ref_kg_ids}
+    scoped_single_reg = bool(ref_regs) and len(ref_regs) == 1
+
+    # 4b. Bridge hop — follow shared concept nodes into OTHER regulations.
+    # Suppressed when the question named explicit articles: their scope is
+    # fixed, and bridging would drag in regulations the question didn't ask for.
+    if bridge and results and not refs:
+        seen_keys = {f"{r.get('subject')}|{r.get('predicate')}|{r.get('object')}"
+                     for r in results}
+        for br in _bridge_hop(results):
+            key = f"{br.get('subject')}|{br.get('predicate')}|{br.get('object')}"
+            if key not in seen_keys:
+                seen_keys.add(key)
+                results.append(br)
+
+    # 4c. Solution E — article-anchored retrieval. When the router captured
+    # explicit article references (e.g. "Articles 9 to 15"), fetch those
+    # articles directly rather than relying on keyword matches to reach each
+    # one. These are prepended so the diversity step treats them as first-class.
+    if refs:
+        seen_keys = {f"{r.get('subject')}|{r.get('predicate')}|{r.get('object')}"
+                     for r in results}
+        by_art = _fetch_by_article(refs)
+        prepend = []
+        for r in by_art:
+            key = f"{r.get('subject')}|{r.get('predicate')}|{r.get('object')}"
+            if key not in seen_keys:
+                seen_keys.add(key)
+                prepend.append(r)
+        results = prepend + results
+
+        # If every named article is from ONE regulation, this is a scoped
+        # single-regulation question (e.g. B25 "EU AI Act Articles 9-15").
+        # Restrict to that regulation so keyword-matched noise from other
+        # regulations cannot evict the named articles.
+        if scoped_single_reg:
+            keep_reg = next(iter(ref_regs))
+            results = [r for r in results
+                       if (r.get("article_id") or "").split("__")[0] == keep_reg]
+
+    # 5. Rank, then apply article-diversity so no single article monopolises
+    #    the top-k. Ten near-identical triples from one article are one fact
+    #    and were starving other articles.
+    #
+    #    Mode selection:
+    #    - Named articles from ONE regulation  -> article-level round-robin,
+    #      so all the named articles share the budget (B25 keeps all of 9-15).
+    #    - Retrieved triples span >1 regulation AND no single-reg scope ->
+    #      regulation-level round-robin (the cross-regulation case, e.g. C34).
+    #    - Otherwise -> gentle article-level round-robin.
     results = _rank_triples(results, keywords)
-    return results[:top_k] if top_k else results
+    if top_k:
+        regs_present = {r.get("regulation") for r in results if r.get("regulation")}
+        cross = (len(regs_present) > 1) and not scoped_single_reg
+        results = _diversify_by_article(results, top_k, per_article_cap=4,
+                                        cross_regulation=cross)
+    return results
 
 
 def _get_log():
