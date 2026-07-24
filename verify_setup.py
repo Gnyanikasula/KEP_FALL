@@ -14,7 +14,7 @@ CHROMA_PATH    = "./chroma_db"
 COLLECTION     = "regulations"
 EMBED_MODEL    = "nomic-ai/nomic-embed-text-v1.5"
 GROQ_API_KEY   = os.getenv("GROQ_API_KEY")
-MODEL          = "meta-llama/llama-4-scout-17b-16e-instruct"
+MODEL          = "openai/gpt-oss-120b"
 
 GREEN, RED, YELLOW, DIM, RESET = "\033[92m", "\033[91m", "\033[93m", "\033[2m", "\033[0m"
 OK, FAIL, WARN = f"{GREEN}PASS{RESET}", f"{RED}FAIL{RESET}", f"{YELLOW}WARN{RESET}"

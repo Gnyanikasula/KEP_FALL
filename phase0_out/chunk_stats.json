@@ -1,0 +1,176 @@
+{
+  "collection": "regulations",
+  "n_documents": 55,
+  "token_method": "tiktoken/o200k_base",
+  "chars": {
+    "mean": 5477.8,
+    "median": 3684,
+    "min": 349,
+    "max": 44486,
+    "total": 301279
+  },
+  "tokens": {
+    "mean": 1213.4363636363637,
+    "median": 720,
+    "min": 61,
+    "max": 10877,
+    "total": 66739
+  },
+  "truncation_caps": [
+    {
+      "cap_chars": 800,
+      "docs_truncated": 53,
+      "pct_docs_truncated": 96.4,
+      "pct_text_retained": 14.4,
+      "avg_tokens_per_doc": 175.0
+    },
+    {
+      "cap_chars": 1200,
+      "docs_truncated": 46,
+      "pct_docs_truncated": 83.6,
+      "pct_text_retained": 21.0,
+      "avg_tokens_per_doc": 254.5
+    },
+    {
+      "cap_chars": 1600,
+      "docs_truncated": 40,
+      "pct_docs_truncated": 72.7,
+      "pct_text_retained": 26.7,
+      "avg_tokens_per_doc": 323.6
+    },
+    {
+      "cap_chars": 2000,
+      "docs_truncated": 37,
+      "pct_docs_truncated": 67.3,
+      "pct_text_retained": 31.8,
+      "avg_tokens_per_doc": 385.9
+    },
+    {
+      "cap_chars": 2500,
+      "docs_truncated": 32,
+      "pct_docs_truncated": 58.2,
+      "pct_text_retained": 37.4,
+      "avg_tokens_per_doc": 454.2
+    },
+    {
+      "cap_chars": 3000,
+      "docs_truncated": 31,
+      "pct_docs_truncated": 56.4,
+      "pct_text_retained": 42.6,
+      "avg_tokens_per_doc": 517.3
+    },
+    {
+      "cap_chars": 4000,
+      "docs_truncated": 25,
+      "pct_docs_truncated": 45.5,
+      "pct_text_retained": 51.9,
+      "avg_tokens_per_doc": 629.7
+    },
+    {
+      "cap_chars": 6000,
+      "docs_truncated": 14,
+      "pct_docs_truncated": 25.5,
+      "pct_text_retained": 64.4,
+      "avg_tokens_per_doc": 781.6
+    }
+  ],
+  "by_source": [
+    {
+      "source": "DUAA_2025",
+      "n": 5,
+      "mean_chars": 2853,
+      "max_chars": 7131,
+      "over_3000": 2
+    },
+    {
+      "source": "EU_AI_Act",
+      "n": 23,
+      "mean_chars": 3910,
+      "max_chars": 8906,
+      "over_3000": 13
+    },
+    {
+      "source": "EU_MDR_2017_745",
+      "n": 7,
+      "mean_chars": 8965,
+      "max_chars": 23974,
+      "over_3000": 4
+    },
+    {
+      "source": "GDPR",
+      "n": 14,
+      "mean_chars": 3439,
+      "max_chars": 6895,
+      "over_3000": 8
+    },
+    {
+      "source": "UK_MDR_2002",
+      "n": 6,
+      "mean_chars": 14362,
+      "max_chars": 44486,
+      "over_3000": 4
+    }
+  ],
+  "largest": [
+    {
+      "chunk_id": "UKMDR_ArtPart4A",
+      "chars": 44486,
+      "tokens": 10877,
+      "citation": "UK MDR 2002, Part4A \u2014 Post-market surveillance requirements"
+    },
+    {
+      "chunk_id": "UKMDR_Art2",
+      "chars": 27994,
+      "tokens": 8879,
+      "citation": "UK MDR 2002, Article 2 \u2014 Interpretation E+W+S"
+    },
+    {
+      "chunk_id": "EUMDR_Art10",
+      "chars": 23974,
+      "tokens": 4811,
+      "citation": "EU MDR 2017/745, Article 10 \u2014 General obligations of manufacturers"
+    },
+    {
+      "chunk_id": "EUMDR_Art2",
+      "chars": 19525,
+      "tokens": 4259,
+      "citation": "EU MDR 2017/745, Article 2 \u2014 Definitions"
+    },
+    {
+      "chunk_id": "EUMDR_Art61",
+      "chars": 8930,
+      "tokens": 1794,
+      "citation": "EU MDR 2017/745, Article 61 \u2014 Clinical evaluation"
+    },
+    {
+      "chunk_id": "EUAI_Art10",
+      "chars": 8906,
+      "tokens": 1787,
+      "citation": "EU AI Act, Article 10 \u2014 Data and data governance"
+    },
+    {
+      "chunk_id": "EUAI_ArtAnnexIII",
+      "chars": 8619,
+      "tokens": 1657,
+      "citation": "EU AI Act, Annex III \u2014 Annex III"
+    },
+    {
+      "chunk_id": "EUAI_Art26",
+      "chars": 7406,
+      "tokens": 1431,
+      "citation": "EU AI Act, Article 26 \u2014 Obligations of deployers of high-risk AI systems"
+    },
+    {
+      "chunk_id": "EUAI_Art17",
+      "chars": 7281,
+      "tokens": 1357,
+      "citation": "EU AI Act, Article 17 \u2014 Quality management system"
+    },
+    {
+      "chunk_id": "DUAA_ArtS80-22D",
+      "chars": 7131,
+      "tokens": 1641,
+      "citation": "DUAA 2025, S80-22D \u2014 Further provision about automated decision-making"
+    }
+  ]
+}

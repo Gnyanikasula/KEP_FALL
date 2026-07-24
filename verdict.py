@@ -19,7 +19,8 @@ from route import understand_query, QueryPayload
 load_dotenv()
 
 #  Config 
-MODEL          = "meta-llama/llama-4-scout-17b-16e-instruct"
+# MODEL          = "openai/gpt-oss-120b"
+MODEL          = "openai/gpt-oss-120b"
 NEO4J_URI      = os.getenv("NEO4J_URI",      "bolt://localhost:7687")
 NEO4J_USER     = os.getenv("NEO4J_USER",     "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
@@ -32,8 +33,51 @@ EMBED_MODEL    = "nomic-ai/nomic-embed-text-v1.5"
 # EMBED_MODEL = "jinaai/jina-embeddings-v2-base-en"
 MAX_RETRIES    = 2
 RETRY_DELAY    = 2
+
+# --- Free-tier token budget (gny_v3) ------------------------------------
+# openai/gpt-oss-120b free tier: 30 RPM, 8,000 TPM, 200,000 TPD.
+# The whole retrieved chunk SET is kept (recall unchanged vs the gny_v2
+# baseline); only per-chunk excerpt depth is tiered. The RAG_HEAD_N chunks
+# with the smallest embedding distance keep RAG_HEAD_CHARS characters, the
+# remainder keep RAG_TAIL_CHARS. Measured: mean ~5.8K, max ~6.7K tokens per
+# call including output, leaving headroom for reasoning tokens.
+RAG_HEAD_N     = int(os.getenv("SHIELD_RAG_HEAD_N", "8"))
+RAG_HEAD_CHARS = int(os.getenv("SHIELD_RAG_HEAD_CHARS", "1200"))
+RAG_TAIL_CHARS = int(os.getenv("SHIELD_RAG_TAIL_CHARS", "400"))
+
+# Reasoning tokens count towards TPM, so cap them and cap the completion.
+REASONING_EFFORT      = os.getenv("SHIELD_REASONING_EFFORT", "low")
+MAX_COMPLETION_TOKENS = int(os.getenv("SHIELD_MAX_COMPLETION", "1200"))
+
+# 429 / rate-limit backoff. TPM is a rolling window, so waiting genuinely
+# clears it — unlike a malformed-JSON error, which needs a re-prompt.
+RATE_LIMIT_RETRIES = 3
+RATE_LIMIT_DELAY   = 8
 _HISTORY_TURNS = int(os.getenv("SHIELD_HISTORY_TURNS", "6"))  # 6 msgs = 3 exchanges
 GENERIC_WORDS  = {"data", "personal", "information", "the", "a", "an"}
+
+
+def _create_with_backoff(client, **kwargs):
+    """Groq chat completion with rate-limit backoff.
+
+    Free-tier TPM is 8,000 and is shared across the whole organisation, so
+    two concurrent demo users can trip a 429 even though nothing is wrong.
+    A rate-limit error is transient and worth waiting out; anything else is
+    re-raised immediately.
+    """
+    delay = RATE_LIMIT_DELAY
+    for attempt in range(1 + RATE_LIMIT_RETRIES):
+        try:
+            return client.chat.completions.create(**kwargs)
+        except Exception as err:
+            msg = str(err).lower()
+            transient = ("rate_limit" in msg or "429" in msg
+                         or "too large" in msg or "413" in msg)
+            if not transient or attempt == RATE_LIMIT_RETRIES:
+                raise
+            print(f"[rate-limit] attempt {attempt + 1}, waiting {delay}s")
+            time.sleep(delay)
+            delay *= 2
 
 
 # Lazy singletons
@@ -915,20 +959,29 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
 
     queries = base_queries + purpose_queries + context_queries + duaa_queries + expansions
 
-    out, seen = [], set()
+    # Distances were previously discarded. They are kept now so build_context()
+    # can allocate excerpt depth by relevance. The retrieved SET is unchanged.
+    out, seen = [], {}
     for q in queries:
         res = col.query(query_embeddings=[_embed(q)], n_results=k)
-        for cid, doc, meta in zip(
-            res["ids"][0], res["documents"][0], res["metadatas"][0]
+        dists = (res.get("distances") or [[None] * len(res["ids"][0])])[0]
+        for cid, doc, meta, dist in zip(
+            res["ids"][0], res["documents"][0], res["metadatas"][0], dists
         ):
-            if cid not in seen:
-                seen.add(cid)
-                out.append({
-                    "chunk_id": cid,
-                    "citation": meta.get("citation", cid),
-                    "text":     doc,
-                    "type":     meta.get("type", ""),
-                })
+            if cid in seen:
+                prev = seen[cid]["distance"]
+                if dist is not None and (prev is None or dist < prev):
+                    seen[cid]["distance"] = dist
+                continue
+            rec = {
+                "chunk_id": cid,
+                "citation": meta.get("citation", cid),
+                "text":     doc,
+                "type":     meta.get("type", ""),
+                "distance": dist,
+            }
+            seen[cid] = rec
+            out.append(rec)
     return out
 
 
@@ -943,16 +996,24 @@ def rag_knowledge(payload: QueryPayload, k: int = 6) -> List[dict]:
         "technical documentation general description AI system intended purpose",
     ] + expansions[:6]
 
-    out, seen = [], set()
+    out, seen = [], {}
     for query in queries:
         res = col.query(query_embeddings=[_embed(query)], n_results=k)
-        for cid, doc, meta in zip(res["ids"][0], res["documents"][0], res["metadatas"][0]):
-            if cid not in seen:
-                seen.add(cid)
-                out.append({"chunk_id": cid,
-                            "citation": meta.get("citation", cid),
-                            "text": doc,
-                            "type": meta.get("type", "")})
+        dists = (res.get("distances") or [[None] * len(res["ids"][0])])[0]
+        for cid, doc, meta, dist in zip(res["ids"][0], res["documents"][0],
+                                        res["metadatas"][0], dists):
+            if cid in seen:
+                prev = seen[cid]["distance"]
+                if dist is not None and (prev is None or dist < prev):
+                    seen[cid]["distance"] = dist
+                continue
+            rec = {"chunk_id": cid,
+                   "citation": meta.get("citation", cid),
+                   "text": doc,
+                   "type": meta.get("type", ""),
+                   "distance": dist}
+            seen[cid] = rec
+            out.append(rec)
     return out
 
 
@@ -1005,8 +1066,24 @@ def build_context(kg: List[dict], rag: List[dict]) -> str:
         lines.append("- (no structured rules matched — KG returned 0 results)")
 
     lines.append("\n## REGULATION EXCERPTS (verbatim, for grounding)")
-    for c in rag:
-        excerpt = c["text"][:3000].replace("\n", " ")
+    # Tiered excerpt depth. Every retrieved chunk is still emitted with its
+    # citation header, so the retrieved SET — and therefore faithful-F1,
+    # hallucination and answerability — is unchanged from the gny_v2 baseline.
+    # Only the amount of text per chunk is budgeted, by embedding distance.
+    ranked = sorted(
+        range(len(rag)),
+        key=lambda i: (rag[i].get("distance") is None,
+                       rag[i].get("distance") if rag[i].get("distance") is not None else 0.0),
+    )
+    head = set(ranked[:RAG_HEAD_N])
+    for i, c in enumerate(rag):
+        limit = RAG_HEAD_CHARS if i in head else RAG_TAIL_CHARS
+        raw = c["text"]
+        excerpt = raw[:limit].replace("\n", " ")
+        # Mark truncation explicitly so the model does not treat a cut excerpt
+        # as the complete provision when reasoning about it.
+        if len(raw) > limit:
+            excerpt += " [... excerpt truncated ...]"
         lines.append(f"### {c['citation']}\n{excerpt}")
     return "\n".join(lines)
 
@@ -1255,8 +1332,11 @@ def _synthesize(
                 {"role": "user",   "content": prompt},
             ]
         try:
-            resp = client.chat.completions.create(
+            resp = _create_with_backoff(
+                client,
                 model=MODEL, temperature=0,
+                reasoning_effort=REASONING_EFFORT,
+                max_completion_tokens=MAX_COMPLETION_TOKENS,
                 response_format={"type": "json_object"},
                 messages=messages,
             )

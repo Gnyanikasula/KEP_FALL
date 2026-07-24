@@ -39,11 +39,21 @@ import time
 from typing import Optional, List, Literal
 from dotenv import load_dotenv
 from pydantic import BaseModel, field_validator, ValidationError
+from groq import Groq
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-MODEL        = "meta-llama/llama-4-scout-17b-16e-instruct"
+# MODEL        = "openai/gpt-oss-120b"
+
+# Reasoning tokens count towards the free-tier TPM window, so keep the routing
+# call — which runs on every request — as cheap as possible.
+REASONING_EFFORT      = os.getenv("SHIELD_REASONING_EFFORT", "low")
+MAX_COMPLETION_TOKENS = int(os.getenv("SHIELD_ROUTE_MAX_COMPLETION", "400"))
+RATE_LIMIT_RETRIES    = 3
+RATE_LIMIT_DELAY      = 8
+# MODEL          = "openai/gpt-oss-120b"
+MODEL          = "openai/gpt-oss-20b"
 MAX_RETRIES  = 2
 RETRY_DELAY  = 2
 
@@ -360,16 +370,28 @@ Return STRICT JSON only - no prose, no markdown:
 def call_llm(question: str, nudge: str = "") -> str:
     from groq import Groq
     client = Groq(api_key=GROQ_API_KEY)
-    resp = client.chat.completions.create(
-        model=MODEL, temperature=0,
-        response_format={"type": "json_object"},
-        messages=[{"role": "system", "content": SYSTEM + nudge},
-                  {"role": "user",   "content": question}],
-    )
-    return resp.choices[0].message.content
+    delay = RATE_LIMIT_DELAY
+    for attempt in range(1 + RATE_LIMIT_RETRIES):
+        try:
+            resp = client.chat.completions.create(
+                model=MODEL, temperature=0,
+                reasoning_effort=REASONING_EFFORT,
+                max_completion_tokens=MAX_COMPLETION_TOKENS,
+                response_format={"type": "json_object"},
+                messages=[{"role": "system", "content": SYSTEM + nudge},
+                          {"role": "user",   "content": question}],
+            )
+            return resp.choices[0].message.content
+        except Exception as err:
+            msg = str(err).lower()
+            transient = ("rate_limit" in msg or "429" in msg
+                         or "too large" in msg or "413" in msg)
+            if not transient or attempt == RATE_LIMIT_RETRIES:
+                raise
+            print(f"[rate-limit:route] attempt {attempt + 1}, waiting {delay}s")
+            time.sleep(delay)
+            delay *= 2
 
-
-# understand_query
 def understand_query(question: str) -> Optional[QueryPayload]:
     # Fast path - catches hi/hello/hey/how's life?/what's up/etc.
     fast = _deterministic_intent(question)
