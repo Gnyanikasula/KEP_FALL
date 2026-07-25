@@ -1,0 +1,149 @@
+﻿
+QUESTION: On what basis may special category data be processed to detect bias in a high-risk AI system?
+
+==============================================================================
+ STAGE 1: ROUTER  -  question parsed into a structured payload
+==============================================================================
+  intent = knowledge
+  extracted fields (None = not present):
+    data_type            = None
+    system_type          = None
+    action               = None
+    purpose              = None
+    deployment_context   = None
+    recipients           = None
+    topic                = 'special category data processing for bias detection in high-risk AI'
+    jurisdiction         = 'EU'
+    concepts             = ['special category data', 'explicit consent', 'bias detection', 'high-risk AI system', 'data governance']  <- KG anchors on these
+
+==============================================================================
+ STAGE 2: KEYWORDS  -  which fields anchor the graph search
+==============================================================================
+  source fields passed to _kg_keywords (concepts FIRST, then data_type, system_type, topic, purpose, action):
+    - 'special category data'
+    - 'explicit consent'
+    - 'bias detection'
+    - 'high-risk AI system'
+    - 'data governance'
+    - 'special category data processing for bias detection in high-risk AI'
+
+  keywords produced (19):
+    'special category data'          (phrase)
+    'specialcategory'                (de-spaced phrase)
+    'special'                        (word)
+    'category'                       (word)
+    'explicit consent'               (phrase)
+    'explicitconsent'                (de-spaced phrase)
+    'explicit'                       (word)
+    'consent'                        (word)
+    'bias detection'                 (phrase)
+    'biasdetection'                  (de-spaced phrase)
+    'bias'                           (word)
+    'detection'                      (word)
+    'high-risk ai system'            (phrase)
+    'high-riskai'                    (word)
+    'high-risk'                      (word)
+    'data governance'                (phrase)
+    'governance'                     (word)
+    'special category data processing for bias detection in high-risk ai' (phrase)
+    'specialcategorybiasdetectionhigh-riskai' (de-spaced phrase)
+
+  Match rule: node label / predicate / uri CONTAINS any keyword (lowercased).
+  Node labels are PascalCase concatenations, so the de-spaced variant is what
+  actually matches a label like 'LegalBasis'.
+
+==============================================================================
+ STAGE 3: CYPHER  -  the exact query sent to Neo4j
+==============================================================================
+// $keywords = ["special category data", "specialcategory", "special", "category", "explicit consent", "explicitconsent", "explicit", "consent", "bias detection", "biasdetection", "bias", "detection", "high-risk ai system", "high-riskai", "high-risk", "data governance", "governance", "special category data processing for bias detection in high-risk ai", "specialcategorybiasdetectionhigh-riskai"]
+//
+// PASS A - anchor node is the SUBJECT of the edge
+MATCH (s:Concept)-[r:REL]->(o:Concept)
+WHERE any(kw IN $keywords
+          WHERE toLower(s.label)     CONTAINS kw
+             OR toLower(r.predicate) CONTAINS kw
+             OR (s.uri IS NOT NULL AND toLower(s.uri) CONTAINS kw))
+RETURN s.label AS subject, r.predicate AS predicate, o.label AS object,
+       s.typed AS subject_typed, o.typed AS object_typed,
+       r.regulation AS regulation, r.article_id AS article_id,
+       r.deontic AS deontic, r.confidence AS confidence
+ORDER BY r.confidence DESC, s.typed DESC
+LIMIT 30
+
+UNION
+
+// PASS B - anchor node is the OBJECT of the edge
+MATCH (s:Concept)-[r:REL]->(o:Concept)
+WHERE any(kw IN $keywords
+          WHERE toLower(o.label)     CONTAINS kw
+             OR toLower(r.predicate) CONTAINS kw
+             OR (o.uri IS NOT NULL AND toLower(o.uri) CONTAINS kw))
+RETURN s.label AS subject, r.predicate AS predicate, o.label AS object,
+       s.typed AS subject_typed, o.typed AS object_typed,
+       r.regulation AS regulation, r.article_id AS article_id,
+       r.deontic AS deontic, r.confidence AS confidence
+ORDER BY r.confidence DESC, s.typed DESC
+LIMIT 20
+
+==============================================================================
+ STAGE 4: RAW HITS  -  every triple the graph returned, pre-ranking
+==============================================================================
+  29 distinct triples matched (shown ranked; STAGE 5 explains the order).
+
+==============================================================================
+ STAGE 5: RANKED  -  full list; [KEEP] = kept by kg_retrieve(top_k=12) after diversity
+==============================================================================
+  keep   #  kwHit  conf typed  triple  [deontic]  (article)
+  KEEP   1      6   0.9     1  ProcessingOfSpecialCat --hasLegalBasis--> ExplicitConsent [prohibition] (GDPR__Art9)
+  KEEP   2      3   0.9     1  SpecialCategoryData --hasPersonalData--> RacialOrEthnicOrigin [prohibition] (GDPR__Art9)
+  KEEP   3      3   0.9     1  SpecialCategoryData --hasPersonalData--> PoliticalOpinions [prohibition] (GDPR__Art9)
+  KEEP   4      3   0.9     1  SpecialCategoryData --hasPersonalData--> ReligiousOrPhilosophic [prohibition] (GDPR__Art9)
+  KEEP   5      3   0.9     1  ProcessingOfSpecialCat --hasLegalBasis--> UnionOrMemberStateLawR [prohibition] (GDPR__Art9)
+   .     6      3   0.9     0  SpecialCategoryData --hasPersonalData--> TradeUnionMembership [prohibition] (GDPR__Art9)
+   .     7      3   0.9     0  SpecialCategoryData --hasPersonalData--> GeneticData [prohibition] (GDPR__Art9)
+   .     8      3   0.9     0  SpecialCategoryData --hasPersonalData--> BiometricData [prohibition] (GDPR__Art9)
+   .     9      3   0.9     0  SpecialCategoryData --hasPersonalData--> HealthData [prohibition] (GDPR__Art9)
+   .    10      3   0.9     0  SpecialCategoryData --hasPersonalData--> SexLifeOrSexualOrienta [prohibition] (GDPR__Art9)
+   .    11      3   0.8     2  ExplicitConsent --hasLegalBasis--> LegalBasis [prohibition] (GDPR__Art22)
+   .    12      3   0.8     1  ProcessingOfSpecialCat --hasPurpose--> VitalInterest [prohibition] (GDPR__Art9)
+   .    13      3   0.8     0  ProcessingOfSpecialCat --hasPurpose--> EstablishingLegalClaim [prohibition] (GDPR__Art9)
+  KEEP  14      3   0.7     1  AutomatedProcessing --hasLegalBasis--> ExplicitConsentForAuto [prohibition] (DUAA 2025__ArtS80-22B)
+   .    15      1   0.9     2  Processing --hasLegalBasis--> DataSubjectConsentStat [obligation] (GDPR__Art6)
+   .    16      1   0.9     2  DataSubject --hasRight--> RightToWithdrawConsent [obligation] (GDPR__Art7)
+  KEEP  17      1   0.9     2  HighRiskAISystem --hasObligation--> DataGovernancePractice [obligation] (EU AI Act__Art10)
+   .    18      1   0.9     1  Controller --hasObligation--> ConsentDemonstration [obligation] (GDPR__Art7)
+  KEEP  19      1   0.9     0  InformedConsent --hasPurpose--> ProtectSubjectRights [classification_rule] (EU MDR 2017/745__Art2)
+   .    20      1   0.8     2  WithdrawalOfConsent --hasNotice--> ConsentWithdrawalNotic [obligation] (GDPR__Art7)
+  KEEP  21      1   0.8     2  DataGovernancePractice --hasObligation--> ExaminationProcedure [obligation] (EU AI Act__Art10)
+  KEEP  22      1   0.8     2  PersonalData --hasLegalBasis--> SpecialCategoriesDataP [obligation] (EU AI Act__Art10)
+   .    23      1   0.8     1  Consent --hasNotice--> Notice [obligation] (GDPR__Art7)
+   .    24      1   0.8     1  DataSubjectsConsent --hasLegalBasis--> LegalBasis [obligation] (GDPR__Art7)
+   .    25      1   0.8     1  SpecialCategoriesOfPer --hasRisk--> Risk [prohibition] (GDPR__Art22)
+  KEEP  26      1   0.8     1  HighRiskAISystem --hasRisk--> BiasedOutputs [obligation] (EU AI Act__Art15)
+  KEEP  27      1   0.8     1  StudentMonitoring --hasPurpose--> ProhibitedBehaviorDete [classification_rule] (EU AI Act__ArtAnnex III)
+   .    28      1   0.8     0  AutomatedDecision --hasPersonalData--> SpecialCategoriesOfPer [prohibition] (GDPR__Art22)
+   .    29      1   0.7     2  ConsentRecord --hasPersonalData--> PersonalData [obligation] (GDPR__Art7)
+
+  12 triples kept by diversity-aware retrieval (KEEP), out of 29 matched.
+  regulations in the kept set: ['DUAA 2025', 'EU AI Act', 'EU MDR 2017/745', 'GDPR']
+  CROSS-REGULATION reached (4 regulations kept) - via keyword/concept match + diversity.
+  articles reachable in the kept set: ['DUAA 2025__ArtS80-22B', 'EU AI Act__Art10', 'EU AI Act__Art15', 'EU AI Act__ArtAnnex III', 'EU MDR 2017/745__Art2', 'GDPR__Art9']
+
+==============================================================================
+ STAGE 6: CONTEXT  -  the KG block the LLM receives (RAG omitted)
+==============================================================================
+## STRUCTURED RULES (knowledge graph)
+- ProcessingOfSpecialCategoryData --[hasLegalBasis]--> ExplicitConsent [prohibition] (GDPR, Article 9) [chunks: GDPR_Art9_Para1, GDPR_Art9_Para2_a] ΓÜá untyped
+- AutomatedProcessing --[hasLegalBasis]--> ExplicitConsentForAutomatedDecisionMaking [prohibition] (DUAA 2025, ArtS80-22B) [chunks: DUAA_S80_Art22B_1, DUAA_S80_Art22B_2] ΓÜá untyped
+- HighRiskAISystem --[hasObligation]--> DataGovernancePractice [obligation] (EU AI Act, Article 10) [chunks: EUAI_Art10_Para1, EUAI_Art10_Para2_a]
+- InformedConsent --[hasPurpose]--> ProtectSubjectRights [classification_rule] (EU MDR 2017/745, Article 2) [chunks: EUMDR_Art2_Para1] ΓÜá untyped
+- SpecialCategoryData --[hasPersonalData]--> RacialOrEthnicOrigin [prohibition] (GDPR, Article 9) [chunks: GDPR_Art9_Para1, GDPR_Art9_Para2_a] ΓÜá untyped
+- DataGovernancePractice --[hasObligation]--> ExaminationProcedure [obligation] (EU AI Act, Article 10) [chunks: EUAI_Art10_Para1, EUAI_Art10_Para2_a]
+- SpecialCategoryData --[hasPersonalData]--> PoliticalOpinions [prohibition] (GDPR, Article 9) [chunks: GDPR_Art9_Para1, GDPR_Art9_Para2_a] ΓÜá untyped
+- PersonalData --[hasLegalBasis]--> SpecialCategoriesDataProcessingReason [obligation] (EU AI Act, Article 10) [chunks: EUAI_Art10_Para1, EUAI_Art10_Para2_a]
+- SpecialCategoryData --[hasPersonalData]--> ReligiousOrPhilosophicalBeliefs [prohibition] (GDPR, Article 9) [chunks: GDPR_Art9_Para1, GDPR_Art9_Para2_a] ΓÜá untyped
+- HighRiskAISystem --[hasRisk]--> BiasedOutputs [obligation] (EU AI Act, Article 15) [chunks: EUAI_Art15_Para1, EUAI_Art15_Para2]
+- StudentMonitoring --[hasPurpose]--> ProhibitedBehaviorDetection [classification_rule] (EU AI Act, ArtAnnex III) [chunks: EUAI_AnnexIII_Point1_a, EUAI_AnnexIII_Point1_b]
+- ProcessingOfSpecialCategoryData --[hasLegalBasis]--> UnionOrMemberStateLawRequirement [prohibition] (GDPR, Article 9) [chunks: GDPR_Art9_Para1, GDPR_Art9_Para2_a] ΓÜá untyped
+
+## REGULATION EXCERPTS (verbatim, for grounding)
