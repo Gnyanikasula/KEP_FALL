@@ -1,5 +1,0 @@
-arm,metric,vs,n,delta,CI_lo_95,CI_hi_95,p_two_sided,significant
-hybrid,faithful_F1,rag_only,61,0.0915,0.0213,0.1675,0.0092,YES
-hybrid,deontic_align,rag_only,61,0.2066,0.1257,0.2904,0.0,YES
-kg_only,faithful_F1,rag_only,61,-0.0051,-0.1202,0.1019,0.9432,NO
-kg_only,deontic_align,rag_only,60,0.16,0.0817,0.2411,0.0004,YES

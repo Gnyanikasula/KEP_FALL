@@ -1,0 +1,120 @@
+Step 6 — Graph Validation Report
+============================================================
+
+── BASIC ──
+
+  Total nodes and edges
+  Expected : nodes=546, edges=618
+  Status   : OK
+    {'nodes': 546, 'edges': 618}
+
+  Typed vs new node breakdown
+  Expected : true: 204, false: 342
+  Status   : OK
+    {'typed': True, 'n': 204}
+    {'typed': False, 'n': 342}
+
+  Triples per regulation
+  Expected : EU AI Act ~225, GDPR ~144, UK MDR ~106, EU MDR ~96, DUAA ~47
+  Status   : OK
+    {'regulation': 'EU AI Act', 'triples': 225}
+    {'regulation': 'GDPR', 'triples': 144}
+    {'regulation': 'UK MDR 2002', 'triples': 106}
+    {'regulation': 'EU MDR 2017/745', 'triples': 96}
+    {'regulation': 'DUAA 2025', 'triples': 47}
+
+  Predicate distribution
+  Expected : hasObligation most frequent (~187), all 13 predicates present
+  Status   : OK
+    {'predicate': 'hasObligation', 'n': 187}
+    {'predicate': 'hasRisk', 'n': 74}
+    {'predicate': 'hasPurpose', 'n': 71}
+    {'predicate': 'hasTechnicalMeasure', 'n': 63}
+    {'predicate': 'hasRight', 'n': 48}
+
+  Orphan nodes (no edges)
+  Expected : 0  (every node should have at least one edge)
+  Status   : OK
+    {'orphans': 0}
+
+  Nodes missing required properties
+  Expected : 0
+  Status   : OK
+    {'broken': 0}
+
+── MEDIUM ──
+
+  Known triple — DataSubject has right to withdraw consent (GDPR Art7)
+  Expected : 1 row: DataSubject hasRight RightToWithdrawConsent, GDPR, GDPR__Art7
+  Status   : OK
+    {'s.label': 'DataSubject', 'r.predicate': 'hasRight', 'o.label': 'RightToWithdrawConsent', 'r.regulation': 'GDPR', 'r.article_id': 'GDPR__Art7'}
+    {'s.label': 'DataSubject', 'r.predicate': 'hasRight', 'o.label': 'RightToWithdrawConsent', 'r.regulation': 'GDPR', 'r.article_id': 'GDPR__Art17'}
+
+  Known triple — Processing has legal basis (GDPR Art6)
+  Expected : Multiple rows — Consent, ContractNecessity, LegalObligationUnionLaw, VitalInterest etc
+  Status   : OK
+    {'s.label': 'Processing', 'r.predicate': 'hasLegalBasis', 'o.label': 'DataSubjectConsentStatus', 'r.confidence': 0.9}
+    {'s.label': 'Processing', 'r.predicate': 'hasLegalBasis', 'o.label': 'ContractNecessity', 'r.confidence': 0.8}
+    {'s.label': 'Processing', 'r.predicate': 'hasLegalBasis', 'o.label': 'LegalObligationUnionLaw', 'r.confidence': 0.8}
+
+  Top 10 most connected nodes (hubs)
+  Expected : Entity, Processing, PersonalData should be top hubs
+  Status   : OK
+    {'concept': 'Entity', 'typed': True, 'degree': 49}
+    {'concept': 'DataSubject', 'typed': True, 'degree': 40}
+    {'concept': 'PersonalData', 'typed': True, 'degree': 37}
+    {'concept': 'HighRiskAISystem', 'typed': True, 'degree': 32}
+    {'concept': 'Obligation', 'typed': True, 'degree': 29}
+
+  Provenance — all triples from GDPR Art9 with chunk IDs
+  Expected : ~9 triples, all with chunk_ids like ['GDPR_Art9_Para1', ...]
+  Status   : OK
+    {'s.label': 'SpecialCategoryData', 'r.predicate': 'hasPersonalData', 'o.label': 'RacialOrEthnicOrigin', 'r.chunk_ids': ['GDPR_Art9_Para1', 'GDPR_Art9_Para2_a', 'GDPR_Art9_Para2_b', 'GDPR_Art9_Para2_c', 'GDPR_Art9_Para2_d', 'GDPR_Art9_Para2_e', 'GDPR_Art9_Para2_f', 'GDPR_Art9_Para2_g', 'GDPR_Art9_Para2_h', 'GDPR_Art9_Para2_i', 'GDPR_Art9_Para2_j', 'GDPR_Art9_Para3', 'GDPR_Art9_Para4'], 'r.confidence': 0.9}
+    {'s.label': 'SpecialCategoryData', 'r.predicate': 'hasPersonalData', 'o.label': 'PoliticalOpinions', 'r.chunk_ids': ['GDPR_Art9_Para1', 'GDPR_Art9_Para2_a', 'GDPR_Art9_Para2_b', 'GDPR_Art9_Para2_c', 'GDPR_Art9_Para2_d', 'GDPR_Art9_Para2_e', 'GDPR_Art9_Para2_f', 'GDPR_Art9_Para2_g', 'GDPR_Art9_Para2_h', 'GDPR_Art9_Para2_i', 'GDPR_Art9_Para2_j', 'GDPR_Art9_Para3', 'GDPR_Art9_Para4'], 'r.confidence': 0.9}
+    {'s.label': 'SpecialCategoryData', 'r.predicate': 'hasPersonalData', 'o.label': 'ReligiousOrPhilosophicalBeliefs', 'r.chunk_ids': ['GDPR_Art9_Para1', 'GDPR_Art9_Para2_a', 'GDPR_Art9_Para2_b', 'GDPR_Art9_Para2_c', 'GDPR_Art9_Para2_d', 'GDPR_Art9_Para2_e', 'GDPR_Art9_Para2_f', 'GDPR_Art9_Para2_g', 'GDPR_Art9_Para2_h', 'GDPR_Art9_Para2_i', 'GDPR_Art9_Para2_j', 'GDPR_Art9_Para3', 'GDPR_Art9_Para4'], 'r.confidence': 0.9}
+    {'s.label': 'SpecialCategoryData', 'r.predicate': 'hasPersonalData', 'o.label': 'TradeUnionMembership', 'r.chunk_ids': ['GDPR_Art9_Para1', 'GDPR_Art9_Para2_a', 'GDPR_Art9_Para2_b', 'GDPR_Art9_Para2_c', 'GDPR_Art9_Para2_d', 'GDPR_Art9_Para2_e', 'GDPR_Art9_Para2_f', 'GDPR_Art9_Para2_g', 'GDPR_Art9_Para2_h', 'GDPR_Art9_Para2_i', 'GDPR_Art9_Para2_j', 'GDPR_Art9_Para3', 'GDPR_Art9_Para4'], 'r.confidence': 0.9}
+    {'s.label': 'SpecialCategoryData', 'r.predicate': 'hasPersonalData', 'o.label': 'GeneticData', 'r.chunk_ids': ['GDPR_Art9_Para1', 'GDPR_Art9_Para2_a', 'GDPR_Art9_Para2_b', 'GDPR_Art9_Para2_c', 'GDPR_Art9_Para2_d', 'GDPR_Art9_Para2_e', 'GDPR_Art9_Para2_f', 'GDPR_Art9_Para2_g', 'GDPR_Art9_Para2_h', 'GDPR_Art9_Para2_i', 'GDPR_Art9_Para2_j', 'GDPR_Art9_Para3', 'GDPR_Art9_Para4'], 'r.confidence': 0.9}
+
+  Cross-regulation concepts (appear in 3+ regulations)
+  Expected : Base concepts like Entity, Processing, Obligation should span all regulations
+  Status   : OK
+    {'c.label': 'Entity', 'c.typed': True, 'regs': ['GDPR', 'UK MDR 2002', 'DUAA 2025', 'EU AI Act', 'EU MDR 2017/745']}
+    {'c.label': 'Obligation', 'c.typed': True, 'regs': ['GDPR', 'EU AI Act', 'DUAA 2025', 'UK MDR 2002', 'EU MDR 2017/745']}
+    {'c.label': 'LegalBasis', 'c.typed': True, 'regs': ['UK MDR 2002', 'GDPR', 'DUAA 2025', 'EU AI Act', 'EU MDR 2017/745']}
+    {'c.label': 'TechnicalMeasure', 'c.typed': True, 'regs': ['GDPR', 'EU AI Act', 'UK MDR 2002', 'EU MDR 2017/745', 'DUAA 2025']}
+    {'c.label': 'OrganisationalMeasure', 'c.typed': True, 'regs': ['EU MDR 2017/745', 'GDPR', 'EU AI Act', 'UK MDR 2002', 'DUAA 2025']}
+
+  Edges missing provenance properties
+  Expected : 0  (every edge must have full provenance)
+  Status   : OK
+    {'broken': 0}
+
+── EXTREME ──
+
+  Two-hop path — PersonalData risk chain
+  Expected : Paths showing PersonalData -> Risk/Obligation -> mitigation classes
+  Status   : OK
+    {'chain': ['PersonalData', 'Processing', 'DataSubject'], 'predicates': ['hasPurpose', 'hasNotice']}
+    {'chain': ['PersonalData', 'Processing', 'Purpose'], 'predicates': ['hasPurpose', 'hasPurpose']}
+    {'chain': ['PersonalData', 'Processing', 'Purpose'], 'predicates': ['hasPurpose', 'hasPurpose']}
+    {'chain': ['PersonalData', 'Processing', 'UnlawfulProcessing'], 'predicates': ['hasPurpose', 'hasRisk']}
+    {'chain': ['PersonalData', 'Processing', 'DataSubjectConsentStatus'], 'predicates': ['hasPurpose', 'hasLegalBasis']}
+
+  Cross-regulation compliance — obligations shared by GDPR and EU AI Act
+  Expected : Obligations like Obligation, Notice, TechnicalOrganisationalMeasure shared across both
+  Status   : OK
+    {'shared_obligation': 'Obligation', 'o.typed': True}
+
+  Subgraph density — typed-only nodes and edges
+  Expected : typed_edges ~200 (fully-typed triples from Step 4)
+  Status   : OK
+    {'typed_nodes': 164, 'typed_edges': 240}
+
+  Full provenance chain — trace GDPR Art5 obligations back to chunks
+  Expected : ~11 triples, chunk_ids starting with 'GDPR_Art5_Para1_*'
+  Status   : OK
+    {'s.label': 'PersonalData', 'r.predicate': 'hasObligation', 'o.label': 'LawfulnessFairnessAndTransparency', 'first_chunk': 'GDPR_Art5_Para1_a', 'r.confidence': 0.9}
+    {'s.label': 'PersonalData', 'r.predicate': 'hasObligation', 'o.label': 'PurposeLimitation', 'first_chunk': 'GDPR_Art5_Para1_a', 'r.confidence': 0.9}
+    {'s.label': 'PersonalData', 'r.predicate': 'hasObligation', 'o.label': 'DataMinimisation', 'first_chunk': 'GDPR_Art5_Para1_a', 'r.confidence': 0.9}
+    {'s.label': 'PersonalData', 'r.predicate': 'hasObligation', 'o.label': 'Accuracy', 'first_chunk': 'GDPR_Art5_Para1_a', 'r.confidence': 0.9}
+    {'s.label': 'PersonalData', 'r.predicate': 'hasObligation', 'o.label': 'StorageLimitation', 'first_chunk': 'GDPR_Art5_Para1_a', 'r.confidence': 0.9}

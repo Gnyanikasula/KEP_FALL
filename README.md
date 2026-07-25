@@ -7,15 +7,15 @@ sdk: docker
 app_port: 7860
 pinned: false
 ---
-# SHIELD — Structured Healthcare Intelligence for Ethical and Legal Decisions
+# KEP_FALL — Structured Healthcare Intelligence for Ethical and Legal Decisions
 
 > A Knowledge-Graph-augmented RAG system for healthcare AI compliance, covering GDPR, EU AI Act, EU MDR 2017/745, UK MDR 2002, and the Data (Use and Access) Act 2025 (DUAA 2025).
 
 ---
 
-## What is SHIELD?
+## What is KEP_FALL?
 
-SHIELD answers regulatory compliance questions for healthcare AI and medical device products. It combines a **semantic knowledge graph** (Neo4j AuraDB) built from five major regulations with a **vector retrieval layer** (ChromaDB + nomic-embed-text-v1.5) and an **LLM synthesis layer** (Llama 4 Scout via Groq) to produce answers that cite specific articles, identify applicable obligations, and distinguish between EU and UK jurisdictions.
+KEP_FALL answers regulatory compliance questions for healthcare AI and medical device products. It combines a **semantic knowledge graph** (Neo4j AuraDB) built from five major regulations with a **vector retrieval layer** (ChromaDB + nomic-embed-text-v1.5) and an **LLM synthesis layer** (Llama 4 Scout via Groq) to produce answers that cite specific articles, identify applicable obligations, and distinguish between EU and UK jurisdictions.
 
 It is designed for founders, engineers, researchers, and investors who need to know whether their product is compliant — not a generic chatbot, but a pipeline that reasons over structured regulatory knowledge.
 
