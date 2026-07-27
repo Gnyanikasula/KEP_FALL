@@ -52,8 +52,15 @@ REASONING_EFFORT      = os.getenv("KEP_FALL_REASONING_EFFORT", "low")
 MAX_COMPLETION_TOKENS = int(os.getenv("KEP_FALL_ROUTE_MAX_COMPLETION", "400"))
 RATE_LIMIT_RETRIES    = 3
 RATE_LIMIT_DELAY      = 8
-# MODEL          = "openai/gpt-oss-120b"
-MODEL          = "openai/gpt-oss-20b"
+# Routing runs on EVERY request and must return valid JSON on the first try.
+# gpt-oss-* are *reasoning* models: they spend completion tokens thinking before
+# emitting the JSON, so a small MAX_COMPLETION_TOKENS budget gets consumed by
+# reasoning and the document never closes -> 400 json_validate_failed. Routing
+# is a structured-classification task that a plain instruct model does reliably
+# and cheaply, and Groq rate-limits per model, so this also keeps the routing
+# call out of the synthesis model's TPM window. Do NOT switch this back to a
+# gpt-oss model without also removing the max_completion_tokens cap.
+MODEL          = "llama-3.3-70b-versatile"
 MAX_RETRIES  = 2
 RETRY_DELAY  = 2
 
@@ -370,17 +377,23 @@ Return STRICT JSON only - no prose, no markdown:
 def call_llm(question: str, nudge: str = "") -> str:
     from groq import Groq
     client = Groq(api_key=GROQ_API_KEY)
+    kwargs = dict(
+        model=MODEL, temperature=0,
+        max_completion_tokens=MAX_COMPLETION_TOKENS,
+        response_format={"type": "json_object"},
+        messages=[{"role": "system", "content": SYSTEM + nudge},
+                  {"role": "user",   "content": question}],
+    )
+    # reasoning_effort is only a valid parameter on the gpt-oss reasoning
+    # models; passing it to a Llama instruct model is a 400. Set it only when
+    # the routing model is actually a reasoning model.
+    if "gpt-oss" in MODEL:
+        kwargs["reasoning_effort"] = REASONING_EFFORT
+
     delay = RATE_LIMIT_DELAY
     for attempt in range(1 + RATE_LIMIT_RETRIES):
         try:
-            resp = client.chat.completions.create(
-                model=MODEL, temperature=0,
-                reasoning_effort=REASONING_EFFORT,
-                max_completion_tokens=MAX_COMPLETION_TOKENS,
-                response_format={"type": "json_object"},
-                messages=[{"role": "system", "content": SYSTEM + nudge},
-                          {"role": "user",   "content": question}],
-            )
+            resp = client.chat.completions.create(**kwargs)
             return resp.choices[0].message.content
         except Exception as err:
             msg = str(err).lower()
