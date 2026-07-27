@@ -1,4 +1,3 @@
-
 import json, logging, os, sys, time, uuid, asyncio
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -230,6 +229,13 @@ async def query_stream(req: QueryRequest, request: Request):
     log.info("query_stream", extra={"request_id": rid, "session_id": sid})
 
     async def gen():
+        # Some proxies and browsers buffer a streamed response until ~2KB has
+        # accumulated, which holds the early `step` frames back until the
+        # verdict arrives — the steps then flash past in a single tick and the
+        # user sees nothing but an empty panel. A one-off padding comment
+        # (SSE lines beginning ':' are ignored by the client) fills that buffer
+        # immediately so every subsequent frame flushes as soon as it is sent.
+        yield ":" + (" " * 2048) + "\n\n"
         yield _sse("session", {"session_id": sid})
         yield _sse("step", {"stage": "routing", "label": "Understanding the question"})
         await asyncio.sleep(0.05)
@@ -237,8 +243,18 @@ async def query_stream(req: QueryRequest, request: Request):
         # Pipeline runs in a thread so the event loop isn't blocked
         loop = asyncio.get_event_loop()
 
-        # routing step
-        payload = await loop.run_in_executor(None, understand_query, req.question)
+        # routing step. Any exception here (e.g. an LLM API 400/timeout) must
+        # be surfaced to the client as an `error` event; if we let it propagate
+        # the StreamingResponse generator dies mid-flight and the browser just
+        # sees the connection close with no verdict and no error — the "stays
+        # blank then nothing happens" symptom.
+        try:
+            payload = await loop.run_in_executor(None, understand_query, req.question)
+        except Exception as exc:
+            log.error("route_failed", extra={"request_id": rid}, exc_info=exc)
+            yield _sse("error", {"detail": "Could not understand the question. "
+                                           "Please try rephrasing.", "request_id": rid})
+            return
         if not payload:
             yield _sse("error", {"detail": "Could not understand the question."})
             return
@@ -255,7 +271,13 @@ async def query_stream(req: QueryRequest, request: Request):
         await asyncio.sleep(0.05)
         yield _sse("step", {"stage": "synthesizing", "label": "Synthesizing verdict"})
 
-        result, parsed = await loop.run_in_executor(None, _run_pipeline, req.question, sid)
+        try:
+            result, parsed = await loop.run_in_executor(None, _run_pipeline, req.question, sid)
+        except Exception as exc:
+            log.error("synthesis_failed", extra={"request_id": rid}, exc_info=exc)
+            yield _sse("error", {"detail": "Verdict synthesis failed. Please try again.",
+                                 "request_id": rid})
+            return
         if not result:
             yield _sse("error", {"detail": "Verdict synthesis failed."})
             return

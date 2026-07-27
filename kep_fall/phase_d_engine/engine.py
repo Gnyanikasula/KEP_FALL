@@ -1216,7 +1216,7 @@ Example shape (values are illustrative only):
   "rules": ["GDPR, Article 9", "EU AI Act, Article 6"],
   "reasoning": "The system processes special category health data and must meet strict conditions before deployment.",
   "conditions": ["Obtain explicit consent (GDPR, Art.9(2)(a))", "Conduct DPIA (GDPR, Art.35)"],
-  "confidence": 82,
+  "confidence": <your honest calibration, integer 0-100 — see the scale above; do not copy this example>,
   "citations": [
     {"regulation": "GDPR", "provision": "Article 9"},
     {"regulation": "EU AI Act", "provision": "Article 6"}
@@ -1273,13 +1273,13 @@ EXACT FIELD TYPES:
                  DUAA uses "Article 22A" / "22B" / "22C" / "22D" / "Schedule 6".
                  Cite ONLY provisions that appear in the CONTEXT. Never invent one.
 
-Example shape:
+Example shape (values are illustrative only — calibrate confidence yourself):
 {
   "verdict": "Informational",
   "rules": ["EU AI Act, Article 6"],
   "reasoning": "High-risk AI systems are those listed in Annex III or that serve as safety components.",
   "conditions": [],
-  "confidence": 78,
+  "confidence": <your honest calibration, integer 0-100 — see the scale above; do not copy this example>,
   "citations": [
     {"regulation": "EU AI Act", "provision": "Article 6"},
     {"regulation": "EU AI Act", "provision": "Annex III"}

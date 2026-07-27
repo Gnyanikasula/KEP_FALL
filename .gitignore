@@ -1,36 +1,35 @@
-# --- Secrets ---------------------------------------------------------------
+# Secrets
 .env
 *.env.local
 
-# --- Virtualenvs -----------------------------------------------------------
+# Virtualenvs
 .venv/
 venv/
 fallenv/
 
-# --- Python ----------------------------------------------------------------
+# Python 
 __pycache__/
 *.py[cod]
 .pytest_cache/
 *.egg-info/
 
-# --- Source legislation (copyright; fetch per docs/DATA_SOURCES.md) --------
+# Source legislation (copyright; fetch per docs/DATA_SOURCES.md) -
 data/raw/*.pdf
 
-# --- Third-party vocabularies (large, fetched separately) ------------------
+# Third-party vocabularies (large, fetched separately) 
 vendor/
 
-# --- Regenerable build artefacts ------------------------------------------
-chroma_db/            # rebuild: python -m kep_fall.phase_d_engine.vector_store
-data/graph/*.npy      # rebuild: python -m kep_fall.phase_c_graph.step1_build_vocab_index
+# Regenerable build artefacts 
+chroma_db/           
+data/graph/*.npy      
 data/cache/*.db
 data/cache/*.db-wal
 data/cache/*.db-shm
 
-# --- IDE / OS --------------------------------------------------------------
+# IDE / OS 
 .vscode/
 .idea/
 .DS_Store
 
 # NOTE: results/ IS tracked on purpose. The evaluation outputs and build logs
 # are the dissertation's evidence base and must be reproducible from the repo.
-# The previous `*.txt` blanket rule silently excluded every build report.
