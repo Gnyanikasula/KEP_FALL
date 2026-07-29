@@ -200,6 +200,18 @@ def _persist(sid: str, result, parsed: dict) -> None:
     })
 
 
+def _verdict_frame(sid: str, question: str, result, parsed: dict,
+                   rid: str) -> dict:
+    """The verdict payload sent to the client, shared by the blocking and
+    streaming endpoints so their shapes can't drift."""
+    return {
+        "session_id": sid, "question": question,
+        "verdict": result.verdict, "rules": result.rules,
+        "reasoning": result.reasoning, "conditions": result.conditions,
+        "confidence": result.confidence, "parsed": parsed, "request_id": rid,
+    }
+
+
 # blocking query
 @app.post("/query", response_model=QueryResponse)
 def query(req: QueryRequest, request: Request):
@@ -247,39 +259,68 @@ async def query_stream(req: QueryRequest, request: Request):
         yield _sse("step", {"stage": "routing", "label": "Understanding the question"})
         await asyncio.sleep(0.05)
 
-        # Pipeline runs in a thread so the event loop isn't blocked
         loop = asyncio.get_event_loop()
 
-        # routing step. Any exception here (e.g. an LLM API 400/timeout) must
-        # be surfaced to the client as an `error` event; if we let it propagate
-        # the StreamingResponse generator dies mid-flight and the browser just
-        # sees the connection close with no verdict and no error — the "stays
-        # blank then nothing happens" symptom.
+        # --- Stage 1: prepare (routes ONCE) ------------------------------
+        # Any exception here (e.g. an LLM API 400/timeout) must be surfaced to
+        # the client as an `error` event; letting it propagate kills the
+        # generator mid-flight and the browser sees the connection close with
+        # no verdict and no error — the "stays blank then nothing" symptom.
         try:
-            payload = await loop.run_in_executor(None, understand_query, req.question)
+            history = store.get_messages(sid)
+            plan = await loop.run_in_executor(None, V.prepare, req.question, history)
         except Exception as exc:
             log.error("route_failed", extra={"request_id": rid}, exc_info=exc)
             yield _sse("error", {"detail": "Could not understand the question. "
                                            "Please try rephrasing.", "request_id": rid})
             return
-        if not payload:
+        if plan is None:
             yield _sse("error", {"detail": "Could not understand the question."})
             return
+
+        parsed = plan.payload.model_dump()
         yield _sse("step", {"stage": "routed",
-                            "label": f"Intent: {payload.intent}",
-                            "intent": payload.intent,
-                            "jurisdiction": payload.jurisdiction})
+                            "label": f"Intent: {plan.intent}",
+                            "intent": plan.intent,
+                            "jurisdiction": plan.payload.jurisdiction})
         await asyncio.sleep(0.05)
 
-        # retrieval + synthesis step
-        stage_label = ("Retrieving regulations" if payload.intent in ("knowledge", "scenario")
+        # --- Canned intents: no retrieval, no synthesis ------------------
+        if plan.mode == "canned":
+            result = plan.canned
+            _persist(sid, result, parsed)
+            yield _sse("verdict", _verdict_frame(sid, req.question, result, parsed, rid))
+            yield _sse("done", {"ok": True})
+            return
+
+        # --- Stage 2: retrieve, then emit the evidence BEFORE synthesis --
+        # This is the honest ordering: the graph edges and passages exist the
+        # moment retrieval returns, before the LLM has written a word. Emitting
+        # them here populates the provenance panel while synthesis runs, rather
+        # than after.
+        stage_label = ("Retrieving regulations"
+                       if plan.intent in ("knowledge", "scenario")
                        else "Preparing response")
         yield _sse("step", {"stage": "retrieving", "label": stage_label})
-        await asyncio.sleep(0.05)
-        yield _sse("step", {"stage": "synthesizing", "label": "Synthesizing verdict"})
-
         try:
-            result, parsed = await loop.run_in_executor(None, _run_pipeline, req.question, sid)
+            evidence = await loop.run_in_executor(None, V.retrieve, plan)
+        except Exception as exc:
+            log.error("retrieve_failed", extra={"request_id": rid}, exc_info=exc)
+            yield _sse("error", {"detail": "Failed to retrieve regulatory context. "
+                                           "Please try again.", "request_id": rid})
+            return
+
+        summary = V.evidence_summary(evidence)
+        log.info("evidence", extra={"request_id": rid,
+                 "kg_edges": summary["counts"]["edges"],
+                 "rag_passages": summary["counts"]["passages"]})
+        yield _sse("evidence", {"session_id": sid, "request_id": rid, **summary})
+        await asyncio.sleep(0.05)
+
+        # --- Stage 3: synthesize -----------------------------------------
+        yield _sse("step", {"stage": "synthesizing", "label": "Synthesizing verdict"})
+        try:
+            result = await loop.run_in_executor(None, V.synthesize, plan, evidence)
         except Exception as exc:
             log.error("synthesis_failed", extra={"request_id": rid}, exc_info=exc)
             yield _sse("error", {"detail": "Verdict synthesis failed. Please try again.",
@@ -292,12 +333,13 @@ async def query_stream(req: QueryRequest, request: Request):
         _persist(sid, result, parsed)
         log.info("verdict", extra={"request_id": rid, "verdict": result.verdict})
 
-        yield _sse("verdict", {
-            "session_id": sid, "question": req.question,
-            "verdict": result.verdict, "rules": result.rules,
-            "reasoning": result.reasoning, "conditions": result.conditions,
-            "confidence": result.confidence, "parsed": parsed, "request_id": rid,
-        })
+        # Deterministic grounding: which cited articles are backed by the
+        # retrieved evidence (graph edge / corpus passage / neither).
+        grounding = V.ground_citations(result, evidence)
+        log.info("grounding", extra={"request_id": rid, **grounding["counts"]})
+
+        yield _sse("verdict", _verdict_frame(sid, req.question, result, parsed, rid))
+        yield _sse("grounding", {"session_id": sid, "request_id": rid, **grounding})
         yield _sse("done", {"ok": True})
 
     return StreamingResponse(gen(), media_type="text/event-stream",

@@ -43,8 +43,8 @@ function shouldShowCard(v) {
   if (v.verdict === "Informational" && v.rules && v.rules.length > 0) return true;
   return false;
 }
-function renderAssistantResponse(v) {
-  shouldShowCard(v) ? renderVerdict(v) : renderPlainMessage(v);
+function renderAssistantResponse(v, evidence) {
+  shouldShowCard(v) ? renderVerdict(v, evidence) : renderPlainMessage(v);
 }
 
 function renderPlainMessage(v) {
@@ -72,6 +72,64 @@ function regulationCounts(rules) {
   return counts;
 }
 
+// Article-level grounding key — mirrors engine._art_key so a citation row and
+// a grounding item for the same article produce the same string and match.
+const _REG_PREFIX = {
+  "gdpr": "GDPR", "uk gdpr": "GDPR", "eu gdpr": "GDPR",
+  "eu ai act": "EUAI", "ai act": "EUAI",
+  "eu mdr 2017/745": "EUMDR", "eu mdr": "EUMDR", "mdr": "EUMDR",
+  "uk mdr 2002": "UKMDR", "uk mdr": "UKMDR",
+  "duaa 2025": "DUAA", "duaa": "DUAA",
+};
+function groundingKey(regulation, provision) {
+  const reg = (regulation || "").trim().toLowerCase();
+  const pre = _REG_PREFIX[reg] || (regulation || "").replace(/\s+/g, "");
+  let rest = (provision || "").replace(/article/ig, "").trim();
+  rest = rest.replace(/\(.*/, "");        // drop (2)(a)
+  rest = rest.replace(/S80-/i, "");       // DUAA S80-22C -> 22C
+  rest = rest.replace(/\s+/g, "");
+  return `${pre}_Art${rest}`;
+}
+
+// Attach graph/corpus/ungrounded badges to the citation rows once the
+// grounding frame arrives (after the verdict card is already in the DOM).
+function applyGrounding(g) {
+  const items = (g && g.items) || [];
+  // Find the most recently rendered citation grid that hasn't been marked yet.
+  const grids = document.querySelectorAll(".grounding-summary:not([data-done])");
+  const summary = grids[grids.length - 1];
+  if (!summary) return;
+  summary.setAttribute("data-done", "1");
+  const card = summary.closest(".verdict-card");
+  if (!card) return;
+
+  const byKey = {};
+  items.forEach((it) => { byKey[groundingKey(it.regulation, it.provision)] = it.status; });
+
+  const LABEL = { graph: "graph", corpus: "corpus", ungrounded: "ungrounded" };
+  card.querySelectorAll(".citation-row").forEach((row) => {
+    const status = byKey[row.dataset.gkey] || "ungrounded";
+    const slot = row.querySelector(".citation-ground");
+    if (slot) {
+      slot.className = `citation-ground cg-${status}`;
+      slot.textContent = LABEL[status];
+      slot.title = {
+        graph: "Backed by a knowledge-graph edge",
+        corpus: "Backed by a retrieved passage",
+        ungrounded: "Not found in retrieved evidence",
+      }[status];
+    }
+  });
+
+  const c = g.counts || {};
+  const pct = Math.round((g.grounded_ratio != null ? g.grounded_ratio : 1) * 100);
+  summary.innerHTML =
+    `<span class="gs-pct">${pct}% grounded</span>` +
+    `<span class="gs-detail">${c.graph || 0} graph · ${c.corpus || 0} corpus` +
+    (c.ungrounded ? ` · <span class="gs-warn">${c.ungrounded} ungrounded</span>` : ``) +
+    `</span>`;
+}
+
 // ── Verdict card with tabs ───────────────────────────────────────────────────
 function verdictClass(v) {
   if (v === "Allowed")               return "v-Allowed";
@@ -88,7 +146,7 @@ function gaugeColor(conf) {
   return "var(--red)";
 }
 
-function renderVerdict(v) {
+function renderVerdict(v, evidence) {
   const wrap = document.createElement("div");
   wrap.className = "msg-assistant";
   const cid = "vc-" + Math.random().toString(36).slice(2, 8);
@@ -124,32 +182,74 @@ function renderVerdict(v) {
 
   // — Tab 2: Citations —
   const tab2 = rules.length > 0
-    ? `<div class="citation-grid">
+    ? `<div class="grounding-summary" data-grounding="${cid}"></div>
+       <div class="citation-grid">
          ${rules.map((r) => {
            const { reg, art } = parseRule(r);
-           return `<div class="citation-row">
+           const gkey = groundingKey(reg, art);
+           return `<div class="citation-row" data-gkey="${escapeHtml(gkey)}">
                      <span class="citation-reg">${escapeHtml(reg)}</span>
                      <span class="citation-art">${escapeHtml(art || reg)}</span>
+                     <span class="citation-ground"></span>
                    </div>`;
          }).join("")}
        </div>`
     : `<div class="citation-empty">No specific provisions were cited for this response.</div>`;
 
-  // — Tab 3: Regulations bar chart —
-  const counts = regulationCounts(rules);
-  const maxCount = Math.max(1, ...Object.values(counts));
-  const tab3 = Object.keys(counts).length > 0
-    ? `<div class="reg-chart">
-         ${Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([reg, n]) => `
-           <div class="reg-bar-row">
-             <span class="reg-bar-label">${escapeHtml(reg)}</span>
-             <div class="reg-bar-track">
-               <div class="reg-bar-fill" style="width:${(n / maxCount) * 100}%"></div>
-             </div>
-             <span class="reg-bar-count">${n}</span>
-           </div>`).join("")}
-       </div>`
-    : `<div class="citation-empty">No regulations engaged for this response.</div>`;
+  // — Tab 3: Evidence (graph edges actually traversed) —
+  // This is the provenance view: the subject→predicate→object edges the
+  // knowledge graph returned for this question, with the article each rests on
+  // and its extraction confidence. Unlike Citations (what the LLM cited),
+  // this is what the graph supplied — the two can be cross-checked (Phase 5).
+  const edges = (evidence && evidence.edges) || [];
+  const evCounts = (evidence && evidence.counts) || {};
+  const passages = (evidence && evidence.passages) || [];
+  const tab3 = (edges.length > 0 || passages.length > 0)
+    ? `<div class="evidence-meta">
+         ${evCounts.edges || edges.length} edges ·
+         ${evCounts.passages || passages.length} passages ·
+         ${evCounts.regulations || 0} regulations
+       </div>
+       ${edges.length > 0 ? `
+       <div class="evidence-section-label">Graph edges traversed</div>
+       <div class="evidence-grid">
+         ${edges.map((e) => {
+           const conf = e.confidence != null ? Math.round(e.confidence * 100) : null;
+           const flags = [
+             e.typed      ? `<span class="ev-flag ev-typed" title="Both nodes ontology-typed">typed</span>` : "",
+             e.bridge     ? `<span class="ev-flag ev-bridge" title="Reached via cross-regulation bridge hop">bridge</span>` : "",
+             e.deontic    ? `<span class="ev-flag ev-deontic">${escapeHtml(e.deontic)}</span>` : "",
+           ].filter(Boolean).join("");
+           return `<div class="evidence-row">
+                     <div class="ev-triple">
+                       <span class="ev-node">${escapeHtml(e.subject || "")}</span>
+                       <span class="ev-pred">${escapeHtml(e.predicate || "")}</span>
+                       <span class="ev-node">${escapeHtml(e.object || "")}</span>
+                     </div>
+                     <div class="ev-src">
+                       <span class="ev-cite">${escapeHtml(e.citation || e.article_id || "")}</span>
+                       ${conf != null ? `<span class="ev-conf">${conf}%</span>` : ""}
+                       ${flags}
+                     </div>
+                   </div>`;
+         }).join("")}
+       </div>` : ""}
+       ${passages.length > 0 ? `
+       <div class="evidence-section-label">Retrieved passages${
+         (evCounts.passages && evCounts.passages > passages.length)
+           ? ` <span class="ev-shown">showing ${passages.length} of ${evCounts.passages}, closest first</span>`
+           : ``
+       }</div>
+       <div class="evidence-grid">
+         ${passages.map((p) => {
+           const dist = p.distance != null ? p.distance.toFixed(2) : null;
+           return `<div class="evidence-row ev-passage">
+                     <span class="ev-cite">${escapeHtml(p.citation || p.chunk_id || "")}</span>
+                     ${dist != null ? `<span class="ev-dist" title="vector distance (lower = closer)">dist ${dist}</span>` : ""}
+                   </div>`;
+         }).join("")}
+       </div>` : ""}`
+    : `<div class="citation-empty">No evidence was retrieved for this response.</div>`;
 
   wrap.innerHTML = `
     <div class="verdict-card">
@@ -165,7 +265,7 @@ function renderVerdict(v) {
       <div class="tabs">
         <button class="tab active" data-tab="${cid}-1">Verdict</button>
         <button class="tab" data-tab="${cid}-2">Citations<span class="tab-count">${rules.length}</span></button>
-        <button class="tab" data-tab="${cid}-3">Regulations<span class="tab-count">${Object.keys(counts).length}</span></button>
+        <button class="tab" data-tab="${cid}-3">Evidence<span class="tab-count">${edges.length}</span></button>
       </div>
       <div class="tab-panel active" id="${cid}-1">${tab1}</div>
       <div class="tab-panel" id="${cid}-2">${tab2}</div>
@@ -271,6 +371,9 @@ async function submitQuestion() {
   scrollToBottom();
 
   const stepEls = {};
+  // Holds the `evidence` frame (arrives before the verdict) so renderVerdict
+  // can attach it as the Evidence/Provenance tab when the verdict lands.
+  let pendingEvidence = null;
   function setStep(stage, label, state) {
     if (!stepEls[stage]) {
       const el = document.createElement("div");
@@ -332,13 +435,26 @@ async function submitQuestion() {
         }
       } else if (event === "step") {
         setStep(payload.stage, payload.label);
+      } else if (event === "evidence") {
+        // Arrives before the verdict; stash it and show a lightweight live
+        // count on the retrieving step so the user sees the graph did work.
+        pendingEvidence = payload;
+        const c = payload.counts || {};
+        if (stepEls["retrieving"]) {
+          stepEls["retrieving"].querySelector(".step-label").textContent =
+            `Retrieved ${c.edges || 0} graph edges · ${c.passages || 0} passages`;
+        }
+      } else if (event === "grounding") {
+        // Arrives after the verdict card is already rendered. Attach the
+        // grounding badges to the citation rows that were just drawn.
+        applyGrounding(payload);
       } else if (event === "verdict") {
         // mark all steps done, remove panel, render card
         Object.values(stepEls).forEach((el) => {
           el.classList.remove("active"); el.classList.add("done");
         });
         setTimeout(() => stepPanel.remove(), 150);
-        renderAssistantResponse(payload);
+        renderAssistantResponse(payload, pendingEvidence);
         els.activeTitle.textContent = question.slice(0, 60);
         refreshSessions();
       } else if (event === "error") {

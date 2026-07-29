@@ -18,6 +18,7 @@ from sentence_transformers import SentenceTransformer
 from kep_fall.phase_d_engine.router import understand_query, QueryPayload
 from kep_fall.phase_d_engine import graph_store
 from kep_fall import config
+from kep_fall import citation as _cite
 
 load_dotenv()
 
@@ -1607,6 +1608,193 @@ class Evidence:
     rag:     List[dict] = field(default_factory=list)
     context: str = ""
     system:  str = ""                      # which system prompt this evidence feeds
+
+
+def evidence_summary(evidence: Evidence, kg_limit: int = 12,
+                     rag_limit: int = 8) -> dict:
+    """
+    Compact, JSON-safe view of an Evidence bundle for the `evidence` SSE frame
+    and the provenance UI. Sends the retrieved graph edges and passage
+    citations — NOT the full chunk text (that's rehydrated on demand later).
+
+    Passages are sorted closest-first by vector distance and capped at
+    `rag_limit`: the tail of a k-NN search is weak by construction (everything
+    has *some* similarity), so showing all of it makes retrieval look noisier
+    than it is. `counts.passages` always reports the TRUE retrieved total, so
+    the UI can honestly label "showing N of M" rather than hiding the cut.
+
+    This is deliberately a plain dict, not a Pydantic model: it is a wire
+    format that the frontend consumes, and keeping it a dict avoids coupling
+    the API schema to internal row shapes.
+    """
+    edges = []
+    for r in evidence.kg[:kg_limit]:
+        edges.append({
+            "subject":    r.get("subject"),
+            "predicate":  r.get("predicate"),
+            "object":     r.get("object"),
+            "regulation": r.get("regulation"),
+            "article_id": r.get("article_id"),
+            "citation":   r.get("citation"),
+            "deontic":    r.get("deontic"),
+            "confidence": r.get("confidence"),
+            "typed":      bool(r.get("subject_typed")) and bool(r.get("object_typed")),
+            "bridge":     bool(r.get("bridge")),
+            "by_article": bool(r.get("by_article")),
+        })
+
+    # Closest-first; None distances (rare) sort last. Capped for display.
+    ranked = sorted(
+        evidence.rag,
+        key=lambda c: (c.get("distance") is None, c.get("distance") or 0.0),
+    )
+    passages = []
+    for c in ranked[:rag_limit]:
+        passages.append({
+            "chunk_id":   c.get("chunk_id"),
+            "citation":   c.get("citation"),
+            "distance":   c.get("distance"),
+        })
+
+    regulations = sorted({r.get("regulation") for r in evidence.kg
+                          if r.get("regulation")})
+    articles = sorted({r.get("article_id") for r in evidence.kg
+                       if r.get("article_id")})
+
+    return {
+        "edges":    edges,
+        "passages": passages,
+        "counts": {
+            "edges":       len(evidence.kg),
+            "passages":    len(evidence.rag),
+            "regulations": len(regulations),
+            "articles":    len(articles),
+        },
+        "regulations": regulations,
+    }
+
+
+# --------------------------------------------------------------------------
+# Phase 5 — deterministic grounding join
+#
+# Cross-checks the articles the LLM CITED against the articles that were
+# actually RETRIEVED, on both channels (graph edges + vector passages). This is
+# the runtime twin of the eval's faithful-F1 logic: no LLM involvement, pure
+# set membership over canonical article ids.
+#
+# Every cited article is classified into exactly one of:
+#   graph    — backed by a knowledge-graph edge   (strongest: structured)
+#   corpus   — backed by a retrieved passage only (grounded in source text)
+#   ungrounded — backed by neither (the real red flag: the model reached
+#                outside everything it was given)
+#
+# The three-way split matters: a chat-only interface can't distinguish "the
+# model cited a statute it was shown" from "the model cited a statute from its
+# parametric memory". This makes that distinction visible and auditable.
+# --------------------------------------------------------------------------
+import re as _re
+
+
+def _art_key(canonical: str) -> str:
+    """Reduce any canonical id to ARTICLE granularity: REG_ArtNN.
+
+    citation.canonical* produce three subtly different forms
+    (GDPR_ArtArticle9 / GDPR_Art9 / GDPR_Art9_Para1). Article-level grounding
+    needs them to collapse to one key, and needs sub-paragraph citations
+    (Article 9(2)(a)) and DUAA's S80- prefix to match the article-level
+    evidence. Everything funnels through here so both sides use identical keys.
+    """
+    pre, _, rest = canonical.partition("_Art")
+    rest = rest.replace("Article", "").replace("article", "")
+    rest = rest.split("_")[0].strip()        # drop _Para / _Point suffixes
+    rest = _re.sub(r"\(.*", "", rest)         # drop (2)(a) sub-points
+    rest = rest.replace("S80-", "")           # DUAA: S80-22C -> 22C
+    return f"{pre}_Art{rest}"
+
+
+def _key_from_kg(article_id: str) -> str:
+    return _art_key(_cite.canonical_from_kg(article_id))
+
+
+def _key_from_chunk(chunk_id: str) -> str:
+    return _art_key(_cite.canonical_from_chunk(chunk_id))
+
+
+def _key_from_citation(regulation: Optional[str], provision: str) -> str:
+    return _art_key(_cite.canonical(regulation or "", provision))
+
+
+def _cited_articles(verdict: Verdict) -> list[dict]:
+    """The articles a verdict claims to rely on, each as
+    {regulation, provision, key}.
+
+    Prefers the structured `citations` field; falls back to parsing the
+    human-readable `rules` strings ("GDPR, Article 9") when the model emitted
+    none — mirroring the evaluator's own fallback so live and offline grounding
+    agree.
+    """
+    out, seen = [], set()
+
+    def add(reg, prov):
+        if not prov:
+            return
+        key = _key_from_citation(reg, prov)
+        if key in seen:
+            return
+        seen.add(key)
+        out.append({"regulation": reg, "provision": prov, "key": key})
+
+    if verdict.citations:
+        for c in verdict.citations:
+            add(c.regulation, c.provision)
+    else:
+        # Fallback: "GDPR, Article 9" -> reg="GDPR", provision="Article 9"
+        for rule in (verdict.rules or []):
+            reg, sep, prov = rule.partition(",")
+            add(reg.strip() if sep else None, (prov or reg).strip())
+
+    return out
+
+
+def ground_citations(verdict: Verdict, evidence: Evidence) -> dict:
+    """
+    Classify every cited article as graph / corpus / ungrounded.
+
+    Returns a JSON-safe dict for the `grounding` SSE frame and the UI badge:
+
+        {
+          "items": [ {regulation, provision, status}, ... ],
+          "counts": {"graph": n, "corpus": n, "ungrounded": n, "total": n},
+          "grounded_ratio": 0.0-1.0,   # (graph+corpus)/total
+        }
+
+    An empty citation list yields total=0 and ratio=1.0 (nothing to fault).
+    """
+    graph_keys  = {_key_from_kg(r.get("article_id"))
+                   for r in evidence.kg if r.get("article_id")}
+    corpus_keys = {_key_from_chunk(c.get("chunk_id"))
+                   for c in evidence.rag if c.get("chunk_id")}
+
+    items = []
+    n_graph = n_corpus = n_ungrounded = 0
+    for c in _cited_articles(verdict):
+        if c["key"] in graph_keys:
+            status = "graph"; n_graph += 1
+        elif c["key"] in corpus_keys:
+            status = "corpus"; n_corpus += 1
+        else:
+            status = "ungrounded"; n_ungrounded += 1
+        items.append({"regulation": c["regulation"],
+                      "provision": c["provision"], "status": status})
+
+    total = len(items)
+    grounded = n_graph + n_corpus
+    return {
+        "items": items,
+        "counts": {"graph": n_graph, "corpus": n_corpus,
+                   "ungrounded": n_ungrounded, "total": total},
+        "grounded_ratio": (grounded / total) if total else 1.0,
+    }
 
 
 def prepare(question: str, history: list[dict] | None = None) -> Optional[Plan]:

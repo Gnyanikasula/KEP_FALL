@@ -246,6 +246,60 @@ body {
 .citation-art { font-family: var(--serif); font-size: 15px; color: var(--gold); font-weight: 500; }
 .citation-empty { color: var(--ink-faint); font-style: italic; font-size: 13px; }
 
+/* Evidence tab — traversed graph edges (provenance) */
+.evidence-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-faint);
+                 text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+.evidence-grid { display: flex; flex-direction: column; gap: 8px; }
+.evidence-row {
+  padding: 10px 14px; background: var(--bg-sunken);
+  border: 1px solid var(--border-soft); border-radius: 7px;
+  border-left: 3px solid var(--green);
+}
+.ev-triple { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.ev-node { font-family: var(--serif); font-size: 14px; color: var(--ink); }
+.ev-pred { font-family: var(--mono); font-size: 11px; color: var(--green);
+           padding: 1px 7px; background: rgba(90,158,111,.12); border-radius: 4px; }
+.ev-pred::before { content: "→ "; color: var(--ink-faint); }
+.ev-pred::after  { content: " →"; color: var(--ink-faint); }
+.ev-src { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ev-cite { font-family: var(--mono); font-size: 11px; color: var(--gold);
+           text-transform: uppercase; letter-spacing: .4px; }
+.ev-conf { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+.ev-flag { font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+           letter-spacing: .5px; padding: 1px 6px; border-radius: 4px;
+           border: 1px solid var(--border-soft); color: var(--ink-faint); }
+.ev-typed  { color: var(--green); border-color: rgba(90,158,111,.4); }
+.ev-bridge { color: var(--gold);  border-color: rgba(201,162,75,.4); }
+.ev-deontic { color: var(--ink-dim); }
+
+/* Grounding badges on citation rows (Phase 5) */
+.citation-row { position: relative; }
+.citation-ground { margin-left: auto; font-family: var(--mono); font-size: 10px;
+                   text-transform: uppercase; letter-spacing: .5px;
+                   padding: 1px 7px; border-radius: 4px; border: 1px solid transparent; }
+.cg-graph  { color: var(--green); border-color: rgba(90,158,111,.4);
+             background: rgba(90,158,111,.10); }
+.cg-corpus { color: var(--gold);  border-color: rgba(201,162,75,.4);
+             background: rgba(201,162,75,.10); }
+.cg-ungrounded { color: var(--red); border-color: rgba(200,80,80,.45);
+                 background: rgba(200,80,80,.10); }
+.grounding-summary { display: flex; align-items: baseline; gap: 10px;
+                     margin-bottom: 12px; font-family: var(--mono); font-size: 11px; }
+.gs-pct    { color: var(--ink); font-weight: 600; }
+.gs-detail { color: var(--ink-faint); text-transform: uppercase; letter-spacing: .4px; }
+.gs-warn   { color: var(--red); }
+
+/* Evidence sections + passage rows */
+.evidence-section-label { font-family: var(--mono); font-size: 10px;
+                          text-transform: uppercase; letter-spacing: .6px;
+                          color: var(--ink-faint); margin: 14px 0 8px; }
+.evidence-section-label:first-of-type { margin-top: 4px; }
+.ev-shown { text-transform: none; letter-spacing: 0; color: var(--ink-dim);
+            font-size: 10px; }
+.ev-passage { display: flex; align-items: center; gap: 10px;
+              border-left-color: var(--gold); }
+.ev-dist { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); margin-left: auto; }
+
 /* Tab 3: Regulations bar chart */
 .reg-chart { display: flex; flex-direction: column; gap: 12px; }
 .reg-bar-row { display: flex; align-items: center; gap: 12px; }
