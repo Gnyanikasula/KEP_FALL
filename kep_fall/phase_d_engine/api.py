@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field
 from kep_fall.phase_d_engine import engine as V
 from kep_fall.phase_d_engine.router import understand_query
 from kep_fall.phase_d_engine.history import SQLiteHistoryStore
+from kep_fall.phase_d_engine import eval_data
 from kep_fall import config
 
 
@@ -166,6 +167,17 @@ def get_history(session_id: str):
     if not store.session_exists(session_id):
         raise HTTPException(404, "Session not found")
     return {"session_id": session_id, "messages": store.get_messages(session_id)}
+
+
+@app.get("/evaluation")
+def get_evaluation():
+    """Frozen offline ablation results for the eval explorer. Read from CSV at
+    import; never recomputed at runtime."""
+    try:
+        return eval_data.get_eval()
+    except Exception as exc:
+        log.error("eval_load_failed", exc_info=exc)
+        raise HTTPException(500, "Evaluation results unavailable.")
 
 
 # shared query core

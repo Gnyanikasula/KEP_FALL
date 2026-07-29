@@ -452,6 +452,7 @@ async function refreshSessions() {
 }
 
 async function loadSession(id, title) {
+  switchView("chat");
   activeSessionId = id;
   localStorage.setItem("shield_session_id", id);
   els.activeTitle.textContent = title || "Consultation";
@@ -471,6 +472,7 @@ const STEP_ORDER = ["routing", "routed", "retrieving", "synthesizing"];
 async function submitQuestion() {
   const question = els.question.value.trim();
   if (!question) return;
+  switchView("chat");
 
   lastQuestion = question;
   els.send.disabled = true;
@@ -608,6 +610,7 @@ els.question.addEventListener("input", () => {
   els.question.style.height = Math.min(els.question.scrollHeight, 140) + "px";
 });
 els.newSession.onclick = () => {
+  switchView("chat");
   activeSessionId = null;
   localStorage.removeItem("shield_session_id");
   els.activeTitle.textContent = "New consultation";
@@ -647,4 +650,275 @@ function bindExamples() {
   } catch (e) {
     console.warn("Backend not reachable yet:", e.message);
   }
+})();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Phase 7 — Evaluation explorer
+// Fetches the frozen ablation results from /evaluation and renders four views:
+//   1. Ablation bar chart with bootstrap 95% CI error bars
+//   2. Faithful-vs-naive F1 gap (the parametric-leakage finding)
+//   3. Per-group heatmap (group × arm), small-n cells flagged
+//   4. Per-question explorer with filters + arm drill-down
+// All numbers are read verbatim from the CSVs — nothing is recomputed here.
+// ═══════════════════════════════════════════════════════════════════════════
+let _evalData = null;
+const _fmt = (v, d = 3) => (v == null ? "—" : Number(v).toFixed(d));
+const _pct = (v) => (v == null ? "—" : Math.round(v * 100) + "%");
+const ARM_LABEL = { hybrid: "Hybrid", kg_only: "KG only", rag_only: "RAG only" };
+
+function switchView(view) {
+  const chat = document.getElementById("chat-view");
+  const evalV = document.getElementById("eval-view");
+  const navChat = document.getElementById("nav-chat");
+  const navEval = document.getElementById("nav-eval");
+  const title = document.getElementById("active-title");
+  if (view === "eval") {
+    chat.hidden = true; evalV.hidden = false;
+    navChat.classList.remove("active"); navEval.classList.add("active");
+    if (title) title.textContent = "System evaluation";
+    loadEval();
+  } else {
+    evalV.hidden = true; chat.hidden = false;
+    navEval.classList.remove("active"); navChat.classList.add("active");
+    if (title) title.textContent = activeSessionId ? (lastQuestion || "Consultation") : "No consultation selected";
+  }
+}
+
+async function loadEval() {
+  const body = document.getElementById("eval-body");
+  if (_evalData) { renderEval(body, _evalData); return; }
+  body.innerHTML = `<div class="eval-loading">Loading evaluation…</div>`;
+  try {
+    const res = await fetch(`${API_BASE}/evaluation`);
+    if (!res.ok) throw new Error(`${res.status}`);
+    _evalData = await res.json();
+  } catch (e) {
+    body.innerHTML = `<div class="eval-loading">Could not load evaluation results (${_ESC(e.message)}).</div>`;
+    return;
+  }
+  renderEval(body, _evalData);
+}
+
+function renderEval(body, d) {
+  body.innerHTML =
+    evalHeader(d) +
+    evalAblation(d) +
+    evalGap(d) +
+    evalHeatmap(d) +
+    evalExplorer(d);
+  wireExplorer(d);
+}
+
+function evalHeader(d) {
+  return `<div class="eval-meta">
+    Offline ablation · ${d.meta.n_questions} competency questions · ${d.meta.n_arms} retrieval configurations ·
+    faithful-F1 counts a citation only when it is grounded in retrieved evidence
+  </div>`;
+}
+
+// ── 1. Ablation bar chart with bootstrap CI error bars ──────────────────────
+function evalAblation(d) {
+  const arms = d.arms;
+  const maxV = 1.0;
+  const ciByArm = {};
+  d.bootstrap.forEach((c) => {
+    if (c.metric === "faithful_F1" && c.vs === "rag_only") ciByArm[c.arm] = c;
+  });
+
+  const bars = arms.map((a) => {
+    const v = a.faithful_F1 || 0;
+    const h = Math.round((v / maxV) * 180);
+    const ci = ciByArm[a.arm];
+    // error bar drawn relative to the delta CI, translated onto the bar value
+    let err = "";
+    if (ci && ci.ci_lo != null) {
+      const lo = Math.round(((v - (ci.delta - ci.ci_lo)) / maxV) * 180);
+      const hi = Math.round(((v + (ci.ci_hi - ci.delta)) / maxV) * 180);
+      err = `<div class="eval-err" style="bottom:${lo}px;height:${hi - lo}px"></div>`;
+    }
+    const sig = ci && ci.significant
+      ? `<span class="eval-sig" title="vs RAG only, p=${_fmt(ci.p, 3)}">p=${_fmt(ci.p, 3)}</span>` : "";
+    return `<div class="eval-bar-col">
+      <div class="eval-bar-wrap">
+        <div class="eval-bar ${a.arm === "hybrid" ? "eval-bar-hero" : ""}" style="height:${h}px">
+          <span class="eval-bar-val">${_fmt(v)}</span>
+        </div>
+        ${err}
+      </div>
+      <div class="eval-bar-label">${ARM_LABEL[a.arm] || a.arm}</div>
+      ${sig}
+    </div>`;
+  }).join("");
+
+  return `<section class="eval-section">
+    <h3>Faithful F1 by retrieval configuration</h3>
+    <p class="eval-note">Bars show faithful F1; whiskers are the 95% bootstrap confidence interval of the
+    difference vs RAG only. Hybrid's lead is significant — the interval excludes zero.</p>
+    <div class="eval-bars">${bars}</div>
+  </section>`;
+}
+
+// ── 2. Faithful vs naive gap ────────────────────────────────────────────────
+function evalGap(d) {
+  const rows = d.arms.map((a) => {
+    const gap = a.faithful_naive_gap;
+    const neg = gap != null && gap < 0;
+    return `<div class="eval-gap-row">
+      <span class="eval-gap-arm">${ARM_LABEL[a.arm] || a.arm}</span>
+      <span class="eval-gap-nums">
+        naive <b>${_fmt(a.naive_F1)}</b> → faithful <b>${_fmt(a.faithful_F1)}</b>
+      </span>
+      <span class="eval-gap-delta ${neg ? "eval-gap-neg" : "eval-gap-pos"}">
+        ${gap == null ? "—" : (gap >= 0 ? "+" : "") + _fmt(gap)}
+      </span>
+    </div>`;
+  }).join("");
+  return `<section class="eval-section">
+    <h3>Faithful vs naive F1 — parametric leakage</h3>
+    <p class="eval-note">Naive F1 counts any correct-looking citation; faithful F1 counts it only if it was
+    actually retrieved. A negative gap means the raw score was inflated by the model citing from memory.
+    KG only shows this leakage; hybrid does not.</p>
+    <div class="eval-gap">${rows}</div>
+  </section>`;
+}
+
+// ── 3. Per-group heatmap ────────────────────────────────────────────────────
+function evalHeatmap(d) {
+  const arms = d.arm_names;
+  const groups = d.group_names;
+  const cell = {};
+  d.groups.forEach((g) => { cell[g.group + "|" + g.arm] = g; });
+
+  const heatColor = (v) => {
+    if (v == null) return "transparent";
+    // green ramp on faithful F1 (0.5→1.0 mapped)
+    const t = Math.max(0, Math.min(1, (v - 0.5) / 0.5));
+    const a = 0.12 + t * 0.5;
+    return `rgba(90,158,111,${a.toFixed(2)})`;
+  };
+
+  const head = `<div class="eval-hm-row eval-hm-head">
+    <div class="eval-hm-corner">group</div>
+    ${arms.map((a) => `<div class="eval-hm-cell">${ARM_LABEL[a] || a}</div>`).join("")}
+  </div>`;
+
+  const rows = groups.map((grp) => {
+    const cells = arms.map((arm) => {
+      const c = cell[grp + "|" + arm];
+      const v = c ? c.faithful_F1 : null;
+      const warn = c && c.warn_small_n;
+      return `<div class="eval-hm-cell eval-hm-data" style="background:${heatColor(v)}"
+                   title="${grp} / ${ARM_LABEL[arm] || arm}${c ? " · n=" + c.n : ""}">
+        ${v == null ? "—" : _fmt(v, 2)}${warn ? `<span class="eval-hm-warn" title="small sample (n=${c.n})">*</span>` : ""}
+      </div>`;
+    }).join("");
+    return `<div class="eval-hm-row"><div class="eval-hm-corner">${grp}</div>${cells}</div>`;
+  }).join("");
+
+  return `<section class="eval-section">
+    <h3>Faithful F1 by question group</h3>
+    <p class="eval-note">Each cell is faithful F1 for one group × configuration. Darker = higher.
+    <span class="eval-hm-warn">*</span> marks groups with a small sample (n ≤ 5) — read those with caution.</p>
+    <div class="eval-heatmap">${head}${rows}</div>
+  </section>`;
+}
+
+// ── 4. Per-question explorer ────────────────────────────────────────────────
+function evalExplorer(d) {
+  const groups = ["all", ...d.group_names];
+  const intents = ["all", ...Array.from(new Set(d.questions.map((q) => q.intent).filter(Boolean)))];
+  return `<section class="eval-section">
+    <h3>Per-question explorer</h3>
+    <div class="eval-filters">
+      <label>Group
+        <select id="eval-f-group">${groups.map((g) => `<option value="${g}">${g}</option>`).join("")}</select>
+      </label>
+      <label>Intent
+        <select id="eval-f-intent">${intents.map((i) => `<option value="${i}">${i}</option>`).join("")}</select>
+      </label>
+      <label class="eval-f-search">Search
+        <input id="eval-f-q" type="text" placeholder="filter by text or id…">
+      </label>
+    </div>
+    <div id="eval-q-list" class="eval-q-list"></div>
+  </section>`;
+}
+
+function wireExplorer(d) {
+  const byQ = {};
+  d.per_question.forEach((r) => { (byQ[r.cq_id] = byQ[r.cq_id] || []).push(r); });
+
+  const listEl = document.getElementById("eval-q-list");
+  const fg = document.getElementById("eval-f-group");
+  const fi = document.getElementById("eval-f-intent");
+  const fq = document.getElementById("eval-f-q");
+
+  function render() {
+    const g = fg.value, intent = fi.value, term = (fq.value || "").toLowerCase();
+    const rows = d.questions.filter((q) =>
+      (g === "all" || q.group === g) &&
+      (intent === "all" || q.intent === intent) &&
+      (!term || (q.question || "").toLowerCase().includes(term) || q.cq_id.toLowerCase().includes(term))
+    );
+    listEl.innerHTML = rows.length
+      ? rows.map((q) => qCard(q, byQ[q.cq_id] || [])).join("")
+      : `<div class="citation-empty">No questions match these filters.</div>`;
+    listEl.querySelectorAll(".eval-q-head").forEach((h) => {
+      h.onclick = () => h.parentElement.classList.toggle("open");
+    });
+  }
+  fg.onchange = fi.onchange = render;
+  fq.oninput = render;
+  render();
+}
+
+function qCard(q, arms) {
+  const armCells = arms.map((a) => {
+    const SEP = /[;,|\s]+/;
+    const found = (a.citations_found || "").split(SEP).filter(Boolean);
+    const grounded = new Set((a.citations_grounded || "").split(SEP).filter(Boolean));
+    const expected = new Set((a.citations_expected || "").split(SEP).filter(Boolean));
+    const chips = [...new Set([...found, ...expected])].map((c) => {
+      const hit = expected.has(c) && grounded.has(c);
+      const miss = expected.has(c) && !found.includes(c);
+      const extra = !expected.has(c);
+      const cls = hit ? "cq-hit" : miss ? "cq-miss" : extra ? "cq-extra" : "cq-found";
+      return `<span class="cq-chip ${cls}">${_ESC(c)}</span>`;
+    }).join("");
+    return `<div class="eval-arm-row">
+      <div class="eval-arm-name">${ARM_LABEL[a.arm] || a.arm}</div>
+      <div class="eval-arm-metrics">
+        <span title="faithful F1">F1 <b>${_fmt(a.faithful_F1, 2)}</b></span>
+        <span title="precision">P ${_fmt(a.precision, 2)}</span>
+        <span title="recall">R ${_fmt(a.recall, 2)}</span>
+        <span title="latency">${_fmt(a.latency_s, 1)}s</span>
+      </div>
+      <div class="eval-arm-cites">${chips || '<span class="cq-none">no citations</span>'}</div>
+    </div>`;
+  }).join("");
+
+  const best = arms.reduce((m, a) => (a.faithful_F1 || 0) > (m.faithful_F1 || 0) ? a : m, arms[0] || {});
+  return `<div class="eval-qcard">
+    <div class="eval-q-head">
+      <span class="eval-q-id">${q.cq_id}</span>
+      <span class="eval-q-grp">${q.group}</span>
+      <span class="eval-q-text">${_ESC(_clip(q.question, 90))}</span>
+      <span class="eval-q-best">best ${_fmt(best.faithful_F1, 2)}</span>
+    </div>
+    <div class="eval-q-detail">${armCells}
+      <div class="eval-legend-cq">
+        <span class="cq-chip cq-hit">grounded hit</span>
+        <span class="cq-chip cq-miss">missed</span>
+        <span class="cq-chip cq-extra">extra</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// wire sidebar view navigation
+(function bindNav() {
+  const navChat = document.getElementById("nav-chat");
+  const navEval = document.getElementById("nav-eval");
+  if (navChat) navChat.onclick = () => switchView("chat");
+  if (navEval) navEval.onclick = () => switchView("eval");
 })();
