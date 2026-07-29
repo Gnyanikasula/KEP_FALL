@@ -300,6 +300,42 @@ body {
               border-left-color: var(--gold); }
 .ev-dist { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); margin-left: auto; }
 
+/* Reasoning-path diagram (Phase 6) */
+.path-slot { padding: 8px 0; }
+.path-pending { color: var(--ink-faint); font-style: italic; font-size: 13px; padding: 20px 0; }
+.rp-svg { display: block; width: 100%; height: auto; }
+.rp-svg text { font-family: var(--sans, system-ui, sans-serif); }
+.rp-th  { font-size: 13px; font-weight: 500; fill: var(--ink); }
+.rp-ts  { font-size: 10.5px; fill: var(--ink-dim); font-family: var(--mono); }
+.rp-legend { font-size: 10px; fill: var(--ink-faint); font-family: var(--mono); }
+
+/* connectors */
+.rp-arr    { stroke: var(--ink-faint); stroke-width: 1; fill: none; }
+.rp-faint  { stroke: var(--border); stroke-width: .75; fill: none; }
+.rp-leader { stroke: var(--ink-faint); stroke-width: .75; stroke-dasharray: 2 2; fill: none; }
+
+/* neutral boxes (question, regulations) — dark fill, light text */
+.rp-svg .rp-neutral rect { fill: var(--bg-elevated); stroke: var(--border); }
+.rp-svg .rp-neutral .rp-th { fill: var(--ink); }
+
+/* article nodes by grounding status */
+.rp-svg .rp-graph  rect   { fill: #16241c; stroke: var(--green); }
+.rp-svg .rp-graph  .rp-th { fill: var(--green); }
+.rp-svg .rp-corpus rect   { fill: #241f12; stroke: var(--gold); }
+.rp-svg .rp-corpus .rp-th { fill: var(--gold); }
+.rp-svg .rp-ungr   rect   { fill: #2a1614; stroke: var(--red); }
+.rp-svg .rp-ungr   .rp-th { fill: var(--red); }
+
+/* supporting-edge box (dashed gold outline, dark fill) */
+.rp-svg .rp-edge rect { fill: var(--bg-sunken); stroke: var(--gold); stroke-dasharray: 3 3; }
+.rp-svg .rp-edge .rp-es   { fill: var(--ink-dim); font-size: 10px; font-family: var(--mono); }
+.rp-svg .rp-edge .rp-pred { fill: var(--green); font-size: 10px; font-family: var(--mono); }
+
+/* verdict box */
+.rp-svg .rp-verdict rect  { fill: var(--gold-soft); stroke: var(--gold); }
+.rp-svg .rp-verdict .rp-th { fill: var(--gold); }
+.rp-svg .rp-verdict .rp-ts { fill: var(--ink-dim); }
+
 /* Tab 3: Regulations bar chart */
 .reg-chart { display: flex; flex-direction: column; gap: 12px; }
 .reg-bar-row { display: flex; align-items: center; gap: 12px; }

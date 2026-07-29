@@ -1797,6 +1797,79 @@ def ground_citations(verdict: Verdict, evidence: Evidence) -> dict:
     }
 
 
+def reasoning_path(verdict: Verdict, evidence: Evidence,
+                   grounding: Optional[dict] = None,
+                   max_edges_per_article: int = 2) -> dict:
+    """
+    Assemble the *reasoning path* behind a verdict for the provenance diagram.
+
+    This is deliberately NOT the raw retrieval dump. It starts from the
+    articles the verdict actually cited (via ground_citations), and for each
+    one attaches the graph edges that carry that article — the real
+    subject->predicate->object links the answer rests on. Off-topic retrieved
+    edges (device-classification noise, etc.) that no citation relied on are
+    excluded, so the diagram shows the path taken, not everything scanned.
+
+    Shape (JSON-safe, for the `reasoning_path` frame / diagram):
+        {
+          "verdict": "Conditionally Allowed",
+          "articles": [
+            {
+              "regulation": "GDPR", "provision": "Article 6",
+              "article_id": "GDPR__Art6", "status": "graph",
+              "edges": [{subject, predicate, object, deontic, confidence, typed}, ...]
+            }, ...
+          ],
+          "regulations": ["GDPR", "EU AI Act", ...],  # distinct, in path
+          "counts": {"articles": n, "graph": n, "corpus": n, "ungrounded": n}
+        }
+    """
+    grounding = grounding or ground_citations(verdict, evidence)
+
+    # Index retrieved edges by canonical article key, preserving retrieval order
+    # (already ranked/diversified upstream).
+    edges_by_key: dict[str, list[dict]] = {}
+    for r in evidence.kg:
+        aid = r.get("article_id")
+        if not aid:
+            continue
+        edges_by_key.setdefault(_key_from_kg(aid), []).append(r)
+
+    articles = []
+    regs_seen: list[str] = []
+    for item in grounding["items"]:
+        key = _key_from_citation(item["regulation"], item["provision"])
+        supporting = edges_by_key.get(key, [])[:max_edges_per_article]
+
+        # Regulation label: prefer the edge's, fall back to the citation's.
+        reg = (supporting[0].get("regulation") if supporting
+               else item.get("regulation")) or item.get("regulation") or "?"
+        if reg not in regs_seen:
+            regs_seen.append(reg)
+
+        articles.append({
+            "regulation": reg,
+            "provision":  item["provision"],
+            "article_id": (supporting[0].get("article_id") if supporting else None),
+            "status":     item["status"],
+            "edges": [{
+                "subject":    e.get("subject"),
+                "predicate":  e.get("predicate"),
+                "object":     e.get("object"),
+                "deontic":    e.get("deontic"),
+                "confidence": e.get("confidence"),
+                "typed":      bool(e.get("subject_typed")) and bool(e.get("object_typed")),
+            } for e in supporting],
+        })
+
+    return {
+        "verdict":     verdict.verdict,
+        "articles":    articles,
+        "regulations": regs_seen,
+        "counts":      grounding["counts"],
+    }
+
+
 def prepare(question: str, history: list[dict] | None = None) -> Optional[Plan]:
     """
     Stage 1 — route once, resolve intent, and decide the retrieval strategy.

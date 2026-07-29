@@ -91,6 +91,120 @@ function groundingKey(regulation, provision) {
   return `${pre}_Art${rest}`;
 }
 
+// ── Reasoning-path diagram (Phase 6) ─────────────────────────────────────────
+// Draws a layered SVG flow from the reasoning_path frame:
+//   question → regulations → grounded articles (green=graph, amber=passage)
+//              → supporting edge (dashed, graph-backed only) → verdict
+// Everything is derived from live data; nothing is invented for the picture.
+const _ESC = (s) => String(s == null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+function _clip(s, n) {
+  s = String(s == null ? "" : s);
+  return s.length > n ? s.slice(0, n - 1) + "…" : s;
+}
+
+function buildReasoningPathSVG(rp) {
+  const arts = (rp && rp.articles) || [];
+  if (!arts.length) {
+    return `<div class="citation-empty">No cited provisions to trace for this response.</div>`;
+  }
+
+  const W = 680, colW = 150, gap = 22;
+  const cardH = 52, edgeH = 58;
+  const perRow = Math.max(1, Math.min(4, arts.length));
+  const rows = Math.ceil(arts.length / perRow);
+  const anyEdge = arts.some((a) => (a.edges || []).length);
+
+  const yQ = 24, qH = 40;
+  const yReg = yQ + qH + 40;
+  const regH = 36;
+  const yArt = yReg + regH + 46;
+  const rowStride = cardH + (anyEdge ? 14 + edgeH : 0) + 48;
+  const yVerdict = yArt + (rows - 1) * rowStride + cardH + (anyEdge ? 14 + edgeH : 0) + 44;
+  const vH = 54;
+  const H = yVerdict + vH + 42;
+
+  const regs = (rp.regulations || []).length ? rp.regulations : ["\u2014"];
+  const cxAt = (col, total) => {
+    const totalW = total * colW + (total - 1) * gap;
+    const startX = (W - totalW) / 2;
+    return startX + col * (colW + gap) + colW / 2;
+  };
+
+  let s = `<svg width="100%" viewBox="0 0 ${W} ${H}" role="img" class="rp-svg">`;
+  s += `<title>Reasoning path</title><desc>How the question flows through regulations and grounded articles to the verdict.</desc>`;
+  s += `<defs><marker id="rparrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+
+  const qx = 170, qw = 340;
+  s += `<g class="rp-neutral"><rect x="${qx}" y="${yQ}" width="${qw}" height="${qH}" rx="8" stroke-width="0.5" style="fill:var(--bg-elevated);stroke:var(--border)"/>`;
+  s += `<text class="rp-th" x="${qx + qw / 2}" y="${yQ + qH / 2}" text-anchor="middle" dominant-baseline="central" style="fill:var(--ink)">${_ESC(_clip(rp.question || "Question", 52))}</text></g>`;
+
+  const regN = regs.length;
+  const regCx = {};
+  regs.forEach((reg, i) => {
+    const c = cxAt(i, regN);
+    regCx[reg] = c;
+    s += `<g class="rp-neutral"><rect x="${c - colW / 2}" y="${yReg}" width="${colW}" height="${regH}" rx="8" stroke-width="0.5" style="fill:var(--bg-elevated);stroke:var(--border)"/>`;
+    s += `<text class="rp-th" x="${c}" y="${yReg + regH / 2}" text-anchor="middle" dominant-baseline="central" style="fill:var(--ink)">${_ESC(_clip(reg, 18))}</text></g>`;
+    s += `<line x1="${qx + qw / 2}" y1="${yQ + qH}" x2="${c}" y2="${yReg}" class="rp-arr" marker-end="url(#rparrow)"/>`;
+  });
+
+  const vx = 340;
+
+  arts.forEach((a, idx) => {
+    const row = Math.floor(idx / perRow);
+    const col = idx % perRow;
+    const inRow = Math.min(perRow, arts.length - row * perRow);
+    const cxc = cxAt(col, inRow);
+    const x = cxc - colW / 2;
+    const yc = yArt + row * rowStride;
+    const status = a.status === "graph" ? "graph"
+                 : a.status === "corpus" ? "corpus" : "ungr";
+    const cls = "rp-" + status;
+    const label = status === "graph" ? "graph-backed"
+                : status === "corpus" ? "passage-backed" : "ungrounded";
+
+    const rc = regCx[a.regulation] != null ? regCx[a.regulation] : cxAt(0, regN);
+    s += `<line x1="${rc}" y1="${yReg + regH}" x2="${cxc}" y2="${yc}" class="rp-faint" marker-end="url(#rparrow)"/>`;
+
+    s += `<g class="${cls}"><rect x="${x}" y="${yc}" width="${colW}" height="${cardH}" rx="8" stroke-width="0.75"/>`;
+    s += `<text class="rp-th" x="${cxc}" y="${yc + 19}" text-anchor="middle" dominant-baseline="central">${_ESC(_clip(a.provision, 18))}</text>`;
+    s += `<text class="rp-ts" x="${cxc}" y="${yc + 37}" text-anchor="middle" dominant-baseline="central">${label}</text></g>`;
+
+    const e = (a.edges || [])[0];
+    let fromY = yc + cardH;
+    if (anyEdge && e) {
+      const ye = yc + cardH + 14;
+      s += `<line x1="${cxc}" y1="${yc + cardH}" x2="${cxc}" y2="${ye}" class="rp-leader"/>`;
+      s += `<g class="rp-edge"><rect x="${x}" y="${ye}" width="${colW}" height="${edgeH}" rx="8" stroke-width="0.75"/>`;
+      s += `<text class="rp-es"   x="${cxc}" y="${ye + 15}" text-anchor="middle" dominant-baseline="central">${_ESC(_clip(e.subject, 20))}</text>`;
+      s += `<text class="rp-pred" x="${cxc}" y="${ye + 31}" text-anchor="middle" dominant-baseline="central">${_ESC(_clip("\u2192 " + e.predicate + " \u2192", 22))}</text>`;
+      s += `<text class="rp-es"   x="${cxc}" y="${ye + 47}" text-anchor="middle" dominant-baseline="central">${_ESC(_clip(e.object, 20))}</text></g>`;
+      fromY = ye + edgeH;
+    }
+
+    s += `<line x1="${cxc}" y1="${fromY}" x2="${vx}" y2="${yVerdict}" class="rp-faint" marker-end="url(#rparrow)"/>`;
+  });
+
+  const c = rp.counts || {};
+  s += `<g class="rp-verdict"><rect x="210" y="${yVerdict}" width="260" height="${vH}" rx="8" stroke-width="0.75"/>`;
+  s += `<text class="rp-th" x="${vx}" y="${yVerdict + 20}" text-anchor="middle" dominant-baseline="central">${_ESC(rp.verdict || "Verdict")}</text>`;
+  s += `<text class="rp-ts" x="${vx}" y="${yVerdict + 38}" text-anchor="middle" dominant-baseline="central">${c.total || 0} articles \u00b7 ${c.graph || 0} graph \u00b7 ${c.corpus || 0} passage${c.ungrounded ? " \u00b7 " + c.ungrounded + " ungrounded" : ""}</text></g>`;
+
+  s += `<text class="rp-legend" x="${vx}" y="${H - 14}" text-anchor="middle">green = graph edge \u00b7 gold = passage \u00b7 dashed box = supporting edge</text>`;
+  s += `</svg>`;
+  return s;
+}
+
+function applyReasoningPath(rp) {
+  const slots = document.querySelectorAll(".path-slot:not([data-done])");
+  const slot = slots[slots.length - 1];
+  if (!slot) return;
+  slot.setAttribute("data-done", "1");
+  slot.innerHTML = buildReasoningPathSVG(rp);
+}
+
 // Attach graph/corpus/ungrounded badges to the citation rows once the
 // grounding frame arrives (after the verdict card is already in the DOM).
 function applyGrounding(g) {
@@ -266,10 +380,12 @@ function renderVerdict(v, evidence) {
         <button class="tab active" data-tab="${cid}-1">Verdict</button>
         <button class="tab" data-tab="${cid}-2">Citations<span class="tab-count">${rules.length}</span></button>
         <button class="tab" data-tab="${cid}-3">Evidence<span class="tab-count">${edges.length}</span></button>
+        <button class="tab" data-tab="${cid}-4">Path</button>
       </div>
       <div class="tab-panel active" id="${cid}-1">${tab1}</div>
       <div class="tab-panel" id="${cid}-2">${tab2}</div>
       <div class="tab-panel" id="${cid}-3">${tab3}</div>
+      <div class="tab-panel" id="${cid}-4"><div class="path-slot"><div class="path-pending">Tracing reasoning path…</div></div></div>
     </div>`;
 
   // Tab switching
@@ -374,6 +490,7 @@ async function submitQuestion() {
   // Holds the `evidence` frame (arrives before the verdict) so renderVerdict
   // can attach it as the Evidence/Provenance tab when the verdict lands.
   let pendingEvidence = null;
+  let pendingPath = null;
   function setStep(stage, label, state) {
     if (!stepEls[stage]) {
       const el = document.createElement("div");
@@ -448,6 +565,10 @@ async function submitQuestion() {
         // Arrives after the verdict card is already rendered. Attach the
         // grounding badges to the citation rows that were just drawn.
         applyGrounding(payload);
+      } else if (event === "reasoning_path") {
+        // Arrives after the verdict card. Draw the diagram into its Path tab.
+        pendingPath = payload;
+        applyReasoningPath(payload);
       } else if (event === "verdict") {
         // mark all steps done, remove panel, render card
         Object.values(stepEls).forEach((el) => {

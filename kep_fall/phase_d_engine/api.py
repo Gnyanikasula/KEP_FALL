@@ -338,8 +338,13 @@ async def query_stream(req: QueryRequest, request: Request):
         grounding = V.ground_citations(result, evidence)
         log.info("grounding", extra={"request_id": rid, **grounding["counts"]})
 
+        # Reasoning path for the provenance diagram: grounded citations traced
+        # back to the graph edges that support them.
+        rpath = V.reasoning_path(result, evidence, grounding)
+
         yield _sse("verdict", _verdict_frame(sid, req.question, result, parsed, rid))
         yield _sse("grounding", {"session_id": sid, "request_id": rid, **grounding})
+        yield _sse("reasoning_path", {"session_id": sid, "request_id": rid, **rpath})
         yield _sse("done", {"ok": True})
 
     return StreamingResponse(gen(), media_type="text/event-stream",
