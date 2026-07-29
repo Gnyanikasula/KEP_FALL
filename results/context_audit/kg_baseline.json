@@ -1,0 +1,6776 @@
+{
+ "top_k": 12,
+ "store": "default",
+ "repeat": 3,
+ "questions": {
+  "A01": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtS80-22D",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art13",
+    "EU AI Act__Art14",
+    "EU MDR 2017/745__Art10",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ],
+    [
+     "Records",
+     "hasPurpose",
+     "DemonstrateConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "Obligation",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableContest",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A02": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__ArtAnnex I",
+    "GDPR__Art17",
+    "GDPR__Art6",
+    "GDPR__Art7",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "InformedConsent",
+     "hasPurpose",
+     "ProtectSubjectRights",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "WithdrawalOfConsent",
+     "hasNotice",
+     "ConsentWithdrawalNotice",
+     "GDPR__Art7",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "MinimumRequirements",
+     "EU MDR 2017/745__ArtAnnex I",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToWithdrawConsent",
+     "GDPR__Art17",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "ComplyWithAccessibilityRequirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DeviceSupply",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasPurpose",
+     "SpecificPatient",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "Processing",
+     "hasLegalBasis",
+     "DataSubjectConsentStatus",
+     "GDPR__Art6",
+     "obligation"
+    ],
+    [
+     "TechnicalDocumentation",
+     "hasObligation",
+     "Compliancewithrequirements",
+     "EU AI Act__Art11",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A03": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art14",
+    "EU AI Act__Art21",
+    "EU MDR 2017/745__Art87",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "GDPR__Art9",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "ExplicitConsent",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "PersonalData",
+     "hasLegalBasis",
+     "SpecialCategoriesDataProcessingReason",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "UnionOrMemberStateLawRequirement",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "LegalBasis",
+     "hasLegalBasis",
+     "Directive90385Directive9342Directive9879",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "SpecialCategoryData",
+     "hasPersonalData",
+     "HealthData",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "CompetentAuthorityRequest",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art21",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A04": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art13",
+    "EU AI Act__Art14",
+    "EU AI Act__Art51",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art5",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "PersonalData",
+     "hasObligation",
+     "LawfulnessFairnessAndTransparency",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "Obligation",
+     "hasPurpose",
+     "Purpose",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "PostMarketSurveillance",
+     "hasPurpose",
+     "Purpose",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "PurposeLimitation",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "GeneralPurposeAIModelWithSystemicRisk",
+     "hasRisk",
+     "SystemicRisk",
+     "EU AI Act__Art51",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ClinicalEvaluation",
+     "hasPurpose",
+     "VerifySafetyAndPerformance",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "StorageLimitation",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasPurpose",
+     "ParticularPatient",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A05": {
+   "n": 1,
+   "articles": [
+    "GDPR__Art5"
+   ],
+   "regulations": [
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "PersonalData",
+     "hasObligation",
+     "DataMinimisation",
+     "GDPR__Art5",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A06": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art11",
+    "EU AI Act__Art18",
+    "EU MDR 2017/745__Art87",
+    "GDPR__Art13",
+    "GDPR__Art5",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "PersonalData",
+     "hasObligation",
+     "StorageLimitation",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "DocumentationRetentionPeriod",
+     "hasNotice",
+     "N_10Years",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "PeriodicSafetyUpdateReport",
+     "hasTechnicalMeasure",
+     "SummaryOfResultsAndConclusions",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "PeriodicSummaryReporting",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "DataRetentionPeriod",
+     "GDPR__Art13",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDocumentation",
+     "hasTechnicalOrganisationalMeasure",
+     "DocumentationRetentionPeriod",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "ProducePeriodicSafetyUpdateReport",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "PurposeLimitation",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProvider",
+     "hasObligation",
+     "DocumentationRetention",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "PeriodicSafetyUpdateReport",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProvider",
+     "hasObligation",
+     "DocumentationRetentionForNationalCompetentAuthorities",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "PeriodicSafetyUpdateReport",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A07": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art14",
+    "EU AI Act__Art21",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art87",
+    "GDPR__Art13",
+    "GDPR__Art16",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "CompetentAuthorityRequest",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art21",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Accessory",
+     "hasPurpose",
+     "GeneralMedicalDevice",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasPurpose",
+     "Purpose",
+     "GDPR__Art13",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRestrictionOfProcessing",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A08": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "GDPR__Art13",
+    "GDPR__Art16",
+    "GDPR__Art5",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "PersonalData",
+     "hasObligation",
+     "PurposeLimitation",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "DesignManufacturePackagingAndLabelling",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "Obligation",
+     "hasPurpose",
+     "Purpose",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ComplyWithUdiSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "UKResponsiblePerson",
+     "hasObligation",
+     "ManufacturersObligations",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasPurpose",
+     "Purpose",
+     "GDPR__Art13",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ConductCorrectiveActions",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A09": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art12",
+    "EU AI Act__Art19",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalMeasure",
+     "EU AI Act__Art12",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemLoggingCapability",
+     "hasTechnicalMeasure",
+     "AutomaticallyGeneratedLogs",
+     "EU AI Act__Art19",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A10": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtS80-22D",
+    "EU AI Act__Art15",
+    "EU AI Act__Art21",
+    "EU AI Act__Art5",
+    "GDPR__Art14",
+    "GDPR__Art15",
+    "GDPR__Art16",
+    "GDPR__Art17",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRestrictionOfProcessing",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRisk",
+     "SignificantHarm",
+     "EU AI Act__Art5",
+     "prohibition"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestAccess",
+     "GDPR__Art14",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "Right",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "CompetentAuthorityRequest",
+     "hasRight",
+     "Requestinformation",
+     "EU AI Act__Art21",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightOfAccess",
+     "GDPR__Art15",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "ContestDecision",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "AchieveAccuracy",
+     "EU AI Act__Art15",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToErasureCommunication",
+     "GDPR__Art17",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "MakeRepresentations",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A11": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art14",
+    "EU AI Act__Art21",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__Art87",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "GDPR__Art9",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "ExplicitConsent",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "UnionOrMemberStateLawRequirement",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "Entity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "CompetentAuthorityRequest",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art21",
+     "obligation"
+    ],
+    [
+     "SpecialCategoryData",
+     "hasPersonalData",
+     "HealthData",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A12": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art16",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A13": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtS80-22D",
+    "EU AI Act__Art16",
+    "EU AI Act__Art21",
+    "EU AI Act__Art5",
+    "GDPR__Art14",
+    "GDPR__Art15",
+    "GDPR__Art16",
+    "GDPR__Art17",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestAccess",
+     "GDPR__Art14",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRestrictionOfProcessing",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRisk",
+     "SignificantHarm",
+     "EU AI Act__Art5",
+     "prohibition"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightOfAccess",
+     "GDPR__Art15",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "Right",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "CompetentAuthorityRequest",
+     "hasRight",
+     "Requestinformation",
+     "EU AI Act__Art21",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "ContestDecision",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "ComplyWithAccessibilityRequirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToErasureCommunication",
+     "GDPR__Art17",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "MakeRepresentations",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A14": {
+   "n": 12,
+   "articles": [
+    "GDPR__Art13",
+    "GDPR__Art14",
+    "GDPR__Art15",
+    "GDPR__Art16",
+    "GDPR__Art17",
+    "GDPR__Art18",
+    "GDPR__Art22",
+    "GDPR__Art6"
+   ],
+   "regulations": [
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToErasureCommunication",
+     "GDPR__Art17",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RestrictionForLegalClaims",
+     "GDPR__Art18",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestAccess",
+     "GDPR__Art14",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightOfAccess",
+     "GDPR__Art15",
+     "obligation"
+    ],
+    [
+     "Processing",
+     "hasLegalBasis",
+     "DataSubjectConsentStatus",
+     "GDPR__Art6",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToContestDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "ControllerIdentity",
+     "hasNotice",
+     "DataSubjectInformation",
+     "GDPR__Art13",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestErasure",
+     "GDPR__Art17",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToObjectToProcessing",
+     "GDPR__Art18",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToCompleteIncompleteData",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToHumanIntervention",
+     "GDPR__Art22",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "A15": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art14",
+    "EU AI Act__Art26",
+    "EU AI Act__Art5",
+    "GDPR__Art16",
+    "GDPR__Art22"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToContestDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToHumanIntervention",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToObjectToAutomatedDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "ContestDecision",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRisk",
+     "SignificantHarm",
+     "EU AI Act__Art5",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B16": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art11",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasRisk",
+     "Risk",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B17": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B18": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B19": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU AI Act__Art18",
+    "EU AI Act__Art29",
+    "EU AI Act__ArtAnnex III"
+   ],
+   "regulations": [
+    "EU AI Act"
+   ],
+   "rows": [
+    [
+     "CriticalInfrastructure",
+     "hasObligation",
+     "SafetyMeasures",
+     "EU AI Act__ArtAnnex III",
+     "classification_rule"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "ConformityAssessmentProcedure",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProvider",
+     "hasObligation",
+     "QualityManagementSystemDocumentationRetention",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "BiometricIdentification",
+     "hasPurpose",
+     "LawEnforcement",
+     "EU AI Act__ArtAnnex III",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "ComplyWithAccessibilityRequirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RemoteBiometricIdentificationSystem",
+     "hasTechnicalMeasure",
+     "PersonalData",
+     "EU AI Act__ArtAnnex III",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasObligation",
+     "SubmitNotificationApplication",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B20": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art11",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasRisk",
+     "Risk",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B21": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art14",
+    "EU AI Act__Art17",
+    "EU AI Act__Art26",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B22": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art14",
+    "EU AI Act__Art17",
+    "EU AI Act__Art26",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B23": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art10",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU AI Act__Art18",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProvider",
+     "hasObligation",
+     "QualityManagementSystemDocumentationRetention",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B24": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "EU AI Act__Art14",
+    "EU AI Act__Art29",
+    "EU AI Act__ArtAnnex III",
+    "EU MDR 2017/745__Art87",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "GDPR__Art9",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "RemoteBiometricIdentificationSystem",
+     "hasTechnicalMeasure",
+     "PersonalData",
+     "EU AI Act__ArtAnnex III",
+     "classification_rule"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "ExplicitConsent",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentProcedure",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "UnionOrMemberStateLawRequirement",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "PostMarketSurveillance",
+     "hasPurpose",
+     "Purpose",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "SpecialCategoryData",
+     "hasPersonalData",
+     "BiometricData",
+     "GDPR__Art9",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B25": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B26": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B27": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art10",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__ArtAnnex I",
+    "UK MDR 2002__Art8",
+    "UK MDR 2002__Art9"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DeviceTechnicalDocumentation",
+     "hasTechnicalMeasure",
+     "CEMarkingOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "TechnicalDocumentation",
+     "hasObligation",
+     "Compliancewithrequirements",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "KeepTechnicalDocumentation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DeviceSupply",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "MinimumRequirements",
+     "EU MDR 2017/745__ArtAnnex I",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Statementofessentialrequirements",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B28": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B29": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art13",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU AI Act__Art19",
+    "EU MDR 2017/745__Art10",
+    "GDPR__Art5",
+    "GDPR__Art7",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "MaintainRecords",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "LawfulnessFairnessAndTransparency",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "UKResponsiblePerson",
+     "hasObligation",
+     "ManufacturersObligations",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemLoggingCapability",
+     "hasTechnicalMeasure",
+     "AutomaticallyGeneratedLogs",
+     "EU AI Act__Art19",
+     "obligation"
+    ],
+    [
+     "ConsentRecord",
+     "hasPersonalData",
+     "PersonalData",
+     "GDPR__Art7",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ComplyWithUdiSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ConductCorrectiveActions",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "AffixCeMarking",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "CooperateWithAuthorities",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B30": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art13",
+    "EU AI Act__Art14",
+    "EU AI Act__Art26",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B31": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art14",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B32": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtS80-22D",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art13",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Records",
+     "hasPurpose",
+     "DemonstrateConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableContest",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "AffixCeMarking",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableHumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "B33": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art13",
+    "EU AI Act__Art16",
+    "EU AI Act__Art50",
+    "EU AI Act__ArtAnnex III",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art5",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "EmotionRecognitionSystem",
+     "hasObligation",
+     "InformNaturalPersons",
+     "EU AI Act__Art50",
+     "obligation"
+    ],
+    [
+     "DeviceTechnicalDocumentation",
+     "hasTechnicalMeasure",
+     "CEMarkingOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "CEMarkingOfConformity",
+     "hasTechnicalMeasure",
+     "ConformityMarking",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasObligation",
+     "LawfulnessFairnessAndTransparency",
+     "GDPR__Art5",
+     "obligation"
+    ],
+    [
+     "EmotionRecognition",
+     "hasTechnicalMeasure",
+     "FacialAnalysis",
+     "EU AI Act__ArtAnnex III",
+     "classification_rule"
+    ],
+    [
+     "CEMarking",
+     "hasRight",
+     "MarketAccess",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "UkMarking",
+     "hasLegalBasis",
+     "Article222OfRegulationecNo7652008",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art13",
+     "obligation"
+    ],
+    [
+     "MutualRecognitionAgreement",
+     "hasPurpose",
+     "RecognitionOfConformityAssessmentProcedures",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "AffixCeMarking",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRight",
+     "CEMarkingOfConformity",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "AiSystem",
+     "hasObligation",
+     "TransparencyObligation",
+     "EU AI Act__Art50",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "C34": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art10",
+    "EU AI Act__Art51",
+    "EU AI Act__Art53",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art9",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "ExplicitConsent",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "GeneralPurposeAiModelTrainingDataSummary",
+     "hasPurpose",
+     "Transparency",
+     "EU AI Act__Art53",
+     "obligation"
+    ],
+    [
+     "AutomatedProcessing",
+     "hasLegalBasis",
+     "ExplicitConsentForAutomatedDecisionMaking",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Risk",
+     "hasRisk",
+     "InjuryOrDamageToHealth",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "InformedConsent",
+     "hasPurpose",
+     "ProtectSubjectRights",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "SpecialCategoryData",
+     "hasPersonalData",
+     "HealthData",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "GeneralPurposeAIModelWithSystemicRisk",
+     "hasRisk",
+     "SystemicRisk",
+     "EU AI Act__Art51",
+     "classification_rule"
+    ],
+    [
+     "ImplantableDevice",
+     "hasRisk",
+     "InjuryOrDamageToHealth",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ClinicalBenefit",
+     "hasPurpose",
+     "ImprovePatientHealth",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "UnionOrMemberStateLawRequirement",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasPurpose",
+     "Healthcare",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "C35": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art35",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "NotifiedBody",
+     "hasObligation",
+     "ConformityAssessment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskProcessing",
+     "hasRiskAssessment",
+     "RiskAssessment",
+     "GDPR__Art35",
+     "obligation"
+    ],
+    [
+     "UKResponsiblePerson",
+     "hasObligation",
+     "ManufacturersObligations",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "ConformityAssessment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalOrganisationalMeasure",
+     "RiskAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "AffixCeMarking",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "CEMarkingOfConformity",
+     "hasTechnicalMeasure",
+     "ConformityMarking",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "C36": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "C37": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "C38": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art14",
+    "EU AI Act__Art26",
+    "EU AI Act__Art5",
+    "GDPR__Art22",
+    "GDPR__Art9"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToHumanIntervention",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToObjectToAutomatedDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "ExplicitConsent",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableHumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ProcessingOfSpecialCategoryData",
+     "hasLegalBasis",
+     "UnionOrMemberStateLawRequirement",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRisk",
+     "SignificantHarm",
+     "EU AI Act__Art5",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D39": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art5",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "EmotionInference",
+     "hasObligation",
+     "MedicalSafety",
+     "EU AI Act__Art5",
+     "prohibition"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Treatment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "InVitroDiagnosticMedicalDevice",
+     "hasPurpose",
+     "ExaminationOfSpecimens",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DeviceTechnicalDocumentation",
+     "hasTechnicalMeasure",
+     "CEMarkingOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "DeviceDesign",
+     "hasRisk",
+     "Risk",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPersonalData",
+     "PersonalData",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D40": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745"
+   ],
+   "rows": [
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ImplementPostMarketSurveillanceSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ConformityAssessmentProcedure",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ComplyWithUdiSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ConductCorrectiveActions",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D41": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D42": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU AI Act__Art18",
+    "EU AI Act__Art20",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProvider",
+     "hasObligation",
+     "QualityManagementSystemDocumentationRetention",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAIProviderObligation",
+     "hasObligation",
+     "Informmarketsurveillanceauthorities",
+     "EU AI Act__Art20",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D43": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art15",
+    "EU AI Act__Art20",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__Art87",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "HighRiskAIProviderObligation",
+     "hasObligation",
+     "Informmarketsurveillanceauthorities",
+     "EU AI Act__Art20",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "CybersecurityOfHighRiskAI",
+     "hasTechnicalOrganisationalMeasure",
+     "MeasuresToPreventDataPoisoning",
+     "EU AI Act__Art15",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Treatment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "InVitroDiagnosticMedicalDevice",
+     "hasPurpose",
+     "ExaminationOfSpecimens",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ReportSeriousIncidents",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D44": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "ComplyWithAccessibilityRequirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D45": {
+   "n": 11,
+   "articles": [
+    "EU MDR 2017/745__ArtAnnex VIII"
+   ],
+   "regulations": [
+    "EU MDR 2017/745"
+   ],
+   "rows": [
+    [
+     "MedicalDevice",
+     "hasRiskAssessment",
+     "AnnexVIIIConditions",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasRisk",
+     "Death",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasRisk",
+     "SeriousDeterioration",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasObligation",
+     "Classification",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasTechnicalMeasure",
+     "RiskAssessment",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "isMitigatedByMeasure",
+     "ClassIII",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "isMitigatedByMeasure",
+     "ClassIIa",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "isMitigatedByMeasure",
+     "ClassIIb",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "Software",
+     "hasPurpose",
+     "TherapeuticPurposes",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D46": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art10",
+    "EU AI Act__Art11",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasObligation",
+     "DataGovernancePractice",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasRisk",
+     "Risk",
+     "EU AI Act__Art10",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D47": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "D48": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__Art61",
+    "GDPR__Art35",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ClinicalEvaluation",
+     "hasPurpose",
+     "VerifySafetyAndPerformance",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentProcedure",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskProcessing",
+     "hasRiskAssessment",
+     "RiskAssessment",
+     "GDPR__Art35",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "AnnexXIV",
+     "hasTechnicalMeasure",
+     "ClinicalEvaluationReport",
+     "EU MDR 2017/745__Art61",
+     "obligation"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasObligation",
+     "SubmitNotificationApplication",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E49": {
+   "n": 12,
+   "articles": [
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5",
+    "UK MDR 2002__Art8",
+    "UK MDR 2002__Art9",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "Accessory",
+     "hasPurpose",
+     "GeneralMedicalDevice",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Statementofessentialrequirements",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "FieldSafetyCorrectiveAction",
+     "hasObligation",
+     "DeviceRecall",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Obligation",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "Device",
+     "hasRisk",
+     "DeviceNonConformity",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DeviceSupply",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "ExemptedDevice",
+     "hasObligation",
+     "Exempted",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E50": {
+   "n": 9,
+   "articles": [
+    "UK MDR 2002__Art5"
+   ],
+   "regulations": [
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "CustomMadeDevice",
+     "hasPurpose",
+     "ParticularPatient",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Obligation",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "SingleUseCombinationProduct",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "ExemptedDevice",
+     "hasObligation",
+     "Exempted",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "Device",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "SystemOrProcedurePack",
+     "hasTechnicalMeasure",
+     "TechnicalMeasure",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "Accessory",
+     "hasPurpose",
+     "GeneralMedicalDevice",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "RelevantDevice",
+     "hasObligation",
+     "LegalBasis",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRight",
+     "CEMarkingOfConformity",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E51": {
+   "n": 12,
+   "articles": [
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5",
+    "UK MDR 2002__Art7",
+    "UK MDR 2002__Art8",
+    "UK MDR 2002__Art9",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "DeviceClassificationDispute",
+     "hasObligation",
+     "Obligation",
+     "UK MDR 2002__Art7",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Obligation",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Statementofessentialrequirements",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "FieldSafetyCorrectiveAction",
+     "hasObligation",
+     "DeviceRecall",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "DeviceClassification",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art7",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ExemptedDevice",
+     "hasObligation",
+     "Exempted",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "DeviceSupply",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "Device",
+     "hasRisk",
+     "DeviceNonConformity",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "MedicalDeviceClassification",
+     "hasTechnicalMeasure",
+     "ClassificationCriteria",
+     "UK MDR 2002__Art7",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E52": {
+   "n": 11,
+   "articles": [
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "DeviceSupply",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "EssentialRequirements",
+     "hasTechnicalMeasure",
+     "Regulation7222012",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "EssentialRequirementsCompliance",
+     "hasTechnicalMeasure",
+     "ApplicableRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "RelevantDevice",
+     "hasTechnicalMeasure",
+     "ApplicableRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "DeviceClassification",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasPurpose",
+     "Healthcare",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "RelevantDevice",
+     "hasObligation",
+     "MeetRegulationeuNo7222012",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ],
+    [
+     "DevicePlacementOnMarket",
+     "hasRisk",
+     "NonCompliance",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E53": {
+   "n": 12,
+   "articles": [
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art9",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "EssentialRequirements",
+     "hasObligation",
+     "Clinicaldata",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "CEMarkingOfConformity",
+     "hasTechnicalMeasure",
+     "ConformityMarking",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "PeriodicSafetyUpdateReport",
+     "hasTechnicalMeasure",
+     "SummaryOfResultsAndConclusions",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "EssentialRequirements",
+     "hasTechnicalMeasure",
+     "Designatedstandards",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasObligation",
+     "Statementofessentialrequirements",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "Device",
+     "isMitigatedByMeasure",
+     "Conformityassessment",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasTechnicalMeasure",
+     "Annexviii",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasPersonalData",
+     "Patientdata",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "Device",
+     "hasPurpose",
+     "Intendedpurpose",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasRight",
+     "Patientinformation",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "Device",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ],
+    [
+     "Device",
+     "hasRisk",
+     "ReasonableGroundsForSuspicion",
+     "UK MDR 2002__Art9",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E54": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art16",
+    "EU AI Act__Art17",
+    "EU MDR 2017/745__Art10",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__ArtPart4A"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ImplementPostMarketSurveillanceSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "UKResponsiblePerson",
+     "hasObligation",
+     "ManufacturersObligations",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "AffixCeMarking",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ComplyWithUdiSystem",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "ComplyWithAccessibilityRequirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ConductCorrectiveActions",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "Manufacturer",
+     "hasObligation",
+     "PostMarketSurveillance",
+     "UK MDR 2002__ArtPart4A",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E55": {
+   "n": 12,
+   "articles": [
+    "EU AI Act__Art5",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "UK MDR 2002__Art2",
+    "UK MDR 2002__Art5",
+    "UK MDR 2002__Art8"
+   ],
+   "regulations": [
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "EmotionInference",
+     "hasObligation",
+     "MedicalSafety",
+     "EU AI Act__Art5",
+     "prohibition"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Treatment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "CustomMadeDevice",
+     "hasPurpose",
+     "ParticularPatient",
+     "UK MDR 2002__Art5",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DeviceTechnicalDocumentation",
+     "hasTechnicalMeasure",
+     "CEMarkingOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "InVitroDiagnosticMedicalDevice",
+     "hasPurpose",
+     "ExaminationOfSpecimens",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "DeviceDesign",
+     "hasRisk",
+     "Risk",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "MedicalDevices",
+     "hasObligation",
+     "MeetEssentialRequirements",
+     "UK MDR 2002__Art8",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "E56": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art11",
+    "EU AI Act__Art16",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art83",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "HighRiskAISystem",
+     "hasTechnicalMeasure",
+     "TechnicalDocumentation",
+     "EU AI Act__Art11",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "HaveQualityManagementSystem",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "Manufacturer",
+     "hasOrganisationalMeasure",
+     "QualityManagementSystem",
+     "EU MDR 2017/745__Art83",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "F57": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art14",
+    "EU AI Act__Art26",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art22",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToHumanIntervention",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "ClinicalInvestigation",
+     "hasRisk",
+     "HumanSubjects",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "PlacingOnTheMarket",
+     "hasObligation",
+     "FirstMakingAvailableOfADevice",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToObjectToAutomatedDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "HumanBody",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "F58": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtSchedule 6"
+   ],
+   "regulations": [
+    "DUAA 2025"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasOrganisationalMeasure",
+     "OrganisationalMeasure",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableHumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasPurpose",
+     "AutomatedDecisionMaking",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalMeasure",
+     "TechnicalMeasure",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "AppropriateSafeguard",
+     "hasOrganisationalMeasure",
+     "HumanInterventionEnablement",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalOrganisationalMeasure",
+     "RiskAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "AutomatedProcessing",
+     "hasLegalBasis",
+     "ExplicitConsentForAutomatedDecisionMaking",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "ProcessingOperation",
+     "hasTechnicalMeasure",
+     "HumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalMeasure",
+     "NaturalPersonProfiling",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "F59": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "DUAA 2025__ArtS80-22D",
+    "DUAA 2025__ArtSchedule 6"
+   ],
+   "regulations": [
+    "DUAA 2025"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "AppropriateSafeguard",
+     "hasOrganisationalMeasure",
+     "HumanInterventionEnablement",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRestrictionOfProcessing",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "Right",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "Article22CRequirement",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ProcessingOperation",
+     "hasTechnicalMeasure",
+     "HumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableHumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasRisk",
+     "DataSubjectRights",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasTechnicalOrganisationalMeasure",
+     "SafeguardImplementationRequirements",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "ImplementSafeguards",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "F60": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22D",
+    "DUAA 2025__ArtSchedule 6"
+   ],
+   "regulations": [
+    "DUAA 2025"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasOrganisationalMeasure",
+     "OrganisationalMeasure",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "Obligation",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "PersonalData",
+     "hasPurpose",
+     "AutomatedDecisionMaking",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalMeasure",
+     "TechnicalMeasure",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "Right",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalOrganisationalMeasure",
+     "RiskAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "AutomatedProcessing",
+     "hasLegalBasis",
+     "ExplicitConsentForAutomatedDecisionMaking",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Obligation",
+     "hasOrganisationalMeasure",
+     "OrganisationalMeasure",
+     "DUAA 2025__ArtS80-22D",
+     "permission"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasTechnicalMeasure",
+     "NaturalPersonProfiling",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "F61": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "DUAA 2025__ArtS80-22C",
+    "EU AI Act__Art14",
+    "EU AI Act__Art26",
+    "EU AI Act__Art5",
+    "GDPR__Art16",
+    "GDPR__Art22"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToHumanIntervention",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToObjectToAutomatedDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasObligation",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "AutomatedDecision",
+     "hasObligation",
+     "SignificantDecisionRestriction",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToContestDecision",
+     "GDPR__Art22",
+     "prohibition"
+    ],
+    [
+     "HighRiskAISystemDeployer",
+     "hasOrganisationalMeasure",
+     "HumanOversightMeasure",
+     "EU AI Act__Art26",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasObligation",
+     "EnableHumanIntervention",
+     "DUAA 2025__ArtS80-22C",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRisk",
+     "SignificantHarm",
+     "EU AI Act__Art5",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "G62": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtS80-22B",
+    "EU AI Act__Art16",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10",
+    "GDPR__Art16"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR"
+   ],
+   "rows": [
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "DrawUpEuDeclarationOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "UndergoConformityAssessment",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPersonalData",
+     "PersonalData",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "QualityManagementSystem",
+     "hasPurpose",
+     "EnsureComplianceWithRegulation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRequestRectification",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithRegistrationObligations",
+     "EU AI Act__Art16",
+     "obligation"
+    ],
+    [
+     "DataSubject",
+     "hasRight",
+     "RightToRestrictionOfProcessing",
+     "DUAA 2025__ArtS80-22B",
+     "prohibition"
+    ],
+    [
+     "Records",
+     "hasPurpose",
+     "DemonstrateConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "HighRiskAIConformityDocumentation",
+     "hasObligation",
+     "ComplyWithSection2Requirements",
+     "EU AI Act__Art16",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "G63": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "EU AI Act__Art18",
+    "EU AI Act__Art5",
+    "EU AI Act__Art53",
+    "EU MDR 2017/745__Art2",
+    "EU MDR 2017/745__ArtAnnex VIII",
+    "GDPR__Art9",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "DocumentationRetention",
+     "hasPurpose",
+     "ComplianceWithRegulations",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "SpecialCategoryData",
+     "hasPersonalData",
+     "HealthData",
+     "GDPR__Art9",
+     "prohibition"
+    ],
+    [
+     "HumanInvolvementRegulation",
+     "hasNotice",
+     "DataSubject",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Treatment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "TechnicalDocumentation",
+     "hasPurpose",
+     "ComplianceWithRegulation",
+     "EU AI Act__Art53",
+     "obligation"
+    ],
+    [
+     "HumanInvolvementRegulation",
+     "hasObligation",
+     "MeaningfulInformation",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevices",
+     "hasLegalBasis",
+     "LegalBasis",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "MedicalDevice",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__ArtAnnex VIII",
+     "classification_rule"
+    ],
+    [
+     "EmotionInference",
+     "hasObligation",
+     "MedicalSafety",
+     "EU AI Act__Art5",
+     "prohibition"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "G64": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "EU AI Act__Art14",
+    "EU AI Act__Art29",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art2",
+    "GDPR__Art25",
+    "GDPR__Art35",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "NotifiedBody",
+     "hasObligation",
+     "ConformityAssessment",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ],
+    [
+     "AutomatedDecisionMaking",
+     "hasRisk",
+     "SignificantImpactAssessment",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "HighRiskProcessing",
+     "hasRiskAssessment",
+     "RiskAssessment",
+     "GDPR__Art35",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasRisk",
+     "Risk",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentProcedure",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "DeviceTechnicalDocumentation",
+     "hasTechnicalMeasure",
+     "CEMarkingOfConformity",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ProcessingOperation",
+     "hasPurpose",
+     "Purpose",
+     "GDPR__Art25",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "DiagnosisPreventionMonitoring",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ConformityAssessmentBody",
+     "hasOrganisationalMeasure",
+     "ApprovedBodyCertificate",
+     "EU AI Act__Art29",
+     "obligation"
+    ],
+    [
+     "GeneralMedicalDevice",
+     "hasPurpose",
+     "Diagnosis",
+     "EU MDR 2017/745__Art2",
+     "classification_rule"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  },
+  "G65": {
+   "n": 12,
+   "articles": [
+    "DUAA 2025__ArtS80-22A",
+    "DUAA 2025__ArtSchedule 6",
+    "EU AI Act__Art14",
+    "EU AI Act__Art17",
+    "EU AI Act__Art18",
+    "EU MDR 2017/745__Art10",
+    "EU MDR 2017/745__Art87",
+    "GDPR__Art14",
+    "GDPR__Art16",
+    "GDPR__Art6",
+    "UK MDR 2002__Art2"
+   ],
+   "regulations": [
+    "DUAA 2025",
+    "EU AI Act",
+    "EU MDR 2017/745",
+    "GDPR",
+    "UK MDR 2002"
+   ],
+   "rows": [
+    [
+     "ControllerIdentity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "GDPR__Art16",
+     "obligation"
+    ],
+    [
+     "ProviderObligations",
+     "hasLegalBasis",
+     "EuAiAct",
+     "EU AI Act__Art18",
+     "obligation"
+    ],
+    [
+     "RegulatedAutomatedDecisionMaking",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtS80-22A",
+     "classification_rule"
+    ],
+    [
+     "ManufacturerObligations",
+     "hasObligation",
+     "ClinicalEvaluation",
+     "EU MDR 2017/745__Art10",
+     "obligation"
+    ],
+    [
+     "LegalBasis",
+     "hasDataSubject",
+     "DataSubject",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "ControllerIdentity",
+     "hasObligation",
+     "Obligation",
+     "GDPR__Art14",
+     "obligation"
+    ],
+    [
+     "HumanOversightDecision",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU AI Act__Art14",
+     "obligation"
+    ],
+    [
+     "Entity",
+     "hasLegalBasis",
+     "LegalBasis",
+     "DUAA 2025__ArtSchedule 6",
+     "amendment"
+    ],
+    [
+     "SeriousIncidentReport",
+     "hasLegalBasis",
+     "LegalBasis",
+     "EU MDR 2017/745__Art87",
+     "obligation"
+    ],
+    [
+     "LegalBasis",
+     "hasLegalBasis",
+     "Directive90385Directive9342Directive9879",
+     "UK MDR 2002__Art2",
+     "classification_rule"
+    ],
+    [
+     "Processing",
+     "hasLegalBasis",
+     "DataSubjectConsentStatus",
+     "GDPR__Art6",
+     "obligation"
+    ],
+    [
+     "HighRiskAISystemProviderObligations",
+     "hasObligation",
+     "QualityManagementSystem",
+     "EU AI Act__Art17",
+     "obligation"
+    ]
+   ],
+   "stable_articles": true,
+   "stable_order": true
+  }
+ }
+}

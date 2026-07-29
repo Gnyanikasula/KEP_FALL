@@ -6,6 +6,7 @@ import sys
 import re
 import json
 import time
+from dataclasses import dataclass, field
 from typing import Optional, List, Literal
 from dotenv import load_dotenv
 from pydantic import BaseModel, field_validator, ValidationError
@@ -15,6 +16,7 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 
 from kep_fall.phase_d_engine.router import understand_query, QueryPayload
+from kep_fall.phase_d_engine import graph_store
 from kep_fall import config
 
 load_dotenv()
@@ -98,6 +100,21 @@ def _driver():
     if _DRIVER is None:
         _DRIVER = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
     return _DRIVER
+
+
+def _store():
+    """
+    Breaker-wrapped graph access: Neo4j Aura primary, local read-model
+    fallback. Both stores return rows in the same shape the old direct
+    Cypher calls did, so nothing downstream of kg_retrieve / _bridge_hop /
+    _fetch_by_article needs to change.
+    """
+    return graph_store.get_store(
+        driver_factory=_driver,
+        database=NEO4J_DATABASE,
+        bridge_cypher=_BRIDGE_CYPHER,
+        by_article_cypher=_BY_ARTICLE_CYPHER,
+    )
 
 
 def _collection():
@@ -431,7 +448,7 @@ _BRIDGE_CYPHER = """
            r.confidence     AS confidence,
            r.deontic        AS deontic,
            r.deontic_source AS deontic_source
-    ORDER BY r.confidence DESC, s.typed DESC
+    ORDER BY r.confidence DESC, s.typed DESC, r.article_id, r.predicate, s.label, o.label
     LIMIT 25
 """
 
@@ -475,12 +492,7 @@ def _bridge_hop(anchor_rows: List[dict]) -> List[dict]:
         return []
 
     try:
-        recs = _driver().execute_query(
-            _BRIDGE_CYPHER,
-            anchor_labels=anchor_labels,
-            seen_regs=seen_regs,
-            database_=NEO4J_DATABASE,
-        ).records
+        recs = _store().bridge_hop(anchor_labels, seen_regs)
     except Exception as exc:
         log = _get_log()
         if log:
@@ -612,7 +624,7 @@ _BY_ARTICLE_CYPHER = """
            r.confidence     AS confidence,
            r.deontic        AS deontic,
            r.deontic_source AS deontic_source
-    ORDER BY r.confidence DESC, s.typed DESC
+    ORDER BY r.confidence DESC, s.typed DESC, r.article_id, r.predicate, s.label, o.label
 """
 
 
@@ -622,10 +634,7 @@ def _fetch_by_article(refs: list) -> List[dict]:
     if not kg_ids:
         return []
     try:
-        recs = _driver().execute_query(
-            _BY_ARTICLE_CYPHER, article_ids=kg_ids,
-            database_=NEO4J_DATABASE,
-        ).records
+        recs = _store().fetch_by_article(kg_ids)
     except Exception as exc:
         log = _get_log()
         if log:
@@ -684,76 +693,15 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
     if not keywords:
         return []
 
-    # 2 + 3. Cypher: anchor on keyword, traverse :REL
-    # Two passes in one query:
-    #   Pass A – outgoing edges from anchor (anchor IS the subject)
-    #   Pass B – incoming edges to anchor   (anchor IS the object)
-    # This catches both "HealthData --hasLegalBasis--> Consent"
-    # and "Processing --appliesTo--> HealthData" patterns.
-    # Every RETURN column must exist in BOTH branches of the UNION, or Cypher
-    # errors. Added since v1: subject_typed / object_typed (needed for the
-    # ontology ablation, which filters on typed nodes), and deontic /
-    # deontic_source / canonical_id, written onto the edge by p2_step5.
-    cypher = """
-        // Pass A - anchor is the subject
-        MATCH (s:Concept)-[r:REL]->(o:Concept)
-        WHERE any(kw IN $keywords
-                  WHERE toLower(s.label)   CONTAINS kw
-                     OR toLower(r.predicate) CONTAINS kw
-                     OR (s.uri IS NOT NULL AND toLower(s.uri) CONTAINS kw))
-        RETURN s.label          AS subject,
-               s.uri            AS subject_uri,
-               s.typed          AS subject_typed,
-               o.typed          AS object_typed,
-               s.typed          AS typed,
-               r.predicate      AS predicate,
-               o.label          AS object,
-               o.uri            AS object_uri,
-               r.regulation     AS regulation,
-               r.article_id     AS article_id,
-               r.canonical_id   AS canonical_id,
-               r.chunk_ids      AS chunk_ids,
-               r.confidence     AS confidence,
-               r.deontic        AS deontic,
-               r.deontic_source AS deontic_source
-        ORDER BY r.confidence DESC, s.typed DESC
-        LIMIT 30
-
-        UNION
-
-        // Pass B - anchor is the object
-        MATCH (s:Concept)-[r:REL]->(o:Concept)
-        WHERE any(kw IN $keywords
-                  WHERE toLower(o.label)   CONTAINS kw
-                     OR toLower(r.predicate) CONTAINS kw
-                     OR (o.uri IS NOT NULL AND toLower(o.uri) CONTAINS kw))
-        RETURN s.label          AS subject,
-               s.uri            AS subject_uri,
-               s.typed          AS subject_typed,
-               o.typed          AS object_typed,
-               s.typed          AS typed,
-               r.predicate      AS predicate,
-               o.label          AS object,
-               o.uri            AS object_uri,
-               r.regulation     AS regulation,
-               r.article_id     AS article_id,
-               r.canonical_id   AS canonical_id,
-               r.chunk_ids      AS chunk_ids,
-               r.confidence     AS confidence,
-               r.deontic        AS deontic,
-               r.deontic_source AS deontic_source
-        ORDER BY r.confidence DESC, s.typed DESC
-        LIMIT 20
-    """
-
+    # 2 + 3. Anchor on keyword, traverse :REL — via the breaker-wrapped store.
+    # (Cypher text now lives in graph_store._MATCH_CYPHER; kept in sync there.
+    # Two passes in one query: Pass A anchor-is-subject, Pass B anchor-is-object,
+    # so both "HealthData --hasLegalBasis--> Consent" and
+    # "Processing --appliesTo--> HealthData" patterns are caught.)
     try:
-        recs = _driver().execute_query(
-            cypher, keywords=keywords, database_=NEO4J_DATABASE
-        ).records
+        recs = _store().match_by_keywords(keywords)
     except Exception as exc:
         # Never hard-fail — RAG still runs if KG is unavailable.
-        # If this fires with "Unknown property r.deontic", the graph predates
-        # p2_step5 v2. Re-run `python p2_step5_aura_graph.py`.
         log = _get_log()
         if log:
             log.warning("kg_retrieve failed: %s", exc)
@@ -1615,142 +1563,223 @@ def _route(question: str, history: list[dict] | None) -> Optional[QueryPayload]:
     return understand_query(routed)
 
 
-# Main entry point
-def analyze(
-    question: str,
-    history:  list[dict] | None = None,
-) -> Optional[Verdict]:
+# ==========================================================================
+# Phase 3 — three-stage pipeline: prepare -> retrieve -> synthesize
+#
+# analyze() used to route, retrieve and synthesize in one monolith, and
+# analyze_trace() duplicated the same branching (and had drifted — note the
+# stale commented-out knowledge branch in the old version). Splitting the
+# pipeline into three composable stages:
+#   * removes the duplication (analyze and analyze_trace now share one path),
+#   * lets the API route ONCE instead of three times (see api._run_pipeline),
+#   * makes retrieved KG/RAG evidence a first-class return value instead of a
+#     local that gets discarded — the foundation for the provenance UI and for
+#     emitting an `evidence` SSE frame before the verdict is ready.
+#
+# kg_retrieve / rag_retrieve / rag_knowledge / build_context / _synthesize are
+# UNCHANGED. The eval harness imports those directly and its numbers are frozen;
+# nothing here touches them.
+# ==========================================================================
+
+@dataclass
+class Plan:
+    """Everything the routing stage decided, so retrieval/synthesis needn't
+    re-route. `payload` is what the question routed to; `retrieval_payload` is
+    what retrieval should actually anchor on (differs only for vague
+    follow-ups, which inherit the previous turn's payload)."""
+    question:          str
+    payload:           QueryPayload
+    retrieval_payload: QueryPayload
+    intent:            str
+    mode:              str                 # "canned" | "summary" | "knowledge" | "scenario"
+    canned:            Optional[Verdict] = None
+    history_msgs:      list[dict] = field(default_factory=list)
+    memory_suffix:     str = ""
+    summary_payloads:  list[QueryPayload] = field(default_factory=list)
+
+
+@dataclass
+class Evidence:
+    """Retrieved grounding context. This is the bundle that later becomes the
+    Trace surfaced to the UI; for now it carries exactly what synthesis needs
+    plus the raw kg/rag rows so nothing is thrown away."""
+    kg:      List[dict] = field(default_factory=list)
+    rag:     List[dict] = field(default_factory=list)
+    context: str = ""
+    system:  str = ""                      # which system prompt this evidence feeds
+
+
+def prepare(question: str, history: list[dict] | None = None) -> Optional[Plan]:
     """
-    Single pipeline entry point.
+    Stage 1 — route once, resolve intent, and decide the retrieval strategy.
 
-    CLI usage  : analyze(question)
-    API usage  : analyze(question, history)
-
-    History flow:
-    1. _route()               - intent classification with conversation context
-    2. _canned_response()     - immediate return for non-retrieval intents
-    3. _build_history_messages() - convert history to LLM message list
-    4. retrieval strategy     - vague followup → inherit payload
-                                summary request → combine all session payloads
-                                normal → use current payload
-    5. kg_retrieve / rag_retrieve  - fetch grounding context
-    6. _synthesize()          - LLM verdict/explanation with history messages
-                                so the model sees and can refer to prior turns
+    Returns None only when routing itself fails (same contract analyze() had).
+    A canned intent returns a Plan with mode="canned" and .canned set, so the
+    caller can short-circuit without a second routing call.
     """
     payload = _route(question, history)
     if not payload:
         return None
 
-    # Non-retrieval intents return immediately
     canned = _canned_response(payload)
     if canned is not None:
-        return canned
+        return Plan(question=question, payload=payload,
+                    retrieval_payload=payload, intent=payload.intent,
+                    mode="canned", canned=canned)
 
-    # Build history message list (empty list = single-turn, no history effect)
     history_msgs = _build_history_messages(history) if history else []
     memory_suffix = _SYSTEM_MEMORY_SUFFIX if history_msgs else ""
 
-    # Retrieval strategy
-    # Summary: pull context from the entire session, not just current payload
+    # Summary: pull context from the entire session, not just this turn.
     if history and _is_summary_request(question):
         all_payloads = _extract_all_payloads(history)
         if all_payloads:
-            rag = _rag_retrieve_combined(all_payloads)
-            kg  = kg_retrieve(all_payloads[-1])
-            prompt = (f"QUESTION: {question}\n\n"
-                      f"PARSED: {payload.model_dump()}\n\n"
-                      f"CONTEXT:\n{build_context(kg, rag)}")
-            return _synthesize(SYSTEM + memory_suffix, prompt, history_msgs or None)
+            return Plan(question=question, payload=payload,
+                        retrieval_payload=all_payloads[-1],
+                        intent=payload.intent, mode="summary",
+                        history_msgs=history_msgs, memory_suffix=memory_suffix,
+                        summary_payloads=all_payloads)
 
-    # Vague followup: inherit previous payload so retrieval has a real topic
+    # Vague follow-up: inherit the previous payload so retrieval has a real topic.
     retrieval_payload = payload
     if history and _is_vague_followup(question):
         inherited = _extract_last_payload(history)
         if inherited:
             retrieval_payload = inherited
 
-    # Synthesis
-    # if payload.intent == "knowledge":
-    #     rag = rag_knowledge(retrieval_payload)
-    #     prompt = (f"QUESTION: {question}\n\n"
-    #               f"TOPIC: {payload.topic}\n\n"
-    #               f"CONTEXT:\n{build_context([], rag)}")
-    #     return _synthesize(SYSTEM_KNOWLEDGE + memory_suffix, prompt, history_msgs or None)
-    if payload.intent == "knowledge":
-        kg  = kg_retrieve(retrieval_payload)
-        rag = rag_knowledge(retrieval_payload)
-        prompt = (f"QUESTION: {question}\n\n"
-                  f"TOPIC: {payload.topic}\n\n"
-                  f"CONTEXT:\n{build_context(kg, rag)}")
-        return _synthesize(SYSTEM_KNOWLEDGE + memory_suffix, prompt, history_msgs or None)
+    mode = "knowledge" if payload.intent == "knowledge" else "scenario"
+    return Plan(question=question, payload=payload,
+                retrieval_payload=retrieval_payload, intent=payload.intent,
+                mode=mode, history_msgs=history_msgs, memory_suffix=memory_suffix)
+
+
+def retrieve(plan: Plan) -> Evidence:
+    """
+    Stage 2 — fetch grounding context according to the plan's mode.
+
+    Canned plans need no retrieval and return an empty Evidence. Every other
+    branch reproduces exactly what analyze() did before, so retrieved content
+    is unchanged — only its lifetime is (it is now returned, not discarded).
+    """
+    if plan.mode == "canned":
+        return Evidence()
+
+    if plan.mode == "summary":
+        rag = _rag_retrieve_combined(plan.summary_payloads)
+        kg  = kg_retrieve(plan.summary_payloads[-1])
+        return Evidence(kg=kg, rag=rag,
+                        context=build_context(kg, rag), system=SYSTEM)
+
+    if plan.mode == "knowledge":
+        kg  = kg_retrieve(plan.retrieval_payload)
+        rag = rag_knowledge(plan.retrieval_payload)
+        return Evidence(kg=kg, rag=rag,
+                        context=build_context(kg, rag), system=SYSTEM_KNOWLEDGE)
 
     # scenario
-    kg  = kg_retrieve(retrieval_payload)
-    rag = rag_retrieve(retrieval_payload)
-    prompt = (f"QUESTION: {question}\n\n"
-              f"PARSED: {payload.model_dump()}\n\n"
-              f"CONTEXT:\n{build_context(kg, rag)}")
-    return _synthesize(SYSTEM + memory_suffix, prompt, history_msgs or None)
+    kg  = kg_retrieve(plan.retrieval_payload)
+    rag = rag_retrieve(plan.retrieval_payload)
+    return Evidence(kg=kg, rag=rag,
+                    context=build_context(kg, rag), system=SYSTEM)
 
 
-# Backward-compat alias - api.py calls this signature
+def synthesize(plan: Plan, evidence: Evidence) -> Optional[Verdict]:
+    """
+    Stage 3 — build the prompt and call the LLM.
+
+    Canned plans return their prebuilt verdict without an LLM call. The prompt
+    construction below matches the old analyze() per-mode wording exactly
+    (knowledge uses TOPIC, scenario/summary use PARSED).
+    """
+    if plan.mode == "canned":
+        return plan.canned
+
+    if plan.mode == "knowledge":
+        prompt = (f"QUESTION: {plan.question}\n\n"
+                  f"TOPIC: {plan.payload.topic}\n\n"
+                  f"CONTEXT:\n{evidence.context}")
+    else:  # summary / scenario
+        prompt = (f"QUESTION: {plan.question}\n\n"
+                  f"PARSED: {plan.payload.model_dump()}\n\n"
+                  f"CONTEXT:\n{evidence.context}")
+
+    system = evidence.system + plan.memory_suffix
+    return _synthesize(system, prompt, plan.history_msgs or None)
+
+
+# --------------------------------------------------------------------------
+# Public entry points — thin compositions of prepare / retrieve / synthesize.
+# --------------------------------------------------------------------------
+def analyze(question: str,
+            history: list[dict] | None = None) -> Optional[Verdict]:
+    """
+    Single pipeline entry point.  CLI: analyze(q)   API: analyze(q, history)
+
+    Now a three-line composition. Behaviour is identical to the previous
+    monolith for every intent — canned, summary, knowledge, scenario — because
+    prepare/retrieve/synthesize reproduce each of those branches unchanged.
+    """
+    plan = prepare(question, history)
+    if plan is None:
+        return None
+    if plan.mode == "canned":
+        return plan.canned
+    return synthesize(plan, retrieve(plan))
+
+
+# Backward-compat alias — api.py calls this signature.
 def analyze_with_history(question: str, history: list[dict]) -> Optional[Verdict]:
     return analyze(question, history)
 
 
+def analyze_full(question: str,
+                 history: list[dict] | None = None
+                 ) -> tuple[Optional[Plan], Optional[Evidence], Optional[Verdict]]:
+    """
+    Like analyze(), but returns the intermediate stages too:
+        (plan, evidence, verdict)
+
+    This is what the API and the provenance UI use when they need the retrieved
+    KG/RAG evidence, not just the final verdict. Retrieval runs once; the caller
+    gets the verdict AND the grounding it was built from.
+    """
+    plan = prepare(question, history)
+    if plan is None:
+        return None, None, None
+    if plan.mode == "canned":
+        return plan, Evidence(), plan.canned
+    evidence = retrieve(plan)
+    verdict  = synthesize(plan, evidence)
+    return plan, evidence, verdict
+
 
 def analyze_trace(question: str) -> dict:
     """
-    Evaluation harness - returns full trace including retrieved KG/RAG context.
-    Called by your eval scripts, not by the live API.
-    Does its own retrieval so trace captures intermediate results.
-    Uses the same _canned_response() and _synthesize() so outputs are consistent.
+    Evaluation-style trace: verdict plus the retrieved KG/RAG context, as a
+    plain dict. Single-turn (no history). Kept for any ad-hoc script or notebook
+    that used it; the live eval harness builds its own pipeline and does not
+    call this. Now backed by the shared three-stage path, so it can no longer
+    drift from analyze() the way the old duplicated version did.
     """
-    trace = {
-        "question": question, "intent": None, "parsed": None,
-        "kg": [], "rag": [], "verdict": None, "rules": [],
-        "reasoning": "", "confidence": 0,
-    }
+    trace = {"question": question, "intent": None, "parsed": None,
+             "kg": [], "rag": [], "verdict": None, "rules": [],
+             "reasoning": "", "confidence": 0}
 
-    payload = understand_query(question)
-    if not payload:
+    plan, evidence, result = analyze_full(question, history=None)
+    if plan is None:
         return trace
 
-    trace["intent"] = payload.intent
-    trace["parsed"] = payload.model_dump()
-
-    # Canned intents need no retrieval
-    result = _canned_response(payload)
-
-    if result is None:
-        # if payload.intent == "knowledge":
-        #     rag          = rag_knowledge(payload)
-        #     trace["rag"] = rag
-        #     prompt       = (f"QUESTION: {question}\n\n"
-        #                     f"TOPIC: {payload.topic}\n\n"
-        #                     f"CONTEXT:\n{build_context([], rag)[:6000]}")
-        #     result       = _synthesize(SYSTEM_KNOWLEDGE, prompt)
-        if payload.intent == "knowledge":
-            kg           = kg_retrieve(payload)
-            rag          = rag_knowledge(payload)
-            trace["kg"], trace["rag"] = kg, rag
-            prompt       = (f"QUESTION: {question}\n\n"
-                            f"TOPIC: {payload.topic}\n\n"
-                            f"CONTEXT:\n{build_context(kg, rag)[:6000]}")
-            result       = _synthesize(SYSTEM_KNOWLEDGE, prompt)
-        else:  # scenario
-            kg  = kg_retrieve(payload)
-            rag = rag_retrieve(payload)
-            trace["kg"], trace["rag"] = kg, rag
-            prompt = (f"QUESTION: {question}\n\n"
-                      f"PARSED: {payload.model_dump()}\n\n"
-                      f"CONTEXT:\n{build_context(kg, rag)}")
-            result = _synthesize(SYSTEM, prompt)
-
+    trace["intent"] = plan.intent
+    trace["parsed"] = plan.payload.model_dump()
+    if evidence:
+        trace["kg"], trace["rag"] = evidence.kg, evidence.rag
     if result:
         trace.update(verdict=result.verdict, rules=result.rules,
                      reasoning=result.reasoning, confidence=result.confidence)
     return trace
+
+
+
 
 
 

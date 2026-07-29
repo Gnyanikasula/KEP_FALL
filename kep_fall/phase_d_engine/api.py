@@ -177,11 +177,18 @@ def _resolve_session(req: QueryRequest) -> str:
 
 
 def _run_pipeline(question: str, sid: str) -> tuple:
-    """Run the full pipeline. Returns (result, parsed_dict)."""
+    """Run the full pipeline. Returns (result, parsed_dict).
+
+    Uses analyze_full so routing happens ONCE. The previous version called
+    analyze_with_history (which routes internally, with history) and then
+    understand_query(question) again (without history) just to get `parsed` —
+    two routes per query, and the displayed payload could differ from the one
+    retrieval actually used. `plan.payload` is the exact payload the pipeline
+    ran on, so `parsed` is now guaranteed consistent with the verdict.
+    """
     history = store.get_messages(sid)
-    result  = V.analyze_with_history(question, history)
-    payload = understand_query(question)
-    parsed  = payload.model_dump() if payload else {}
+    plan, _evidence, result = V.analyze_full(question, history)
+    parsed = plan.payload.model_dump() if plan else {}
     return result, parsed
 
 
