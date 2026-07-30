@@ -197,19 +197,50 @@ class LocalGraphStore:
     name = "local"
 
     def __init__(self, triples_path=None, gold_path=None):
-        from kep_fall.phase_c_graph.step5_load_graph import (
-            build_rows, load_gold_deontic,
-        )
+        # Lazy by design. The runtime image ships only chroma_db + Neo4j creds
+        # (see .dockerignore: `data/` is build-time only), so the triples file
+        # this fallback reads is deliberately absent in production. Reading it
+        # in __init__ used to crash get_store() before the Neo4j primary was
+        # even constructed — turning a missing FALLBACK file into a total graph
+        # outage. Construction is now cheap and cannot fail; the file is read
+        # on first query, and a missing file degrades to an empty store (0
+        # edges) with a single warning instead of raising.
         from pathlib import Path
-
-        triples_path = Path(triples_path or config.TRIPLES_CLEAN)
-        gold_path = Path(gold_path or config.GOLD_STANDARD)
-
-        triples = json.load(open(triples_path, encoding="utf-8"))
-        gold = load_gold_deontic(gold_path)
-        rows = build_rows(triples, gold)
-
+        self._triples_path = Path(triples_path or config.TRIPLES_CLEAN)
+        self._gold_path = Path(gold_path or config.GOLD_STANDARD)
+        self._loaded = False
+        self._load_failed = False
         self._edges: List[dict] = []
+        self._hay: List[dict] = []
+        self._by_article: dict[str, List[int]] = {}
+
+    def _ensure_loaded(self) -> None:
+        """Load and index the read-model on first use. Idempotent; never raises.
+
+        A missing/unreadable triples file (the expected case on a Space that
+        doesn't ship `data/`) is caught once, logged, and leaves the store
+        empty so callers uniformly get [] instead of an exception propagating
+        up through the breaker.
+        """
+        if self._loaded or self._load_failed:
+            return
+        try:
+            from kep_fall.phase_c_graph.step5_load_graph import (
+                build_rows, load_gold_deontic,
+            )
+            triples = json.load(open(self._triples_path, encoding="utf-8"))
+            gold = load_gold_deontic(self._gold_path)
+            rows = build_rows(triples, gold)
+        except Exception as exc:
+            # Mark failed so we don't re-attempt (and re-log) on every query.
+            self._load_failed = True
+            log.warning(
+                "LocalGraphStore unavailable (%s): fallback will serve 0 edges. "
+                "Expected when the runtime image omits data/graph/clean_triples.json.",
+                exc,
+            )
+            return
+
         seen = set()
         for r in rows:
             key = (r["s_key"], r["pred"], r["art"], r["o_key"])
@@ -245,10 +276,10 @@ class LocalGraphStore:
             "pred":    (e["predicate"] or "").lower(),
         } for e in self._edges]
 
-        self._by_article: dict[str, List[int]] = {}
         for i, e in enumerate(self._edges):
             self._by_article.setdefault(e["article_id"], []).append(i)
 
+        self._loaded = True
         log.info("LocalGraphStore ready: %d edges, %d articles",
                  len(self._edges), len(self._by_article))
 
@@ -283,6 +314,7 @@ class LocalGraphStore:
 
     # -- queries ----------------------------------------------------------
     def match_by_keywords(self, keywords: List[str]) -> List[dict]:
+        self._ensure_loaded()
         kws = [k.lower() for k in keywords if k]
         if not kws:
             return []
@@ -309,6 +341,7 @@ class LocalGraphStore:
 
     def bridge_hop(self, anchor_labels: List[str],
                    seen_regs: List[str]) -> List[dict]:
+        self._ensure_loaded()
         wanted = {a.lower() for a in anchor_labels if a}
         blocked = set(seen_regs or [])
         if not wanted:
@@ -321,12 +354,14 @@ class LocalGraphStore:
         return self._ordered(hits)[:25]
 
     def fetch_by_article(self, article_ids: List[str]) -> List[dict]:
+        self._ensure_loaded()
         idxs = []
         for aid in article_ids or []:
             idxs.extend(self._by_article.get(aid, []))
         return self._ordered(idxs)
 
     def healthy(self) -> bool:
+        self._ensure_loaded()
         return bool(self._edges)
 
 
@@ -505,11 +540,16 @@ def get_store(driver_factory=None, database=None,
         log.warning("graph_store: ignoring unknown STORE=%r", forced)
         forced = None
 
-    local = LocalGraphStore()
+    # Build the primary FIRST. LocalGraphStore construction is now cheap and
+    # cannot throw, but ordering the primary ahead keeps a future eager
+    # fallback from ever blocking the Neo4j path during assembly.
     primary = Neo4jGraphStore(
         driver_factory, database,
         bridge_cypher=bridge_cypher, by_article_cypher=by_article_cypher,
-    ) if driver_factory else local
+    ) if driver_factory else None
+    local = LocalGraphStore()
+    if primary is None:
+        primary = local
 
     _STORE = BreakerGraphStore(primary, local, forced=forced)
     if forced:
