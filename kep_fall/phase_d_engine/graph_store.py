@@ -54,6 +54,8 @@ import threading
 import time
 from typing import List, Optional, Protocol
 
+from neo4j import Query
+
 from kep_fall import config
 
 log = logging.getLogger(__name__)
@@ -145,8 +147,13 @@ class Neo4jGraphStore:
         self._by_article = by_article_cypher
 
     def _run(self, cypher: str, **params) -> List[dict]:
+        # Phase 0 (survival): a server-side transaction timeout so a query that
+        # reaches Aura but stalls (e.g. instance waking, contention) fails fast
+        # and the breaker falls back, instead of holding the request thread.
+        # Complements the driver-level connect/acquisition timeouts.
         recs = self._driver_factory().execute_query(
-            cypher, database_=self._database, **params
+            Query(cypher, timeout=config.NEO4J_TIMEOUT),
+            database_=self._database, **params
         ).records
         return [dict(r) for r in recs]
 

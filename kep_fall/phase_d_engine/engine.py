@@ -99,7 +99,19 @@ _EMBED_INSTANCE = None
 def _driver():
     global _DRIVER
     if _DRIVER is None:
-        _DRIVER = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+        # Phase 0 (survival): fail fast on a paused/unreachable Aura instead of
+        # hanging on the driver's 30-60s defaults. connection_timeout bounds the
+        # socket connect; connection_acquisition_timeout bounds waiting for a
+        # pooled connection; max_transaction_retry_time caps managed-transaction
+        # retries. All set to config.NEO4J_TIMEOUT (3s) so the circuit breaker in
+        # graph_store trips to the local read-model within a few seconds rather
+        # than blocking the request thread.
+        _DRIVER = GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD),
+            connection_timeout=config.NEO4J_TIMEOUT,
+            connection_acquisition_timeout=config.NEO4J_TIMEOUT,
+            max_transaction_retry_time=config.NEO4J_TIMEOUT,
+        )
     return _DRIVER
 
 

@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
 import chromadb
-from neo4j import GraphDatabase
+from neo4j import Query
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -95,10 +95,39 @@ def ensure_chroma_index() -> None:
                   extra={"error": str(e)[:120]})
 
 
+def _warm_singletons() -> None:
+    """Phase 0 (survival): force the lazy singletons to initialise at startup so
+    the FIRST user query doesn't pay for a cold SentenceTransformer load (~5-15s
+    on CPU) plus the Chroma collection open.
+
+    - _collection() opens the persistent Chroma client and caches the handle
+      inside the engine (ensure_chroma_index() above only proves the index
+      exists via a separate client; it does not populate the engine singleton).
+    - _embed_model() loads the nomic weights from disk; a one-shot _embed()
+      forces the full encode path (tokenizer + first forward pass), which is
+      where the real latency hides.
+
+    Each is guarded independently: a warm failure must never abort startup — the
+    engine will simply fall back to lazy loading on first use.
+    """
+    try:
+        V._collection()
+        log.info("warm: chroma collection ready")
+    except Exception as e:
+        log.warning("warm: chroma collection failed", extra={"error": str(e)[:160]})
+    try:
+        V._embed_model()
+        V._embed("warmup")          # forces tokenizer + first forward pass
+        log.info("warm: embed model ready")
+    except Exception as e:
+        log.warning("warm: embed model failed", extra={"error": str(e)[:160]})
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     log.info("KEP_FALL starting")
     ensure_chroma_index()
+    _warm_singletons()
     log.info("KEP_FALL ready")
     yield
     log.info("KEP_FALL stopped")
@@ -131,6 +160,15 @@ def health():
 
 @app.get("/health/deep")
 def health_deep():
+    """Deep health probe. Also the survival heartbeat: the cron in
+    .github/workflows/keepalive.yml hits this every 12h, and the RETURN 1 below
+    is a real Cypher query against Aura — that write of "activity" is what keeps
+    the Free-tier instance from pausing after its 72h inactivity window (a mere
+    connectivity handshake is not guaranteed to reset that clock; an executed
+    query is). Reuses the engine's singleton driver, so this inherits the
+    Phase 0 fail-fast timeouts rather than opening a fresh, untimed driver on
+    every call.
+    """
     checks = {"chroma": "unknown", "neo4j": "unknown"}
     try:
         n = chromadb.PersistentClient(path=V.CHROMA_PATH).get_collection(V.COLLECTION).count()
@@ -138,9 +176,11 @@ def health_deep():
     except Exception as e:
         checks["chroma"] = f"error: {e}"
     try:
-        d = GraphDatabase.driver(V.NEO4J_URI, auth=(V.NEO4J_USER, V.NEO4J_PASSWORD))
-        d.verify_connectivity(); d.close()
-        checks["neo4j"] = "ok"
+        rows = V._driver().execute_query(
+            Query("RETURN 1 AS ok", timeout=config.NEO4J_TIMEOUT),
+            database_=V.NEO4J_DATABASE,
+        ).records
+        checks["neo4j"] = "ok" if rows and rows[0]["ok"] == 1 else "error: unexpected result"
     except Exception as e:
         checks["neo4j"] = f"error: {e}"
     ok = all(v.startswith("ok") for v in checks.values())

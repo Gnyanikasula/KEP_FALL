@@ -137,6 +137,14 @@ NEO4J_USER     = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "")
 NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
+# Phase 0 (survival): fail-fast timeout, in seconds, for every Neo4j interaction
+# — socket connect, pool acquisition, transaction retry budget, and per-query
+# execution. On the Aura Free tier a paused instance would otherwise let a
+# connection hang for the driver's 30-60s defaults, blocking a request thread
+# and delaying the circuit breaker's trip to the local read-model. 3s means a
+# paused/unreachable Aura fails fast and the fallback serves almost immediately.
+NEO4J_TIMEOUT  = float(os.getenv("NEO4J_TIMEOUT", "3.0"))
+
 
 def ensure_dirs() -> None:
     """Create every output directory. Call once at the top of any build script."""
