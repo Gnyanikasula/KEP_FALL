@@ -1,0 +1,94 @@
+# Phase 0 (survival) — uptime heartbeat + Aura keep-warm.
+#
+# What this does
+#   Every 12h it hits /health/deep on the Space. That endpoint runs `RETURN 1`
+#   against Aura, and that executed query is what keeps the Free-tier instance
+#   from pausing after its 72h inactivity window. 12h << 72h, so Aura never
+#   sleeps as long as this job keeps running.
+#
+#   It pings TWICE, ~2 minutes apart, and fails ONLY if both pings fail. The
+#   first ping also wakes a Space that has slept (HF pauses after 48h idle and
+#   cold-starts in ~30s), so a single cold-start timeout never pages you — the
+#   job only goes red when the Space is genuinely down. That makes this file
+#   double as an uptime alarm: a red run in the Actions tab = investigate.
+#
+# IMPORTANT — where this file must live
+#   GitHub runs `schedule:` triggers ONLY from the repository's DEFAULT branch.
+#   Your default branch is `main`; `space-deploy` is only the HF deploy target.
+#   So this workflow must be committed to `main` to run on a schedule. It talks
+#   to the Space over HTTP, so it doesn't matter which branch was deployed.
+#
+# Keeping the schedule alive
+#   GitHub disables scheduled workflows after 60 days with no repo activity.
+#   Push anything to the repo occasionally (or run this manually via the
+#   "Run workflow" button) to keep the schedule armed.
+#
+# Changing the Space URL
+#   Set a repo variable HF_SPACE_URL (Settings → Secrets and variables →
+#   Actions → Variables) to override the default below.
+
+name: keepalive
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'   # every 12 hours (UTC)
+  workflow_dispatch: {}        # manual trigger, for testing
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Ping /health/deep twice, fail only if both fail
+        env:
+          SPACE_URL: ${{ vars.HF_SPACE_URL || 'https://gnyani007-shield.hf.space' }}
+        run: |
+          set -u
+          URL="${SPACE_URL%/}/health/deep"
+
+          attempt() {
+            # $1 = label, $2 = curl max-time (seconds)
+            echo "[$1] GET $URL (max ${2}s)"
+            if ! body="$(curl -sS --max-time "$2" -w $'\n%{http_code}' "$URL")"; then
+              echo "[$1] curl failed (network error or timeout)"
+              return 1
+            fi
+            code="$(printf '%s' "$body" | tail -n1)"
+            payload="$(printf '%s' "$body" | sed '$d')"
+            echo "[$1] HTTP $code"
+            echo "[$1] body: $payload"
+            if [ "$code" != "200" ]; then
+              echo "[$1] non-200 response"
+              return 1
+            fi
+            # A degraded backend (e.g. Aura still waking) is logged as a warning
+            # but does NOT fail the alarm: the Space itself is up (HTTP 200),
+            # which is what uptime cares about. Watch for repeated degraded runs.
+            case "$payload" in
+              *'"status":"ok"'*|*'"status": "ok"'*) echo "[$1] status: ok" ;;
+              *) echo "[$1] WARNING: backend degraded (see checks above)" ;;
+            esac
+            return 0
+          }
+
+          # First attempt gets a generous budget so a cold-starting Space counts
+          # as success rather than a false alarm.
+          if attempt "try-1" 90; then
+            echo "First ping succeeded."
+            exit 0
+          fi
+
+          echo "First ping failed; waiting 120s before the second attempt..."
+          sleep 120
+
+          if attempt "try-2" 90; then
+            echo "Second ping succeeded (first was likely a cold start)."
+            exit 0
+          fi
+
+          echo "::error::Both pings to $URL failed — the Space appears to be DOWN."
+          exit 1
