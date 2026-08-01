@@ -1,4 +1,4 @@
-# KEP_FALL — Phase D runtime image.
+# KEP_FALL - Phase D runtime image.
 # Prerequisite: the Chroma index must be built BEFORE `docker build`:
 #     python -m kep_fall.phase_d_engine.vector_store
 
@@ -14,7 +14,7 @@ ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
 WORKDIR /home/user/app
 
-# Dependencies first — this layer survives code changes.
+# Dependencies first - this layer survives code changes.
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 

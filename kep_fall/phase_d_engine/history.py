@@ -117,7 +117,7 @@ class SQLiteHistoryStore(HistoryStore):
 
     def add_feedback(self, session_id: str, question: str,
                      verdict: str, rating: int, notes: str = "") -> None:
-        """Persist a reviewer's thumbs-up/down rating for a verdict card."""
+        """Saves a reviewer's thumbs-up/down rating for a verdict card."""
         with self._conn() as c:
             c.execute(
                 "INSERT INTO feedback (session_id, question, verdict, rating, notes, ts) "

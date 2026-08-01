@@ -1,15 +1,11 @@
 # Step 4 - Reconciliation, Sanitization & Validation
-# Takes raw extracted triples and prepares them for Neo4j:
-
-#   1. RECONCILE  - promote NEW nodes that exactly match a vocab class to typed
-#   2. SANITIZE   - make every node label Neo4j-safe (no apostrophes, no leading digit)
-#   3. VALIDATE   - soft domain/range check against property constraints (warn, don't reject)
-#   4. REPORT     - before/after stats
-
-# Input : data/validated_triples.json   (Step 3 output)
-#         data/vocab_index.json
-# Output: data/clean_triples.json        (ready for Step 5 AuraDB load)
-#         logs/step4_report.txt
+# Takes the raw extracted triples and prepares them for Neo4j: promotes any
+# NEW node that exactly matches a vocab class to typed, sanitizes every node
+# label to be Neo4j-safe, runs a soft domain/range check (warns, doesn't
+# reject), and writes a before/after report.
+#
+# Input : data/validated_triples.json  (Step 3 output), data/vocab_index.json
+# Output: data/clean_triples.json (ready for Step 5 AuraDB load), logs/step4_report.txt
 
 
 import json
@@ -37,7 +33,7 @@ def norm(s: str) -> str:
 
 def sanitize_label(label: str) -> str:
     """
-    Make a node label safe to use as a Neo4j node identity.
+    Makes a node label safe to use as a Neo4j node identity.
     - strip apostrophes and quotes
     - remove characters that aren't alphanumeric
     - prefix with N_ if it starts with a digit
@@ -51,7 +47,7 @@ def sanitize_label(label: str) -> str:
 
 def reconcile_node(label: str, typed: bool, uri, vocab_norm: dict):
     """
-    If a NEW node exactly matches a vocab class, promote it to typed.
+    If a NEW node exactly matches a vocab class, promotes it to typed.
     Returns (label, uri, typed, promoted_flag).
     """
     if typed:
@@ -67,7 +63,7 @@ def reconcile_node(label: str, typed: bool, uri, vocab_norm: dict):
 def soft_domain_range_check(triple: dict, prop_constraints: dict) -> str | None:
     """
     Soft check: if subject/object are typed and clearly violate the property's
-    declared domain/range, return a warning string. Never rejects.
+    declared domain/range, returns a warning string. Never rejects.
     """
     pred = triple["predicate_label"]
     constraint = prop_constraints.get(pred)

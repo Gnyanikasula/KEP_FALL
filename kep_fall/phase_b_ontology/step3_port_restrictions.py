@@ -1,23 +1,19 @@
 """
-phase1_fix.py  -  v2 -> v3  (deterministic, no LLM)
-=====================================================
-Run this first. It produces dpv-fallrisk-ext-v3.rdf.
-Then run phase1_llm_restrictions.py to produce v4.
+phase1_fix.py — v2 -> v3 (deterministic, no LLM)
 
-What this does:
-  1. Loads DPV modules via owlready2 (needed for parent + property resolution)
-  2. Reads v2 RDF (rdflib) - correct 621-class hierarchy + labels/comments
-  3. Reads v1 RDF (rdflib) - extracts 62 existing someValuesFrom restrictions
-  4. Rebuilds ontology in owlready2 (two-pass: create all, then set parents)
-  5. Ports v1 restrictions - matched by local class name, skips removed classes
-  6. Adds 6 FallRisk domain-specific classes with their restrictions
-     (these never appear in regulatory text - added from project description)
-  7. Runs HermiT reasoner - exits on any unsatisfiable class
-  8. Serializes via owlready2 ntriples -> rdflib filter -> clean RDF/XML (v3)
-     Filter: KEP namespace + blank nodes only - no DPV individual leakage
-  9. Declares 13 DPV object properties with domain + range in the v3 graph
+Run this first; it produces dpv-fallrisk-ext-v3.rdf. Then run
+phase1_llm_restrictions.py to produce v4.
 
-
+What it does: loads DPV via owlready2, reads v2 (the correct 621-class
+hierarchy + labels/comments) and v1 (its 62 someValuesFrom restrictions) via
+rdflib, rebuilds the ontology in owlready2 in two passes (create all classes,
+then set parents), ports the v1 restrictions onto the v2 hierarchy by local
+class name (skipping classes that were removed), adds 6 FallRisk
+domain-specific classes that never appear in regulatory text, runs HermiT
+(exits on any unsatisfiable class), and serializes to clean RDF/XML — via
+owlready2 ntriples, then an rdflib filter that keeps only the KEP namespace
+and its blank nodes so no DPV individuals leak in — finally declaring the 13
+DPV object properties with domain + range in the v3 graph.
 """
 
 import os
@@ -70,10 +66,10 @@ DPV_AIACT_NS= "https://w3id.org/dpv/legal/eu/aiact/owl#"
 # ]
 DPV_MODULES = [str(p) for p in config.DPV_MODULES]
 
-# ── 13 DPV object properties to declare with domain + range ──────────────────
-# All URIs verified from v1 RDF and DPV v2.2.1 module structure.
-# domain/range are URIRef strings — resolved at serialisation time.
-# Properties marked (*) — verified present in v1 restrictions.
+# The 13 DPV object properties to declare with domain + range. All URIs
+# verified from v1 RDF and the DPV v2.2.1 module structure. domain/range are
+# resolved to URIRefs at serialisation time. (*) marks properties confirmed
+# in v1 restrictions.
 OBJECT_PROPERTIES = [
     # (*) confirmed in v1 restrictions
     {
@@ -164,8 +160,7 @@ OBJECT_PROPERTIES = [
     },
 ]
 
-# FallRisk domain-specific classes
-# These concepts are NOT in any regulatory text.
+# FallRisk domain-specific classes. These concepts are not in any regulatory text.
 DOMAIN_CLASSES = [
     {
         "name":   "FallRiskPrediction",

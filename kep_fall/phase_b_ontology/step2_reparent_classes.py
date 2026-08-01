@@ -38,11 +38,12 @@ FALLRISK_NS = "https://w3id.org/kep/fallrisk#"
 # ]
 DPV_MODULES = [str(p) for p in config.DPV_MODULES]
 
-# audit decisions for all 146 Thing-fallback classes from the current run
-# each DPV target was verified against the live DPV v2.2.1 ontology before use
-# DUPLICATE: class duplicates an existing DPV term — remove and redirect references to it
-# PARENT:    a real DPV parent was found - reparent under it
-# KEEP_THING: no good DPV anchor exists - confirmed correct to remain top-level
+# Audit decisions for all 146 Thing-fallback classes from the run that
+# produced them. Every DPV target was checked against the live DPV v2.2.1
+# ontology before use.
+# DUPLICATE  - class duplicates an existing DPV term, remove and redirect references
+# PARENT     - a real DPV parent was found, reparent under it
+# KEEP_THING - no good DPV anchor exists, confirmed correct to stay top-level
 AUDIT_DECISIONS = {
 
     # GDPR Art.9 Para 3 - secrecy exceptions
@@ -264,16 +265,16 @@ AUDIT_DECISIONS = {
     "Article22CRequirement":         ("KEEP_THING", "DUAA Schedule 6 specific concept, no DPV anchor"),
 }
 
-# the 3 dedup pairs flagged by step 5 are all false positives:
+# The 3 dedup pairs flagged by step 5 are all false positives:
 # ApplicableCriteria vs BodyCriteriaAssessment - different concepts (criteria set vs assessment body)
 # FinancialInstitutionInternalGovernance vs FinancialInstitutionGovernance - distinct granularity
 # Suture vs Staple - completely different medical device products
-# so MERGES is intentionally empty for this run
+# So MERGES is intentionally empty for this run.
 MERGES = {}
 
-# hasLegalBasis restrictions grounded in literal GDPR Art.6(1) and Art.9(2) text
-# these are kept from the design - if the class names don't appear in the current
-# run (the LLM may have used different names), the cleanup script skips them silently
+# hasLegalBasis restrictions grounded in literal GDPR Art.6(1) and Art.9(2) text.
+# Kept from the design; if a class name doesn't appear in the current run (the
+# LLM may have used a different name), the cleanup script just skips it silently.
 RESTRICTIONS = {
     "LegitimateInterest":          "A6-1-f",
     "VitalInterests":              "A6-1-d",
@@ -286,7 +287,7 @@ RESTRICTIONS = {
 }
 
 
-# loads all DPV modules; Path.as_uri() produces correct file:/// URIs on Windows and Linux
+# Loads all DPV modules; Path.as_uri() gives correct file:/// URIs on Windows and Linux
 def load_dpv():
     print("Loading DPV...")
     for p in DPV_MODULES:
@@ -333,7 +334,7 @@ def main():
     live = [c for c in created if not c.get("merged_into")]
     print(f"{len(live)} live classes\n")
 
-    # build the redirect map for classes being removed
+    # Build the redirect map for classes being removed
     removed_redirect = {}
     for name, (action, target) in AUDIT_DECISIONS.items():
         if action == "DUPLICATE":
@@ -347,7 +348,7 @@ def main():
         else:
             removed_redirect[src] = FALLRISK_NS + canonical
 
-    # resolve final parent IRI for each class that survives
+    # Resolve the final parent IRI for each class that survives
     final_parent = {}
     for c in live:
         name = c["name"]
@@ -378,7 +379,7 @@ def main():
     print(f"{len(live)} live -> {len(removed_redirect)} removed -> {surviving} surviving")
     print(f"owl:Thing: {n_thing}  |  real parent: {surviving - n_thing}\n")
 
-    # rebuild ontology with corrected parents (two-pass for local references)
+    # Rebuild the ontology with corrected parents (two-pass for local references)
     onto        = get_ontology(FALLRISK_NS)
     new_classes = {}
     with onto:
@@ -412,7 +413,7 @@ def main():
         fixed += 1
     print(f"pass 1: {len(new_classes)} classes  |  pass 2: {fixed} parented\n")
 
-    # apply hasLegalBasis restrictions
+    # Apply hasLegalBasis restrictions
     has_lb = IRIS["https://w3id.org/dpv/owl#hasLegalBasis"]
     if has_lb is None:
         print("[warn] dpv:hasLegalBasis not found, skipping restrictions")
@@ -435,7 +436,7 @@ def main():
             print(f"  + {cand_name} — hasLegalBasis some {lb_local}")
         print(f"\n{applied}/{len(RESTRICTIONS)} restrictions applied\n")
 
-    # run HermiT and exit on failure
+    # Run HermiT and exit on failure
     print("Running HermiT...")
     t_r = time.time()
     with onto:
@@ -448,7 +449,7 @@ def main():
             print(f"  UNSAT: {ic}")
         sys.exit(1)
 
-    # serialize to RDF/XML
+    # Serialize to RDF/XML
     print(f"Serializing to {OUT_RDF} ...")
     tmp = OUT_RDF + ".nt"
     onto.save(file=tmp, format="ntriples")
@@ -465,7 +466,7 @@ def main():
     os.remove(tmp)
     print(f"  {len(g)} triples\n")
 
-    # write updated classes_created_v2.json
+    # Write updated classes_created_v2.json
     final_created = []
     dup_names = {n for n, (a, _) in AUDIT_DECISIONS.items() if a == "DUPLICATE"}
     for c in live:

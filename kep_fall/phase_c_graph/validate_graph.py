@@ -1,6 +1,6 @@
 """
 Step 6 — Graph Validation
-=========================
+
 Runs a suite of validation queries against AuraDB and reports results.
 Covers: structure, coverage, provenance, connectivity, cross-regulation.
 """

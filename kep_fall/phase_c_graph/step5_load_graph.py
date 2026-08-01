@@ -1,48 +1,38 @@
 """
-Step 5 — AuraDB Population  (v2: deontic-annotated edges)
+Step 5 — AuraDB Population (v2: deontic-annotated edges)
 
 Loads data/clean_triples.json into Neo4j AuraDB.
 
-Schema
-------
+Schema:
   (:Concept {key, label, uri, typed, source_reg})
      -[:REL {predicate, predicate_uri, regulation, article_id,
              canonical_id, chunk_ids, confidence,
              deontic, deontic_source}]->
   (:Concept {...})
 
-WHAT CHANGED vs v1
-------------------
-1. r.deontic          — obligation | prohibition | permission |
-                        classification_rule | amendment
-2. r.deontic_source   — "gold" | "predicate" | "none"
-3. r.canonical_id     — canonical article key (EUAI_ArtAnnexIII), so
-                        Neo4j, ChromaDB and the gold standard all join on
-                        one identifier. No regex at query time.
+v2 adds three things to the edge: deontic (obligation | prohibition |
+permission | classification_rule | amendment), deontic_source ("gold" |
+"predicate" | "none"), and canonical_id (a canonical article key like
+EUAI_ArtAnnexIII, so Neo4j, ChromaDB, and the gold standard all join on one
+identifier without needing regex at query time).
 
-WHY
----
 Without a deontic property on the edge, the kg_only arm of the ablation
-cannot be scored for deontic alignment — the metric returns None and the
-arm becomes uncomparable. Storing it on the edge (as Turaga et al. do with
-`type: SHALL_DO`) makes every arm scorable.
+can't be scored for deontic alignment, so it's stored on every edge.
 
-PROVENANCE OF THE DEONTIC VALUE
--------------------------------
-Preference order, recorded in r.deontic_source:
-  1. "gold"      — the human-annotated gold standard for that article.
-                   This is a legal judgement and takes priority.
-  2. "predicate" — derived from the DPV predicate. A weak fallback for
+Deontic provenance, recorded in r.deontic_source, preference order:
+  1. "gold"      - the human-annotated gold standard for that article; a
+                   legal judgement, so it takes priority.
+  2. "predicate" - derived from the DPV predicate, a weak fallback for
                    articles with no gold annotation.
-  3. "none"      — neither available; edge carries deontic = null.
+  3. "none"      - neither available; edge carries deontic = null.
 
-The fallback exists only so the graph is complete. Any edge whose
-deontic_source is "predicate" should be treated as unverified: the
-predicate vocabulary cannot express prohibition, so a prohibitive rule
-extracted as hasObligation would be mislabelled.
+The predicate fallback only exists so the graph is complete. Any edge whose
+deontic_source is "predicate" should be treated as unverified: the predicate
+vocabulary can't express prohibition, so a prohibitive rule extracted as
+hasObligation would be mislabelled.
 
-Idempotent: MERGE on (key) and on (predicate, article_id).
-Re-running is safe; batched in groups of 50.
+Idempotent: MERGE on (key) and on (predicate, article_id). Re-running is
+safe; writes are batched in groups of 50.
 """
 
 import json

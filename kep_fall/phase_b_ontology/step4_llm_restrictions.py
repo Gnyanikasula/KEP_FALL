@@ -1,21 +1,15 @@
 """
-phase1_llm_restrictions.py  -  v3 -> v4  (LLM restriction pass)
+phase1_llm_restrictions.py — v3 -> v4 (LLM restriction pass)
 
-
-What this does:
-  1. Loads DPV + v3 ontology
-  2. Finds all KEP classes that have NO someValuesFrom restriction
-  3. Groups them by source_chunk_id (one LLM call per chunk, not per class)
-  4. For each chunk group: sends chunk text + class names + allowed vocabulary
-     to Groq and asks ONLY for OWL property restrictions
-  5. Validates every returned restriction:
-       - class must exist in ontology
-       - property must be one of the 13 declared DPV properties
-       - target must exist in ontology (KEP or DPV)
-  6. Applies validated restrictions via owlready2
-  7. Runs HermiT - exits on any unsatisfiable class
-  8. Serializes clean output -> v4 (same filter as phase1_fix.py)
-
+Loads DPV + the v3 ontology, finds every KEP class with no someValuesFrom
+restriction, and groups them by source_chunk_id so there's one LLM call per
+chunk rather than per class. Each call sends the chunk text, the class names
+extracted from it, and the allowed vocabulary to Groq and asks only for OWL
+property restrictions. Every returned restriction is validated (class exists
+in the ontology, property is one of the 13 declared DPV properties, target
+exists as either a KEP or DPV class) before being applied via owlready2.
+Then HermiT runs (exits on any unsatisfiable class) and the ontology is
+serialized to v4 using the same clean-output filter as phase1_fix.py.
 
 Input:
   OUT_CANDIDATES/dpv-fallrisk-ext-v3.rdf
@@ -93,8 +87,8 @@ REQUEST_DELAY = 2.2
 MAX_RETRIES   = 5
 RETRY_BASE    = 15.0
 
-# The 13 allowed DPV properties - must match phase1_fix.py exactly.
-# Local name -> full URI.  LLM is shown local names; validation uses full URIs.
+# The 13 allowed DPV properties, must match phase1_fix.py exactly.
+# Local name -> full URI. The LLM is shown local names; validation uses full URIs.
 ALLOWED_PROPERTIES = {
     "hasPersonalData":                DPV_NS      + "hasPersonalData",
     "hasOrganisationalMeasure":       DPV_NS      + "hasOrganisationalMeasure",

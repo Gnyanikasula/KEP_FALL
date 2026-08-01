@@ -1,13 +1,12 @@
 """
-kep_fall.phase_d_engine.eval_data — serve the FROZEN evaluation results to the UI.
+kep_fall.phase_d_engine.eval_data — serves the frozen evaluation results to the UI.
 
-The numbers here are read verbatim from results/evaluation/*.csv, which are the
-output of the offline ablation harness. Nothing is recomputed — this module only
-reshapes the CSVs into JSON the eval explorer renders. If a number looks wrong in
-the UI, it is wrong in the CSV; fix it upstream and re-run the harness, don't
-patch it here.
+These numbers come straight from results/evaluation/*.csv, produced by the offline
+ablation harness. Nothing gets recomputed here, this module just reshapes the CSVs
+into JSON for the eval explorer. If a number looks off in the UI, it's off in the
+CSV — fix it upstream and re-run the harness rather than patching it here.
 
-Loaded once at import (the CSVs don't change at runtime) and cached.
+Loaded once at import time and cached, since the CSVs don't change at runtime.
 """
 from __future__ import annotations
 
@@ -23,8 +22,7 @@ log = logging.getLogger(__name__)
 _DIR = config.EVAL_RESULTS_DIR
 _CACHE: Optional[dict] = None
 
-# Metrics where HIGHER is better vs where LOWER is better — the UI needs to know
-# which direction "good" points for the heatmap coloring.
+# The UI needs to know which direction "good" points for heatmap coloring.
 HIGHER_BETTER = {"faithful_F1", "naive_F1", "answerability", "concept_cov",
                  "deontic_align", "scenario_reg_F1", "precision", "recall"}
 LOWER_BETTER = {"hallucination", "latency_s"}
@@ -53,7 +51,7 @@ def _read_csv(name: str) -> list[dict]:
 
 
 def _load() -> dict:
-    # ── by-arm summary: the headline ablation table ──────────────────────
+    # by-arm summary: the headline ablation table
     arms = []
     for r in _read_csv("summary_by_arm.csv"):
         arms.append({
@@ -68,8 +66,9 @@ def _load() -> dict:
             "ungrounded_Qs": int(_num(r.get("ungrounded_Qs")) or 0),
             "scenario_reg_F1": _num(r.get("scenario_reg_F1")),
             "n_scenario": int(_num(r.get("n_scenario")) or 0),
-            # faithful minus naive: positive = honest, negative = parametric
-            # leakage inflated the naive score. This gap is the headline finding.
+            # faithful minus naive: positive means honest, negative means
+            # parametric leakage inflated the naive score. This gap is the
+            # headline finding.
             "faithful_naive_gap": (
                 (_num(r.get("faithful_F1")) - _num(r.get("naive_F1")))
                 if _num(r.get("faithful_F1")) is not None
@@ -77,7 +76,7 @@ def _load() -> dict:
             ),
         })
 
-    # ── bootstrap CIs: the significance evidence, for error bars ─────────
+    # bootstrap CIs: the significance evidence, for error bars
     cis = []
     for r in _read_csv("bootstrap_cis.csv"):
         cis.append({
@@ -92,7 +91,7 @@ def _load() -> dict:
             "significant": str(r.get("significant", "")).strip().upper() == "YES",
         })
 
-    # ── per-group: the heatmap (group × arm), with small-n honesty flag ──
+    # per-group: the heatmap (group x arm), with a small-n honesty flag
     groups = []
     for r in _read_csv("summary_by_group.csv"):
         groups.append({
@@ -106,7 +105,7 @@ def _load() -> dict:
             "scenario_reg_F1": _num(r.get("scenario_reg_F1")),
         })
 
-    # ── per-question: the drill-down ────────────────────────────────────
+    # per-question: the drill-down
     pq = []
     for r in _read_csv("per_question.csv"):
         pq.append({
@@ -132,7 +131,7 @@ def _load() -> dict:
             "question": r.get("question", ""),
         })
 
-    # Distinct question list (collapsing the 3 arms) for the explorer's picker.
+    # distinct question list (collapsing the 3 arms) for the explorer's picker
     seen, questions = set(), []
     for r in pq:
         if r["cq_id"] in seen:
