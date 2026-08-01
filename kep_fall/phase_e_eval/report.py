@@ -17,7 +17,7 @@ from pathlib import Path
 from statistics import mean
 from kep_fall import config
 
-# ── load ──────────────────────────────────────────────────────────────────
+# load
 # src = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("Results/eval_p5_checkpoint.json")
 # if not src.exists():
 #     src = Path("Results/eval_p5_results.json")
@@ -33,7 +33,7 @@ ARMS = ["hybrid", "kg_only", "rag_only"]
 SEED, N = 20260710, 5000
 
 
-# ── helpers ───────────────────────────────────────────────────────────────
+# helpers
 def ff(r, a):   return r["arms"][a]["citation"]["faithful_f1"]
 def nf(r, a):   return r["arms"][a]["citation"]["f1"]
 def hall(r, a): return r["arms"][a]["hallucination"]
@@ -65,7 +65,7 @@ scen   = [r for r in R if r["intent"] == "scenario"]
 groups = sorted({r["group"] for r in R})
 
 
-# ── 1. summary_by_arm.csv ─────────────────────────────────────────────────
+# 1. summary_by_arm.csv
 rows = []
 for a in ARMS:
     pool = know  # all citation metrics on knowledge Qs only
@@ -106,7 +106,7 @@ with open(p, "w", newline="", encoding="utf-8") as f:
 print(f"  wrote {p}")
 
 
-# ── 2. bootstrap_cis.csv ──────────────────────────────────────────────────
+# 2. bootstrap_cis.csv
 base_ff  = [ff(r,  "rag_only") for r in know if "rag_only" in r["arms"]]
 base_de  = [deon(r,"rag_only") for r in know
             if "rag_only" in r["arms"] and deon(r,"rag_only") is not None]
@@ -154,7 +154,7 @@ with open(p, "w", newline="", encoding="utf-8") as f:
 print(f"  wrote {p}")
 
 
-# ── 3. summary_by_group.csv ───────────────────────────────────────────────
+# 3. summary_by_group.csv
 rows = []
 for g in groups:
     gk = [r for r in know if r["group"] == g]
@@ -184,7 +184,7 @@ with open(p, "w", newline="", encoding="utf-8") as f:
 print(f"  wrote {p}")
 
 
-# ── 4. per_question.csv ───────────────────────────────────────────────────
+# 4. per_question.csv
 rows = []
 for r in R:
     for a in ARMS:

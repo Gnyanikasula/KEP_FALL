@@ -59,14 +59,14 @@ GROQ_MODEL     = "meta-llama/llama-4-scout-17b-16e-instruct"
 TOP_K_RETRIEVE = 10
 TOP_K_FINAL    = 5     # return this many after MMR + re-ranking
 MMR_LAMBDA     = 0.6   # 1.0 = pure relevance, 0.0 = pure diversity
-MIN_WORD_COUNT = 50    # raised from 20 — article-level chunks are never this small
+MIN_WORD_COUNT = 50    # raised from 20, article-level chunks are never this small
 
 # Metadata fields stored in Chroma alongside each chunk.
 # All are scalar (Chroma does not accept lists).
 META_FIELDS = ("source", "regulation", "article", "article_title",
                "citation", "type", "word_count")
 
-# Maps the regulation field in regulatory_chunks.json → a URL-safe
+# Maps the regulation field in regulatory_chunks.json to a URL-safe
 # source string used for Chroma source_filter queries.
 # Use these exact strings in verdict.py source_filter= calls.
 SOURCE_NORMALISE = {
@@ -78,7 +78,7 @@ SOURCE_NORMALISE = {
 }
 
 # Short prefix used to build article-level chunk IDs.
-# e.g. EU AI Act + Art 5 → "EUAI_Art5"
+# e.g. EU AI Act + Art 5 -> "EUAI_Art5"
 REGULATION_PREFIX = {
     "GDPR":            "GDPR",
     "EU AI Act":       "EUAI",
@@ -90,7 +90,7 @@ REGULATION_PREFIX = {
 
 # Prompts
 
-# Used at INDEX time: converts raw legal text to dense semantic summary..
+# Used at index time: converts raw legal text to a dense semantic summary.
 SUMMARY_SYSTEM = """You are a legal document analyst specialising in EU/UK regulations.
 Given the full text of a regulatory article, write a dense 3-5 sentence plain-English
 summary that captures:
@@ -104,12 +104,12 @@ Rules:
 - Do NOT use bullet points; write as flowing prose
 - Be specific and concrete, not generic"""
 
-# Used at QUERY time: generates a hypothetical regulatory passage so the
+# Used at query time: generates a hypothetical regulatory passage so the
 # query vector is anchored in legal vocabulary, not user phrasing.
 # Banning article numbers eliminates hallucinated identifiers entirely.
-# IMPORTANT: The prompt explicitly asks for obligations/prohibitions/conditions
-# and bans vague language like "strict controls" or "subject to regulations"
-# those phrases pull the vector toward definitional chunks, not operative ones.
+# The prompt explicitly asks for obligations/prohibitions/conditions and bans
+# vague language like "strict controls" or "subject to regulations", those
+# phrases pull the vector toward definitional chunks, not operative ones.
 HYDE_SYSTEM = """You are a legal document generator specialising in EU/UK regulations.
 Given a compliance question, write 3-4 sentences that a relevant regulation article
 would say to directly address it.
@@ -167,8 +167,8 @@ def generate_hyde(client: Groq, query: str) -> str:
 
 def decompose_query(client: Groq, query: str) -> list[str]:
     """
-    Ask Groq to split a multi-intent query into focused sub-queries.
-    Falls back to [query] if the response is not valid JSON so the
+    Asks Groq to split a multi-intent query into focused sub-queries.
+    Falls back to [query] if the response isn't valid JSON so the
     caller always gets a non-empty list to iterate over.
     """
     raw = _groq_call(
@@ -191,7 +191,7 @@ def decompose_query(client: Groq, query: str) -> list[str]:
 # nomic-embed-text-v1.5 uses asymmetric task prefixes:
 #   "search_document: " for texts being indexed
 #   "search_query: "    for the query vector
-# Skipping these prefixes degrades recall by 10–15% on retrieval benchmarks.
+# Skipping these prefixes degrades recall by 10-15% on retrieval benchmarks.
 
 def embed_documents(model: SentenceTransformer, texts: list[str]) -> np.ndarray:
     """Embed a list of document texts (index-side)."""
@@ -220,8 +220,8 @@ def mmr(
         relevance  = cosine(candidate, query)
         redundancy = max cosine(candidate, already_selected)
 
-    Score = lambda * relevance  -  (1 - lambda) * redundancy
-    lambda=1 → pure relevance; lambda=0 → pure diversity.
+    Score = lambda * relevance - (1 - lambda) * redundancy
+    lambda=1 -> pure relevance; lambda=0 -> pure diversity.
 
     Vectors must already be L2-normalised (nomic does this when
     normalize_embeddings=True), so dot-product == cosine similarity.
@@ -250,14 +250,14 @@ def mmr(
 # Metadata
 def build_metadata(chunk: dict) -> dict:
     """
-    Build a flat Chroma-compatible metadata dict from an article-level chunk.
+    Builds a flat Chroma-compatible metadata dict from an article-level chunk.
 
     The article-level chunk produced by aggregate_to_article_level() has:
       regulation, article, article_title, text, word_count,
       source (URL-safe, added during aggregation),
       citation (human-readable, added during aggregation)
 
-    Chroma only accepts scalar values — no lists, no None.
+    Chroma only accepts scalar values, no lists, no None.
     """
     return {k: chunk[k] for k in META_FIELDS
             if k in chunk and chunk[k] is not None}
@@ -275,7 +275,7 @@ def load_chunks(path: str, label: str) -> list[dict]:
 
 def filter_empty(chunks: list[dict]) -> list[dict]:
     """
-    Drop chunks whose text is blank or below MIN_WORD_COUNT.
+    Drops chunks whose text is blank or below MIN_WORD_COUNT.
     After article-level aggregation MIN_WORD_COUNT=50 is easy to clear,
     but the guard still catches malformed input.
     """
@@ -305,13 +305,13 @@ def deduplicate(chunks: list[dict]) -> list[dict]:
 
 def aggregate_to_article_level(raw_chunks: list[dict]) -> list[dict]:
     """
-    Collapse sub-point chunks (e.g. GDPR_Art5_Para1_a, _b, _c …)
+    Collapses sub-point chunks (e.g. GDPR_Art5_Para1_a, _b, _c ...)
     into one chunk per article (GDPR_Art5).
 
-    WHY: sub-point chunks average ~60 words. An 8192-token embedding
+    Why: sub-point chunks average ~60 words. An 8192-token embedding
     model summarising 23 words produces a near-zero-information vector.
-    Article-level chunks average 867 words — the model can extract
-    meaningful legal semantics.
+    Article-level chunks average 867 words, giving the model enough to
+    extract meaningful legal semantics.
 
     Output chunk schema:
       chunk_id     : e.g. "GDPR_Art5"
@@ -319,14 +319,14 @@ def aggregate_to_article_level(raw_chunks: list[dict]) -> list[dict]:
       source       : URL-safe key              e.g. "GDPR"   (for Chroma filter)
       article      : article identifier        e.g. "5"
       article_title: title of the article
-      citation     : human-readable cite       e.g. "GDPR, Article 5 — Principles..."
+      citation     : human-readable cite       e.g. "GDPR, Article 5 - Principles..."
       text         : all sub-point text joined by newline
       type         : "article"
       word_count   : total word count across sub-points
     """
     from collections import defaultdict, OrderedDict
 
-    # Group sub-points by (regulation, article) preserving document order
+    # Group sub-points by (regulation, article), preserving document order
     groups: dict[tuple, list] = OrderedDict()
     for c in raw_chunks:
         reg = c.get("regulation", "?")
@@ -337,7 +337,7 @@ def aggregate_to_article_level(raw_chunks: list[dict]) -> list[dict]:
     aggregated = []
     for (reg, art), sub_chunks in groups.items():
         prefix = REGULATION_PREFIX.get(reg, reg.replace(" ", "").replace("/", ""))
-        # Sanitise article identifier for use in chunk_id
+        # Sanitise the article identifier for use in chunk_id
         art_safe = art.replace(" ", "").replace("/", "-").replace(".", "_")
         chunk_id = f"{prefix}_Art{art_safe}"
 
@@ -393,7 +393,7 @@ def build_index(
     """
     For each chunk:
       1. Generate a plain-English summary via Groq (cached after first run).
-      2. Embed the summary  → this is the search vector.
+      2. Embed the summary, this is the search vector.
       3. Store the full article text as the Chroma document.
 
     Result: semantic search finds articles by meaning;
@@ -421,13 +421,12 @@ def build_index(
     summaries  = [cache[c["chunk_id"]] for c in chunks]  
     full_texts = [c["text"]            for c in chunks]  
 
-    # Embed summaries, not full texts - this is the core of the improvement.
+    # Embed summaries, not full texts, this is the core of the improvement.
     print(f"\n  Embedding {len(summaries)} summaries with '{EMBED_MODEL}'...")
     embeddings = embed_documents(embed_model, summaries)  
 
-    # ── Upsert ────────────────────────────────────────────────────
-    # embeddings = summary vectors (for search)
-    # documents  = full article texts (returned to caller/LLM)
+    # Upsert: embeddings are the summary vectors (for search), documents
+    # are the full article texts (returned to caller/LLM)
     col.upsert(
         ids        = [c["chunk_id"] for c in chunks],
         embeddings = embeddings.tolist(),
@@ -466,8 +465,8 @@ def query_index(
     print(f"  [HyDE] \"{hypothetical[:100]}...\"")
 
     # Step 2 - Combined query vector
-    # Averaging: hypothetical pulls the vector toward legal vocabulary;
-    # raw query keeps it grounded to the user's actual intent.
+    # Averaging: the hypothetical pulls the vector toward legal vocabulary,
+    # the raw query keeps it grounded to the user's actual intent.
     # Re-normalise after averaging so cosine distances remain valid.
     q_vec    = embed_query(embed_model, user_query)
     hyde_vec = embed_query(embed_model, hypothetical)
@@ -505,16 +504,16 @@ def query_index(
     )
 
     # Step 5 - Cross-encoder re-ranking
-    # Cross-encoder sees (query, document) jointly - much more accurate
-    # than cosine similarity. We truncate document text to 512 chars
-    # for the cross-encoder (it has its own token limit) but the full
-    # text is still in c["text"] for the LLM.
+    # The cross-encoder sees (query, document) jointly, much more accurate
+    # than cosine similarity. Document text is truncated to 512 chars for
+    # the cross-encoder (it has its own token limit) but the full text is
+    # still in c["text"] for the LLM.
     #
-    # NOTE on negative scores: ms-marco was trained on web search passages.
+    # Note on negative scores: ms-marco was trained on web search passages.
     # Legal text sits outside that distribution so raw logit scores are
-    # negative across the board. This is expected - what matters is the
-    # relative ordering (rank), not the absolute value.
-    # We sigmoid-normalise to [0, 1] so scores are readable in the UI.
+    # negative across the board. That's expected, what matters is the
+    # relative ordering (rank), not the absolute value. Scores are
+    # sigmoid-normalised to [0, 1] so they're readable in the UI.
     pairs  = [[user_query, c["text"][:512]] for c in candidates]
     raw_scores = reranker.predict(pairs)
 
@@ -525,10 +524,10 @@ def query_index(
         c["rerank_score"]      = float(s)
         c["rerank_score_norm"] = sigmoid(float(s))
 
-    # Fallback: if the cross-encoder is not confident about any candidate
-    # (all norm scores below LOW_CONF_THRESHOLD), it means we're outside its
-    # training distribution (legal text vs web passages). In that case, trust
-    # cosine distance ordering instead of a confused re-ranker.
+    # Fallback: if the cross-encoder isn't confident about any candidate
+    # (all norm scores below LOW_CONF_THRESHOLD), we're outside its
+    # training distribution (legal text vs web passages). In that case,
+    # trust cosine distance ordering instead of a confused re-ranker.
     LOW_CONF_THRESHOLD = 0.1
     max_norm = max(c["rerank_score_norm"] for c in candidates)
     if max_norm < LOW_CONF_THRESHOLD:
@@ -547,15 +546,15 @@ def reciprocal_rank_fusion(
     k: int = 60,
 ) -> list[dict]:
     """
-    Merge multiple ranked candidate lists into one using RRF.
+    Merges multiple ranked candidate lists into one using RRF.
 
-    RRF score for a document = Σ  1 / (k + rank_i)
+    RRF score for a document = sum of 1 / (k + rank_i)
     where rank_i is its position in the i-th ranked list (1-based).
     k=60 is the standard value from the original RRF paper (Cormack 2009).
 
     Why RRF instead of score averaging?
     - Each sub-query's cosine distances are on different scales.
-    - RRF only uses rank position - scale-invariant and robust.
+    - RRF only uses rank position, so it's scale-invariant and robust.
     - A document appearing in the top-3 of two lists consistently
       outscores one that is top-1 in only one list.
     """
@@ -590,13 +589,13 @@ def multi_query_retrieve(
 
     Pipeline:
       Step 1 - Decompose  : Groq splits the query into 2-4 focused sub-queries.
-      Step 2 - Per-query  : Each sub-query runs through HyDE → embed → k-NN
+      Step 2 - Per-query  : Each sub-query runs through HyDE -> embed -> k-NN
                             independently (standard query_index internals, minus
                             the final MMR/re-rank so we gather all raw candidates).
       Step 3 - RRF merge  : Reciprocal Rank Fusion combines all candidate lists
                             into one ranked pool without relying on raw distances.
       Step 4 - MMR        : Diversity pass over the merged pool.
-      Step 5 - Re-rank    : Cross-encoder re-scores against the ORIGINAL user
+      Step 5 - Re-rank    : Cross-encoder re-scores against the original user
                             query (not the sub-queries) for final ordering.
 
     Falls back to single query_index() if decomposition returns only 1 sub-query.
@@ -609,7 +608,7 @@ def multi_query_retrieve(
     for i, sq in enumerate(sub_queries, 1):
         print(f"    {i}. \"{sq}\"")
 
-    # Single sub-query → no benefit from multi-query path
+    # Single sub-query, no benefit from the multi-query path
     if len(sub_queries) == 1:
         return query_index(user_query, col, embed_model, reranker, groq_client,
                            source_filter, top_k_retrieve, top_k_final)
@@ -650,7 +649,7 @@ def multi_query_retrieve(
     print(f"\n  [RRF] Merged pool: {len(merged)} unique candidates")
 
     # Step 4 - MMR over merged pool
-    # Needed embeddings for MMR - pull from the stored embedding on each item.
+    # Need embeddings for MMR, pull from the stored embedding on each item.
     merged_vecs = np.array([item["embedding"] for item in merged])
     # Use the original query embedding as the relevance anchor for MMR
     orig_vec = embed_query(embed_model, user_query)
@@ -663,7 +662,7 @@ def multi_query_retrieve(
         lambda_        = MMR_LAMBDA,
     )
 
-    # Step 5 - Cross-encoder re-ranking against the ORIGINAL query
+    # Step 5 - Cross-encoder re-ranking against the original query
     pairs      = [[user_query, c["text"][:512]] for c in diverse]
     raw_scores = reranker.predict(pairs)
 
@@ -674,10 +673,10 @@ def multi_query_retrieve(
         c["rerank_score"]      = float(s)
         c["rerank_score_norm"] = sigmoid(float(s))
 
-    # Fallback: if cross-encoder is not confident about any candidate,
-    # trust RRF score (consistent cross-query relevance) over a confused re-ranker.
-    # This prevents a definition chunk from beating a substantively relevant article
-    # on keyword overlap alone.
+    # Fallback: if the cross-encoder isn't confident about any candidate,
+    # trust the RRF score (consistent cross-query relevance) over a confused
+    # re-ranker. This stops a definition chunk from beating a substantively
+    # relevant article purely on keyword overlap.
     LOW_CONF_THRESHOLD = 0.1
     max_norm = max(c["rerank_score_norm"] for c in diverse)
     if max_norm < LOW_CONF_THRESHOLD:
@@ -733,7 +732,7 @@ def main():
     print(f"\n[5/5] Building index...")
     build_index(all_chunks, embed_model, groq_client, col)
 
-    # ── Self-tests covering all 5 regulations ────────────────────────────────
+    # Self-tests covering all 5 regulations
     print(f"\n{'=' * 65}")
     print("  Self-test — one focused query per regulation")
     print(f"{'=' * 65}")

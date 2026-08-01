@@ -22,7 +22,7 @@ from kep_fall import citation as _cite
 
 load_dotenv()
 
-#  Config 
+# Config
 # MODEL          = "openai/gpt-oss-120b"
 # MODEL          = "openai/gpt-oss-120b"
 MODEL          = config.LLM_MODEL
@@ -34,8 +34,8 @@ NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 # COLLECTION     = "regulations"
 CHROMA_PATH    = config.CHROMA_PATH
 COLLECTION     = config.CHROMA_COLLECTION
-# FIXED: must match the model used in rag.py to build the index.
-# Querying with a different model compares incompatible vector spaces.
+# Must match the model used in rag.py to build the index, querying with a
+# different model compares incompatible vector spaces.
 # EMBED_MODEL    = "nomic-ai/nomic-embed-text-v1.5"
 EMBED_MODEL    = config.EMBED_MODEL
 
@@ -44,13 +44,13 @@ EMBED_MODEL    = config.EMBED_MODEL
 MAX_RETRIES    = 2
 RETRY_DELAY    = 2
 
-# --- Free-tier token budget (gny_v3) ------------------------------------
+# Free-tier token budget (gny_v3)
 # openai/gpt-oss-120b free tier: 30 RPM, 8,000 TPM, 200,000 TPD.
-# The whole retrieved chunk SET is kept (recall unchanged vs the gny_v2
-# baseline); only per-chunk excerpt depth is tiered. The RAG_HEAD_N chunks
+# The whole retrieved chunk set is kept (recall unchanged vs the gny_v2
+# baseline), only per-chunk excerpt depth is tiered. The RAG_HEAD_N chunks
 # with the smallest embedding distance keep RAG_HEAD_CHARS characters, the
-# remainder keep RAG_TAIL_CHARS. Measured: mean ~5.8K, max ~6.7K tokens per
-# call including output, leaving headroom for reasoning tokens.
+# rest keep RAG_TAIL_CHARS. Measured: mean ~5.8K, max ~6.7K tokens per call
+# including output, leaving headroom for reasoning tokens.
 RAG_HEAD_N     = int(os.getenv("KEP_FALL_RAG_HEAD_N", "8"))
 RAG_HEAD_CHARS = int(os.getenv("KEP_FALL_RAG_HEAD_CHARS", "1200"))
 RAG_TAIL_CHARS = int(os.getenv("KEP_FALL_RAG_TAIL_CHARS", "400"))
@@ -60,7 +60,7 @@ REASONING_EFFORT      = os.getenv("KEP_FALL_REASONING_EFFORT", "low")
 MAX_COMPLETION_TOKENS = int(os.getenv("KEP_FALL_MAX_COMPLETION", "1200"))
 
 # 429 / rate-limit backoff. TPM is a rolling window, so waiting genuinely
-# clears it — unlike a malformed-JSON error, which needs a re-prompt.
+# clears it, unlike a malformed-JSON error, which needs a re-prompt.
 RATE_LIMIT_RETRIES = 3
 RATE_LIMIT_DELAY   = 8
 _HISTORY_TURNS = int(os.getenv("KEP_FALL_HISTORY_TURNS", "6"))  # 6 msgs = 3 exchanges
@@ -70,9 +70,9 @@ GENERIC_WORDS  = {"data", "personal", "information", "the", "a", "an"}
 def _create_with_backoff(client, **kwargs):
     """Groq chat completion with rate-limit backoff.
 
-    Free-tier TPM is 8,000 and is shared across the whole organisation, so
-    two concurrent demo users can trip a 429 even though nothing is wrong.
-    A rate-limit error is transient and worth waiting out; anything else is
+    Free-tier TPM is 8,000 and shared across the whole organisation, so two
+    concurrent demo users can trip a 429 even though nothing is wrong. A
+    rate-limit error is transient and worth waiting out; anything else gets
     re-raised immediately.
     """
     delay = RATE_LIMIT_DELAY
@@ -99,13 +99,14 @@ _EMBED_INSTANCE = None
 def _driver():
     global _DRIVER
     if _DRIVER is None:
-        # Phase 0 (survival): fail fast on a paused/unreachable Aura instead of
-        # hanging on the driver's 30-60s defaults. connection_timeout bounds the
-        # socket connect; connection_acquisition_timeout bounds waiting for a
-        # pooled connection; max_transaction_retry_time caps managed-transaction
-        # retries. All set to config.NEO4J_TIMEOUT (3s) so the circuit breaker in
-        # graph_store trips to the local read-model within a few seconds rather
-        # than blocking the request thread.
+        # Phase 0 (survival): fail fast on a paused/unreachable Aura instead
+        # of hanging on the driver's 30-60s defaults. connection_timeout
+        # bounds the socket connect, connection_acquisition_timeout bounds
+        # waiting for a pooled connection, max_transaction_retry_time caps
+        # managed-transaction retries. All set to config.NEO4J_TIMEOUT (3s)
+        # so the circuit breaker in graph_store trips to the local
+        # read-model within a few seconds instead of blocking the request
+        # thread.
         _DRIVER = GraphDatabase.driver(
             NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD),
             connection_timeout=config.NEO4J_TIMEOUT,
@@ -164,12 +165,12 @@ def _embed(text: str) -> list[float]:
 # Verdict schema
 class Citation(BaseModel):
     """
-    Structured citation. The evaluator reads THIS, not the prose.
+    Structured citation. The evaluator reads this, not the prose.
 
-    Scraping article numbers out of `reasoning` with a regex is lossy and was
-    the source of the DUAA scoring bug (bare "22" matched out of "Article 22C").
-    Making the model emit the citation as data removes the regex from the
-    primary scoring path entirely.
+    Scraping article numbers out of `reasoning` with a regex is lossy and
+    was the source of the DUAA scoring bug (bare "22" matched out of
+    "Article 22C"). Making the model emit the citation as data removes the
+    regex from the primary scoring path entirely.
     """
     regulation: Optional[str] = None   # "GDPR" | "EU AI Act" | "DUAA 2025" | ...
     provision:  str                    # "Article 9" | "Article 22C" | "Regulation 8" | "Annex I"
@@ -192,10 +193,10 @@ class Verdict(BaseModel):
         return max(0, min(100, int(v)))
 
 
-# Legal term expansion 
+# Legal term expansion
 # Bridges user language ("health data") to exact regulatory vocabulary
-# ("data concerning health", "special categories") so RAG finds the right chunks
-# even when the user's phrasing doesn't match the regulation's wording.
+# ("data concerning health", "special categories") so RAG finds the right
+# chunks even when the user's phrasing doesn't match the regulation's wording.
 _LEGAL_TERM_MAP: dict[str, list[str]] = {
     "health data":          ["data concerning health", "special categories",
                              "clinical data", "medical data", "health information"],
@@ -354,20 +355,20 @@ _KG_STOPWORDS = {
 
 def _kg_keywords(*sources: str) -> list[str]:
     """
-    Build a keyword list for graph anchoring from any number of payload fields.
+    Builds a keyword list for graph anchoring from any number of payload fields.
 
-    Node labels are PascalCase CONCATENATIONS ('LawfulnessFairnessAndTransparency',
-    'LegalBasis') and predicates are camelCase ('hasLegalBasis'). The Cypher match
-    is a lowercased substring CONTAINS. So for the phrase "legal basis":
+    Node labels are PascalCase concatenations ('LawfulnessFairnessAndTransparency',
+    'LegalBasis') and predicates are camelCase ('hasLegalBasis'). The Cypher
+    match is a lowercased substring CONTAINS. So for the phrase "legal basis":
 
-        'legal basis' in 'legalbasis'   -> False   (spaces kill it)
-        'legalbasis'  in 'legalbasis'   -> True
+        'legal basis' in 'legalbasis'    -> False   (spaces kill it)
+        'legalbasis'  in 'legalbasis'    -> True
         'legal'       in 'haslegalbasis' -> True
 
     v1 emitted only the spaced phrase and the individual words, so multi-word
     concepts never matched a node label. We now emit, per source:
       - the spaced phrase          'legal basis'
-      - the DE-SPACED phrase       'legalbasis'      <- new, matches node labels
+      - the de-spaced phrase       'legalbasis'      <- new, matches node labels
       - each meaningful word >= 4  'legal', 'basis'  <- matches predicates
     Deduplicated, stopwords removed, order preserved for stable Cypher.
     """
@@ -391,15 +392,15 @@ def _kg_keywords(*sources: str) -> list[str]:
 
 def _rank_triples(rows: list[dict], keywords: list[str]) -> list[dict]:
     """
-    Rank retrieved triples by how well they match the query, then by the
+    Ranks retrieved triples by how well they match the query, then by the
     extraction confidence and whether the endpoints are ontology-typed.
 
-    WHY: the Cypher returns up to 50 rows in arbitrary keyword-match order.
+    Why: the Cypher returns up to 50 rows in arbitrary keyword-match order.
     Dumping 50 triples into the prompt dilutes the context with edges from
     unrelated articles, which is what makes the hybrid arm underperform
-    rag_only. Ranking does not add information; it orders what was already
-    retrieved. The cut-off itself is exposed as `top_k` so it can be ablated
-    rather than silently tuned.
+    rag_only. Ranking doesn't add information, it just orders what was
+    already retrieved. The cut-off itself is exposed as `top_k` so it can be
+    ablated rather than silently tuned.
     """
     def score(r: dict) -> tuple:
         hay = " ".join(str(r.get(f) or "").lower()
@@ -414,11 +415,11 @@ def _rank_triples(rows: list[dict], keywords: list[str]) -> list[dict]:
 
 def _article_id_to_citation(article_id: str) -> str:
     """
-    Convert Phase 2 article_id format to human-readable citation string.
+    Converts a Phase 2 article_id into a human-readable citation string.
     Examples:
-      'GDPR__Art6'               → 'GDPR, Article 6'
-      'EU AI Act__Art5'          → 'EU AI Act, Article 5'
-      'EU AI Act__Art6_Para1_a'  → 'EU AI Act, Article 6(1)(a)'
+      'GDPR__Art6'               -> 'GDPR, Article 6'
+      'EU AI Act__Art5'          -> 'EU AI Act, Article 5'
+      'EU AI Act__Art6_Para1_a'  -> 'EU AI Act, Article 6(1)(a)'
     """
     if not article_id:
         return ""
@@ -426,13 +427,13 @@ def _article_id_to_citation(article_id: str) -> str:
     if len(parts) != 2:
         return article_id
     reg, art = parts
-    # "Art6" → "Article 6"
+    # "Art6" -> "Article 6"
     art = re.sub(r"^Art(\d+)", r"Article \1", art)
-    # "_Para1" → "(1)"
+    # "_Para1" -> "(1)"
     art = re.sub(r"_Para(\d+)", r"(\1)", art)
-    # remaining "_a" / "_b" sub-points → "(a)" / "(b)"
+    # remaining "_a" / "_b" sub-points -> "(a)" / "(b)"
     art = re.sub(r"_([a-z])$", r"(\1)", art)
-    # anything else with underscores → spaces
+    # anything else with underscores -> spaces
     art = art.replace("_", " ")
     return f"{reg}, {art}"
 
@@ -469,7 +470,8 @@ _BRIDGE_CYPHER = """
 _GENERIC_BRIDGE_NODES = frozenset({
     # These appear in nearly every regulation and link everything to
     # everything. Anchoring a cross-regulation hop on them produces noise,
-    # not a meaningful legal connection. Excluded from bridge traversal.
+    # not a meaningful legal connection, so they're excluded from bridge
+    # traversal.
     "Entity", "Obligation", "Risk", "LegalBasis", "TechnicalMeasure",
     "OrganisationalMeasure", "RiskAssessment", "TechnicalOrganisationalMeasure",
     "Right", "Purpose", "Notice", "PersonalData", "DataSubject", "Processing",
@@ -484,13 +486,14 @@ def _bridge_hop(anchor_rows: List[dict]) -> List[dict]:
 
     A bridge node is a concept that appears in more than one regulation (the
     graph has ~20 meaningful ones, e.g. AutomatedDecision, DemonstrateConformity,
-    QualityManagementSystem — mostly ontology-typed). The first hop lands the
+    QualityManagementSystem, mostly ontology-typed). The first hop lands the
     retriever on one regulation's version of a concept; this hop follows the
     shared node into the OTHER regulations that use it.
 
-    Without this, a cross-regulation question (e.g. 'how do GDPR and DUAA differ
-    on automated decisions?') finds the GDPR side and stops. This is the step
-    that makes the graph actually *traversed* rather than merely *looked up*.
+    Without this, a cross-regulation question (e.g. 'how do GDPR and DUAA
+    differ on automated decisions?') finds the GDPR side and stops. This is
+    the step that makes the graph actually traversed rather than merely
+    looked up.
     """
     if not anchor_rows:
         return []
@@ -525,25 +528,25 @@ def _diversify_by_article(ranked: List[dict], top_k: int,
                           per_article_cap: int = 4,
                           cross_regulation: bool = False) -> List[dict]:
     """
-    Reorder the ranked triples so the top-k spans multiple articles/regulations
+    Reorders the ranked triples so the top-k spans multiple articles/regulations
     instead of being monopolised by one article's redundant edges.
 
     Two modes:
 
-    cross_regulation=False (single-reg / abstract questions) — GENTLE:
+    cross_regulation=False (single-reg / abstract questions), gentle:
         Round-robin one triple per ARTICLE per cycle, in rank order. A dominant
         article still gets the most slots (it appears in every cycle) but a
         minority article that ranks lower still gets picked up on cycle 1.
         Preserves strong recall on the primary article.
 
-    cross_regulation=True (router emitted concepts spanning >1 regulation) —
-    STRICT: round-robin one triple per REGULATION per cycle first, so EVERY
+    cross_regulation=True (router emitted concepts spanning >1 regulation),
+    strict: round-robin one triple per REGULATION per cycle first, so every
         regulation named in the question is guaranteed a slot before any
         regulation gets a second. This is what forces EU AI Act Art 10 into the
         top-k on a GDPR+AI-Act question, instead of being buried under eleven
         GDPR Art 9 edges.
 
-    Reorders only; never invents. Falls back to rank order to fill any
+    Reorders only, never invents. Falls back to rank order to fill any
     remaining slots.
     """
     from collections import defaultdict, OrderedDict
@@ -595,9 +598,9 @@ _REF_PREFIX_TO_REG = {
 
 def _article_refs_to_kg_ids(refs: list) -> list:
     """
-    Map router article_refs ("EUAI:9", "GDPR:22", "EUAI:AnnexIII") to the KG's
+    Maps router article_refs ("EUAI:9", "GDPR:22", "EUAI:AnnexIII") to the KG's
     article_id form ("EU AI Act__Art9"). Solution E: lets a multi-article
-    question anchor on the articles it NAMES, instead of hoping keywords hit
+    question anchor on the articles it names, instead of hoping keywords hit
     each of Articles 9-15 individually.
     """
     out = []
@@ -665,7 +668,7 @@ def _fetch_by_article(refs: list) -> List[dict]:
 def kg_retrieve(payload: QueryPayload, top_k: int = 12,
                 bridge: bool = True) -> List[dict]:
     """
-    Phase 3 KG retrieval — queries the Phase 2 AuraDB schema:
+    Phase 3 KG retrieval, queries the Phase 2 AuraDB schema:
       Node  :Concept  { label, uri, typed, source_reg }
       Edge  :REL      { predicate, predicate_uri, regulation,
                         article_id, chunk_ids, confidence }
@@ -690,10 +693,10 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
     # })
     # if not keywords:
     #     return []
-    # Concepts (from the router) are the PRIMARY anchor for cross-regulation
-    # and abstract questions — they carry the substantive legal terms the graph
-    # is indexed by. topic/data_type/etc. are kept as a fallback for older
-    # router outputs that predate the `concepts` field.
+    # Concepts (from the router) are the primary anchor for cross-regulation
+    # and abstract questions, they carry the substantive legal terms the
+    # graph is indexed by. topic/data_type/etc. are kept as a fallback for
+    # older router outputs that predate the `concepts` field.
     concept_list = getattr(payload, "concepts", None) or []
     keywords = _kg_keywords(
         *concept_list,
@@ -706,7 +709,7 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
     if not keywords:
         return []
 
-    # 2 + 3. Anchor on keyword, traverse :REL — via the breaker-wrapped store.
+    # 2 + 3. Anchor on keyword, traverse :REL, via the breaker-wrapped store.
     # (Cypher text now lives in graph_store._MATCH_CYPHER; kept in sync there.
     # Two passes in one query: Pass A anchor-is-subject, Pass B anchor-is-object,
     # so both "HealthData --hasLegalBasis--> Consent" and
@@ -714,13 +717,13 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
     try:
         recs = _store().match_by_keywords(keywords)
     except Exception as exc:
-        # Never hard-fail — RAG still runs if KG is unavailable.
+        # Never hard-fail, RAG still runs if KG is unavailable.
         log = _get_log()
         if log:
             log.warning("kg_retrieve failed: %s", exc)
         return []
 
-    # --- 4. Deduplicate + format -----------------------------------------
+    # 4. Deduplicate + format
     seen, results = set(), []
     for r in recs:
         key = f"{r['subject']}|{r['predicate']}|{r['object']}"
@@ -752,7 +755,7 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
     ref_regs = {rid.split("__")[0] for rid in ref_kg_ids}
     scoped_single_reg = bool(ref_regs) and len(ref_regs) == 1
 
-    # 4b. Bridge hop — follow shared concept nodes into OTHER regulations.
+    # 4b. Bridge hop, follows shared concept nodes into OTHER regulations.
     # Suppressed when the question named explicit articles: their scope is
     # fixed, and bridging would drag in regulations the question didn't ask for.
     if bridge and results and not refs:
@@ -764,7 +767,7 @@ def kg_retrieve(payload: QueryPayload, top_k: int = 12,
                 seen_keys.add(key)
                 results.append(br)
 
-    # 4c. Solution E — article-anchored retrieval. When the router captured
+    # 4c. Solution E, article-anchored retrieval. When the router captured
     # explicit article references (e.g. "Articles 9 to 15"), fetch those
     # articles directly rather than relying on keyword matches to reach each
     # one. These are prepended so the diversity step treats them as first-class.
@@ -823,7 +826,7 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
 
     Query construction rules:
     - Base queries anchor on the specific compliance action (store/share/deploy),
-      NOT on generic data type strings — this stops Art16/Art18 (data subject
+      NOT on generic data type strings, this stops Art16/Art18 (data subject
       rights) from crowding out Art6/Art9 (lawful basis) for storage questions.
     - Purpose-driven queries fire the exact legal path (Art9(2)(j) for training,
       Art9(2)(h) for direct care, DUAA s.80 for significant automated decisions).
@@ -838,8 +841,8 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
     ctx  = payload.deployment_context or ""
     jur  = payload.jurisdiction       or ""
 
-    # Base queries — action-specific, avoids data-subject-rights articles
-    # "store" / "share" → lawful basis + special category, not erasure/rectification
+    # Base queries, action-specific, avoids data-subject-rights articles.
+    # "store" / "share" -> lawful basis + special category, not erasure/rectification
     base_queries = [
         f"{dt} {act} lawful basis legal basis",
         f"{dt} special category explicit consent Article 9",
@@ -900,13 +903,13 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
                 "automated decision loan credit GDPR Article 22 human oversight"
             )
     else:
-        # No context — include MDR as a secondary path, weighted lower
+        # No context, so include MDR as a secondary path, weighted lower
         context_queries.extend([
             f"medical device software {st} MDR Article 2 definition",
             f"{st} clinical evaluation MDR Article 61",
         ])
 
-    # DUAA 2025 — fire when jurisdiction is UK or purpose involves automated decisions
+    # DUAA 2025, fires when jurisdiction is UK or purpose involves automated decisions
     duaa_queries = []
     if "uk" in jur.lower() or "significant" in purp.lower() or "automated" in act.lower():
         duaa_queries.append(
@@ -918,7 +921,7 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
             "UK MDR 2002 conformity assessment MHRA Part 4A post-market"
         )
 
-    # Legal term expansions — cap to avoid context overflow
+    # Legal term expansions, capped to avoid context overflow
     expansions = (
         _expand_legal_terms(dt)[:3]
         + _expand_legal_terms(st)[:3]
@@ -927,8 +930,8 @@ def rag_retrieve(payload: QueryPayload, k: int = 4) -> List[dict]:
 
     queries = base_queries + purpose_queries + context_queries + duaa_queries + expansions
 
-    # Distances were previously discarded. They are kept now so build_context()
-    # can allocate excerpt depth by relevance. The retrieved SET is unchanged.
+    # Distances were previously discarded. They're kept now so build_context()
+    # can allocate excerpt depth by relevance. The retrieved set is unchanged.
     out, seen = [], {}
     for q in queries:
         res = col.query(query_embeddings=[_embed(q)], n_results=k)
@@ -987,8 +990,8 @@ def rag_knowledge(payload: QueryPayload, k: int = 6) -> List[dict]:
 
 def _rag_retrieve_combined(payloads: list[QueryPayload], k: int = 3) -> list[dict]:
     """Merge RAG results across all session compliance payloads.
-    Used for summary requests - gives LLM context covering the entire session.
-    k is smaller per payload to prevent context overflow."""
+    Used for summary requests, gives the LLM context covering the whole
+    session. k is smaller per payload to prevent context overflow."""
     out, seen = [], set()
     for p in payloads:
         chunks = rag_knowledge(p, k=k) if p.intent == "knowledge" else rag_retrieve(p, k=k)
@@ -1002,7 +1005,7 @@ def _rag_retrieve_combined(payloads: list[QueryPayload], k: int = 3) -> list[dic
 # Context builder
 def build_context(kg: List[dict], rag: List[dict]) -> str:
     """
-    Merge KG structured rules + RAG excerpts into one context block.
+    Merges KG structured rules + RAG excerpts into one context block.
 
     Phase 3 KG row shape (Phase 2 schema):
       subject, subject_uri, typed, predicate, object, object_uri,
@@ -1035,8 +1038,8 @@ def build_context(kg: List[dict], rag: List[dict]) -> str:
 
     lines.append("\n## REGULATION EXCERPTS (verbatim, for grounding)")
     # Tiered excerpt depth. Every retrieved chunk is still emitted with its
-    # citation header, so the retrieved SET — and therefore faithful-F1,
-    # hallucination and answerability — is unchanged from the gny_v2 baseline.
+    # citation header, so the retrieved set, and therefore faithful-F1,
+    # hallucination and answerability, is unchanged from the gny_v2 baseline.
     # Only the amount of text per chunk is budgeted, by embedding distance.
     ranked = sorted(
         range(len(rag)),
@@ -1048,7 +1051,7 @@ def build_context(kg: List[dict], rag: List[dict]) -> str:
         limit = RAG_HEAD_CHARS if i in head else RAG_TAIL_CHARS
         raw = c["text"]
         excerpt = raw[:limit].replace("\n", " ")
-        # Mark truncation explicitly so the model does not treat a cut excerpt
+        # Mark truncation explicitly so the model doesn't treat a cut excerpt
         # as the complete provision when reasoning about it.
         if len(raw) > limit:
             excerpt += " [... excerpt truncated ...]"
@@ -1279,8 +1282,8 @@ def _synthesize(
     synthesize_explanation / _synthesize_explanation_with_history.
 
     history_msgs: prior conversation turns from _build_history_messages().
-    When provided, they sit between the system prompt and the current user turn
-    so the LLM sees the conversation flow and can use it for continuity.
+    When provided, they sit between the system prompt and the current user
+    turn so the LLM sees the conversation flow and can use it for continuity.
     """
     from groq import Groq
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -1322,11 +1325,11 @@ def _synthesize(
 # Canned responses
 def _canned_response(payload: QueryPayload) -> Optional[Verdict]:
     """
-    Handle all non-retrieval intents in one place.
+    Handles all non-retrieval intents in one place.
     Returns a Verdict immediately (no KG/RAG/LLM needed).
     Returns None if the intent requires retrieval (scenario / knowledge).
 
-    This replaces the 7×2 if-blocks that were duplicated across analyze()
+    This replaces the 7x2 if-blocks that were duplicated across analyze()
     and analyze_with_history(). One source of truth for every canned response.
     """
     match payload.intent:
@@ -1441,17 +1444,17 @@ def _canned_response(payload: QueryPayload) -> Optional[Verdict]:
             )
 
         case _:
-            return None  # scenario / knowledge → needs retrieval
+            return None  # scenario / knowledge -> needs retrieval
 
 
 # History helpers
 def _build_history_messages(history: list[dict]) -> list[dict]:
     """
-    Convert SQLite message rows to LLM message dicts.
+    Converts SQLite message rows to LLM message dicts.
     These go BETWEEN the system prompt and the current user turn so the LLM
     sees the conversation and can maintain continuity (the whole point of history).
 
-    NOTE: api.py must store the payload alongside the verdict so
+    Note: api.py must store the payload alongside the verdict so
     _extract_last_payload() and _extract_all_payloads() can read it back.
     Add "payload": parsed to verdict_payload in api.py's /query endpoint.
     """
@@ -1468,8 +1471,8 @@ def _build_history_messages(history: list[dict]) -> list[dict]:
 
 
 def _extract_last_payload(history: list[dict]) -> Optional[QueryPayload]:
-    """Return the most recent compliance payload stored in history.
-    Used for vague follow-ups ('explain that') - retrieval uses the
+    """Returns the most recent compliance payload stored in history.
+    Used for vague follow-ups ('explain that'), retrieval uses the
     previous topic rather than trying to retrieve on 'explain that'."""
     for m in reversed(history):
         if m["role"] == "assistant" and m.get("verdict"):
@@ -1483,7 +1486,7 @@ def _extract_last_payload(history: list[dict]) -> Optional[QueryPayload]:
 
 
 def _extract_all_payloads(history: list[dict]) -> list[QueryPayload]:
-    """Collect all compliance payloads from the session - used for summary requests."""
+    """Collects all compliance payloads from the session, used for summary requests."""
     payloads, seen_keys = [], set()
     for m in history:
         if m["role"] == "assistant" and m.get("verdict"):
@@ -1499,7 +1502,7 @@ def _extract_all_payloads(history: list[dict]) -> list[QueryPayload]:
     return payloads
 
 
-# Retrieval routing helpers─
+# Retrieval routing helpers
 _VAGUE_PATTERNS = [
     r"^(explain|clarify|elaborate|describe)\s*(that|this|it|more|further)?\.?$",
     r"^(what does that mean|what do you mean|i don't understand)\.?$",
@@ -1547,9 +1550,9 @@ def _is_summary_request(question: str) -> bool:
 
 def _route(question: str, history: list[dict] | None) -> Optional[QueryPayload]:
     """
-    Classify intent. When history exists, prepend recent context so follow-up
-    questions like 'what does that mean?' route correctly instead of firing
-    the clarify handler.
+    Classifies intent. When history exists, prepends recent context so
+    follow-up questions like 'what does that mean?' route correctly instead
+    of firing the clarify handler.
     """
     if not history or len(history) < 2:
         return understand_query(question)
@@ -1576,23 +1579,21 @@ def _route(question: str, history: list[dict] | None) -> Optional[QueryPayload]:
     return understand_query(routed)
 
 
-# ==========================================================================
 # Phase 3 — three-stage pipeline: prepare -> retrieve -> synthesize
 #
 # analyze() used to route, retrieve and synthesize in one monolith, and
-# analyze_trace() duplicated the same branching (and had drifted — note the
+# analyze_trace() duplicated the same branching (and had drifted, note the
 # stale commented-out knowledge branch in the old version). Splitting the
 # pipeline into three composable stages:
-#   * removes the duplication (analyze and analyze_trace now share one path),
-#   * lets the API route ONCE instead of three times (see api._run_pipeline),
+#   * removes the duplication (analyze and analyze_trace now share one path)
+#   * lets the API route ONCE instead of three times (see api._run_pipeline)
 #   * makes retrieved KG/RAG evidence a first-class return value instead of a
-#     local that gets discarded — the foundation for the provenance UI and for
-#     emitting an `evidence` SSE frame before the verdict is ready.
+#     local that gets discarded, the foundation for the provenance UI and for
+#     emitting an `evidence` SSE frame before the verdict is ready
 #
-# kg_retrieve / rag_retrieve / rag_knowledge / build_context / _synthesize are
-# UNCHANGED. The eval harness imports those directly and its numbers are frozen;
-# nothing here touches them.
-# ==========================================================================
+# kg_retrieve / rag_retrieve / rag_knowledge / build_context / _synthesize
+# are unchanged. The eval harness imports those directly and its numbers are
+# frozen; nothing here touches them.
 
 @dataclass
 class Plan:
@@ -1627,15 +1628,15 @@ def evidence_summary(evidence: Evidence, kg_limit: int = 12,
     """
     Compact, JSON-safe view of an Evidence bundle for the `evidence` SSE frame
     and the provenance UI. Sends the retrieved graph edges and passage
-    citations — NOT the full chunk text (that's rehydrated on demand later).
+    citations, NOT the full chunk text (that's rehydrated on demand later).
 
     Passages are sorted closest-first by vector distance and capped at
     `rag_limit`: the tail of a k-NN search is weak by construction (everything
     has *some* similarity), so showing all of it makes retrieval look noisier
-    than it is. `counts.passages` always reports the TRUE retrieved total, so
+    than it is. `counts.passages` always reports the true retrieved total, so
     the UI can honestly label "showing N of M" rather than hiding the cut.
 
-    This is deliberately a plain dict, not a Pydantic model: it is a wire
+    This is deliberately a plain dict, not a Pydantic model: it's a wire
     format that the frontend consumes, and keeping it a dict avoids coupling
     the API schema to internal row shapes.
     """
@@ -1686,29 +1687,27 @@ def evidence_summary(evidence: Evidence, kg_limit: int = 12,
     }
 
 
-# --------------------------------------------------------------------------
 # Phase 5 — deterministic grounding join
 #
-# Cross-checks the articles the LLM CITED against the articles that were
-# actually RETRIEVED, on both channels (graph edges + vector passages). This is
-# the runtime twin of the eval's faithful-F1 logic: no LLM involvement, pure
-# set membership over canonical article ids.
+# Cross-checks the articles the LLM cited against the articles that were
+# actually retrieved, on both channels (graph edges + vector passages). This
+# is the runtime twin of the eval's faithful-F1 logic: no LLM involvement,
+# pure set membership over canonical article ids.
 #
 # Every cited article is classified into exactly one of:
-#   graph    — backed by a knowledge-graph edge   (strongest: structured)
-#   corpus   — backed by a retrieved passage only (grounded in source text)
-#   ungrounded — backed by neither (the real red flag: the model reached
+#   graph      - backed by a knowledge-graph edge   (strongest: structured)
+#   corpus     - backed by a retrieved passage only (grounded in source text)
+#   ungrounded - backed by neither (the real red flag: the model reached
 #                outside everything it was given)
 #
 # The three-way split matters: a chat-only interface can't distinguish "the
-# model cited a statute it was shown" from "the model cited a statute from its
-# parametric memory". This makes that distinction visible and auditable.
-# --------------------------------------------------------------------------
+# model cited a statute it was shown" from "the model cited a statute from
+# its parametric memory". This makes that distinction visible and auditable.
 import re as _re
 
 
 def _art_key(canonical: str) -> str:
-    """Reduce any canonical id to ARTICLE granularity: REG_ArtNN.
+    """Reduces any canonical id to ARTICLE granularity: REG_ArtNN.
 
     citation.canonical* produce three subtly different forms
     (GDPR_ArtArticle9 / GDPR_Art9 / GDPR_Art9_Para1). Article-level grounding
@@ -1742,8 +1741,8 @@ def _cited_articles(verdict: Verdict) -> list[dict]:
 
     Prefers the structured `citations` field; falls back to parsing the
     human-readable `rules` strings ("GDPR, Article 9") when the model emitted
-    none — mirroring the evaluator's own fallback so live and offline grounding
-    agree.
+    none, mirroring the evaluator's own fallback so live and offline
+    grounding agree.
     """
     out, seen = [], set()
 
@@ -1770,7 +1769,7 @@ def _cited_articles(verdict: Verdict) -> list[dict]:
 
 def ground_citations(verdict: Verdict, evidence: Evidence) -> dict:
     """
-    Classify every cited article as graph / corpus / ungrounded.
+    Classifies every cited article as graph / corpus / ungrounded.
 
     Returns a JSON-safe dict for the `grounding` SSE frame and the UI badge:
 
@@ -1813,11 +1812,11 @@ def reasoning_path(verdict: Verdict, evidence: Evidence,
                    grounding: Optional[dict] = None,
                    max_edges_per_article: int = 2) -> dict:
     """
-    Assemble the *reasoning path* behind a verdict for the provenance diagram.
+    Assembles the reasoning path behind a verdict for the provenance diagram.
 
-    This is deliberately NOT the raw retrieval dump. It starts from the
+    This is deliberately not the raw retrieval dump. It starts from the
     articles the verdict actually cited (via ground_citations), and for each
-    one attaches the graph edges that carry that article — the real
+    one attaches the graph edges that carry that article, the real
     subject->predicate->object links the answer rests on. Off-topic retrieved
     edges (device-classification noise, etc.) that no citation relied on are
     excluded, so the diagram shows the path taken, not everything scanned.
@@ -1838,8 +1837,8 @@ def reasoning_path(verdict: Verdict, evidence: Evidence,
     """
     grounding = grounding or ground_citations(verdict, evidence)
 
-    # Index retrieved edges by canonical article key, preserving retrieval order
-    # (already ranked/diversified upstream).
+    # Index retrieved edges by canonical article key, preserving retrieval
+    # order (already ranked/diversified upstream).
     edges_by_key: dict[str, list[dict]] = {}
     for r in evidence.kg:
         aid = r.get("article_id")
@@ -1884,7 +1883,7 @@ def reasoning_path(verdict: Verdict, evidence: Evidence,
 
 def prepare(question: str, history: list[dict] | None = None) -> Optional[Plan]:
     """
-    Stage 1 — route once, resolve intent, and decide the retrieval strategy.
+    Stage 1 - route once, resolve intent, and decide the retrieval strategy.
 
     Returns None only when routing itself fails (same contract analyze() had).
     A canned intent returns a Plan with mode="canned" and .canned set, so the
@@ -1928,11 +1927,11 @@ def prepare(question: str, history: list[dict] | None = None) -> Optional[Plan]:
 
 def retrieve(plan: Plan) -> Evidence:
     """
-    Stage 2 — fetch grounding context according to the plan's mode.
+    Stage 2 - fetch grounding context according to the plan's mode.
 
     Canned plans need no retrieval and return an empty Evidence. Every other
     branch reproduces exactly what analyze() did before, so retrieved content
-    is unchanged — only its lifetime is (it is now returned, not discarded).
+    is unchanged, only its lifetime is (it's now returned, not discarded).
     """
     if plan.mode == "canned":
         return Evidence()
@@ -1958,11 +1957,11 @@ def retrieve(plan: Plan) -> Evidence:
 
 def synthesize(plan: Plan, evidence: Evidence) -> Optional[Verdict]:
     """
-    Stage 3 — build the prompt and call the LLM.
+    Stage 3 - build the prompt and call the LLM.
 
-    Canned plans return their prebuilt verdict without an LLM call. The prompt
-    construction below matches the old analyze() per-mode wording exactly
-    (knowledge uses TOPIC, scenario/summary use PARSED).
+    Canned plans return their prebuilt verdict without an LLM call. The
+    prompt construction below matches the old analyze() per-mode wording
+    exactly (knowledge uses TOPIC, scenario/summary use PARSED).
     """
     if plan.mode == "canned":
         return plan.canned
@@ -1980,17 +1979,16 @@ def synthesize(plan: Plan, evidence: Evidence) -> Optional[Verdict]:
     return _synthesize(system, prompt, plan.history_msgs or None)
 
 
-# --------------------------------------------------------------------------
-# Public entry points — thin compositions of prepare / retrieve / synthesize.
-# --------------------------------------------------------------------------
+# Public entry points - thin compositions of prepare / retrieve / synthesize.
 def analyze(question: str,
             history: list[dict] | None = None) -> Optional[Verdict]:
     """
     Single pipeline entry point.  CLI: analyze(q)   API: analyze(q, history)
 
     Now a three-line composition. Behaviour is identical to the previous
-    monolith for every intent — canned, summary, knowledge, scenario — because
-    prepare/retrieve/synthesize reproduce each of those branches unchanged.
+    monolith for every intent — canned, summary, knowledge, scenario —
+    because prepare/retrieve/synthesize reproduce each of those branches
+    unchanged.
     """
     plan = prepare(question, history)
     if plan is None:
@@ -2012,9 +2010,9 @@ def analyze_full(question: str,
     Like analyze(), but returns the intermediate stages too:
         (plan, evidence, verdict)
 
-    This is what the API and the provenance UI use when they need the retrieved
-    KG/RAG evidence, not just the final verdict. Retrieval runs once; the caller
-    gets the verdict AND the grounding it was built from.
+    This is what the API and the provenance UI use when they need the
+    retrieved KG/RAG evidence, not just the final verdict. Retrieval runs
+    once; the caller gets the verdict AND the grounding it was built from.
     """
     plan = prepare(question, history)
     if plan is None:
@@ -2029,10 +2027,10 @@ def analyze_full(question: str,
 def analyze_trace(question: str) -> dict:
     """
     Evaluation-style trace: verdict plus the retrieved KG/RAG context, as a
-    plain dict. Single-turn (no history). Kept for any ad-hoc script or notebook
-    that used it; the live eval harness builds its own pipeline and does not
-    call this. Now backed by the shared three-stage path, so it can no longer
-    drift from analyze() the way the old duplicated version did.
+    plain dict. Single-turn (no history). Kept for any ad-hoc script or
+    notebook that used it; the live eval harness builds its own pipeline and
+    doesn't call this. Now backed by the shared three-stage path, so it can
+    no longer drift from analyze() the way the old duplicated version did.
     """
     trace = {"question": question, "intent": None, "parsed": None,
              "kg": [], "rag": [], "verdict": None, "rules": [],
@@ -2050,8 +2048,6 @@ def analyze_trace(question: str) -> dict:
         trace.update(verdict=result.verdict, rules=result.rules,
                      reasoning=result.reasoning, confidence=result.confidence)
     return trace
-
-
 
 
 

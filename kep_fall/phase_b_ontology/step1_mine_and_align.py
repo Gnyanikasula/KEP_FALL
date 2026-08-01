@@ -68,8 +68,8 @@ FALLRISK_NS     = "https://w3id.org/kep/fallrisk#"
 # ]
 DPV_MODULES = [str(p) for p in config.DPV_MODULES]
 
-# rule-based restrictions added automatically based on chunk source and class semantics
-# every property and target was verified to exist in DPV v2.2.1
+# Rule-based restrictions added automatically based on chunk source and class
+# semantics. Every property and target was verified to exist in DPV v2.2.1.
 RESTRICTION_RULES = [
     {
         "chunk_prefix":  "GDPR_Art9",
@@ -620,7 +620,7 @@ def main():
     with open(CHUNKS_JSON, encoding="utf-8") as f:
         chunks = json.load(f)
 
-    # deduplicate chunk_ids before processing (parser edge cases)
+    # Dedupe chunk_ids before processing (parser edge cases)
     seen_cids, deduped_chunks = set(), []
     for c in chunks:
         if c["chunk_id"] not in seen_cids:
@@ -638,7 +638,7 @@ def main():
     all_props = {p.name: p for p in default_world.search(type=ObjectProperty)}
     client    = Groq(api_key=GROQ_API_KEY)
 
-    # sanitize candidate names immediately after extraction
+    # Sanitize candidate names immediately after extraction
     step1_results = step1(chunks, [e["local_name"] for e in class_index], client)
     for r in step1_results:
         for cand in r["candidates"]:

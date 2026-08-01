@@ -1,35 +1,36 @@
 # KEP_FALL v1 - Stage 5: Query Understanding & Routing
 #
-# Refactored additions vs previous version:
+# What changed vs the previous version:
 #
-#  New fields in QueryPayload:
-#   purpose            - WHY data is processed. Changes legal basis entirely.
-#                        "model training" vs "direct patient care" → different
-#                        GDPR Art.9(2) exception, different MDR applicability.
+# New fields in QueryPayload:
+#   purpose            - WHY data is processed. Changes the legal basis
+#                        entirely. "model training" vs "direct patient care"
+#                        means a different GDPR Art.9(2) exception and
+#                        different MDR applicability.
 #   deployment_context - WHERE the system operates. Triggers:
-#                        "workplace"    → EU AI Act Art.5 prohibition on emotion AI
-#                        "hospital"     → MDR conformity assessment required
-#                        "public space" → real-time biometric ID prohibited
+#                        "workplace"    -> EU AI Act Art.5 prohibition on emotion AI
+#                        "hospital"     -> MDR conformity assessment required
+#                        "public space" -> real-time biometric ID prohibited
 #
-#  Improved intent classification:
-#   - "who is responsible / liable" questions → knowledge (not scenario)
-#   - "do I need approval / certification"     → scenario (regulatory approval)
-#   - "what are our obligations"               → scenario (derive from activity)
-#   - Stakeholder framing (founder/engineer/investor) → same intents, no new branch
-#     (framing affects phrasing, not the regulatory analysis)
+# Improved intent classification:
+#   - "who is responsible / liable" questions -> knowledge (not scenario)
+#   - "do I need approval / certification"     -> scenario (regulatory approval)
+#   - "what are our obligations"               -> scenario (derive from activity)
+#   - Stakeholder framing (founder/engineer/investor) -> same intents, no new branch
+#     (framing changes phrasing, not the regulatory analysis)
 #
-#  Why purpose matters (examples from real user questions):
-#   training a model on medical records → purpose="AI model training"
-#     → GDPR Art.9(2)(j) research exemption, NOT Art.9(2)(h) direct care
-#   emotion detection in workplace      → purpose="workplace productivity"
-#     → EU AI Act Art.5 prohibition fires (workplace context is the trigger)
-#   patient vitals AI in hospital       → purpose="clinical decision support"
-#     → MDR conformity required + high-risk AI obligations
+# Why purpose matters (examples from real user questions):
+#   training a model on medical records -> purpose="AI model training"
+#     -> GDPR Art.9(2)(j) research exemption, NOT Art.9(2)(h) direct care
+#   emotion detection in workplace      -> purpose="workplace productivity"
+#     -> EU AI Act Art.5 prohibition fires (workplace context is the trigger)
+#   patient vitals AI in hospital       -> purpose="clinical decision support"
+#     -> MDR conformity required + high-risk AI obligations
 #
-#  Why deployment_context matters:
-#   Same system in different contexts → completely different regulatory obligations
-#   Emotion recognition: workplace → PROHIBITED | research lab → regulated but not banned
-#   Biometric AI:        hospital  → MDR + high-risk AI | transport → GDPR + EU AI Act only
+# Why deployment_context matters:
+#   Same system in different contexts gets completely different obligations.
+#   Emotion recognition: workplace -> PROHIBITED | research lab -> regulated but not banned
+#   Biometric AI:        hospital  -> MDR + high-risk AI | transport -> GDPR + EU AI Act only
 
 import os
 import re
@@ -47,19 +48,20 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # MODEL        = "openai/gpt-oss-120b"
 
 # Reasoning tokens count towards the free-tier TPM window, so keep the routing
-# call — which runs on every request — as cheap as possible.
+# call - which runs on every request - as cheap as possible.
 REASONING_EFFORT      = os.getenv("KEP_FALL_REASONING_EFFORT", "low")
 MAX_COMPLETION_TOKENS = int(os.getenv("KEP_FALL_ROUTE_MAX_COMPLETION", "400"))
 RATE_LIMIT_RETRIES    = 3
 RATE_LIMIT_DELAY      = 8
-# Routing runs on EVERY request and must return valid JSON on the first try.
-# gpt-oss-* are *reasoning* models: they spend completion tokens thinking before
-# emitting the JSON, so a small MAX_COMPLETION_TOKENS budget gets consumed by
-# reasoning and the document never closes -> 400 json_validate_failed. Routing
-# is a structured-classification task that a plain instruct model does reliably
-# and cheaply, and Groq rate-limits per model, so this also keeps the routing
-# call out of the synthesis model's TPM window. Do NOT switch this back to a
-# gpt-oss model without also removing the max_completion_tokens cap.
+# Routing runs on every request and has to return valid JSON on the first
+# try. gpt-oss-* are reasoning models: they spend completion tokens thinking
+# before emitting the JSON, so a small MAX_COMPLETION_TOKENS budget gets
+# eaten by reasoning and the document never closes, giving a 400
+# json_validate_failed. Routing is a structured-classification task that a
+# plain instruct model handles reliably and cheaply, and since Groq
+# rate-limits per model, this also keeps the routing call out of the
+# synthesis model's TPM window. Don't switch this back to a gpt-oss model
+# without also removing the max_completion_tokens cap.
 MODEL          = "llama-3.3-70b-versatile"
 MAX_RETRIES  = 2
 RETRY_DELAY  = 2
@@ -91,24 +93,24 @@ class QueryPayload(BaseModel):
     purpose:            Optional[str] = None   
     deployment_context: Optional[str] = None
 
-    #  Knowledge field (knowledge intent only) 
+    # Knowledge field (knowledge intent only)
     topic:              Optional[str] = None   
 
-    #  Concept anchors (BOTH intents). A list of the substantive legal concepts
-    #  the question is about, one entry per regulation it touches. This is what
-    #  the KG retriever anchors on. Critical for cross-regulation questions:
-    #  a question spanning GDPR + EU AI Act must surface BOTH sides here, or the
-    #  graph only ever retrieves one regulation. See route prompt for examples.
+    # Concept anchors (both intents). A list of the substantive legal
+    # concepts the question is about, one entry per regulation it touches.
+    # This is what the KG retriever anchors on. Critical for cross-regulation
+    # questions: a question spanning GDPR + EU AI Act must surface both sides
+    # here, or the graph only ever retrieves one regulation.
     concepts:           Optional[List[str]] = None
 
-    #  Explicit article references the question NAMES (not inferred concepts).
-    #  Canonical form: "<REG>:<ARTICLE>" e.g. "EUAI:9", "EUAI:10", "GDPR:22",
-    #  "UKMDR:8". When a question says "Articles 9 to 15 of the EU AI Act" the
-    #  router expands the range to each article. The retriever then anchors on
-    #  article_id directly, bypassing keyword luck for multi-article questions.
+    # Explicit article references the question names (not inferred concepts).
+    # Canonical form: "<REG>:<ARTICLE>" e.g. "EUAI:9", "EUAI:10", "GDPR:22",
+    # "UKMDR:8". When a question says "Articles 9 to 15 of the EU AI Act" the
+    # router expands the range to each article. The retriever then anchors on
+    # article_id directly, bypassing keyword luck for multi-article questions.
     article_refs:       Optional[List[str]] = None
 
-    # Shared optional 
+    # Shared optional
     jurisdiction:       Optional[str] = None  
 
     @field_validator("data_type", "action", "system_type", "recipients",
@@ -384,9 +386,9 @@ def call_llm(question: str, nudge: str = "") -> str:
         messages=[{"role": "system", "content": SYSTEM + nudge},
                   {"role": "user",   "content": question}],
     )
-    # reasoning_effort is only a valid parameter on the gpt-oss reasoning
-    # models; passing it to a Llama instruct model is a 400. Set it only when
-    # the routing model is actually a reasoning model.
+    # reasoning_effort only works on the gpt-oss reasoning models; passing it
+    # to a Llama instruct model is a 400. Set it only when the routing model
+    # is actually a reasoning model.
     if "gpt-oss" in MODEL:
         kwargs["reasoning_effort"] = REASONING_EFFORT
 

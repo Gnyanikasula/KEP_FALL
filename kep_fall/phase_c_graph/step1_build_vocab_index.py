@@ -84,8 +84,9 @@ def extract_classes(g: Graph) -> list[dict]:
             "ns"     : ns_for_uri(uri),
         })
 
-    # Add base DPV classes referenced in property domain/range but not defined in this RDF.
-    # Without these, core concepts like PersonalData, DataSubject have no mapping target.
+    # Also add base DPV classes that show up as a property's domain/range but
+    # aren't defined in this RDF. Without these, core concepts like
+    # PersonalData and DataSubject have no mapping target.
     for prop in g.subjects(RDF.type, OWL.ObjectProperty):
         for pred in (RDFS.domain, RDFS.range):
             ref = g.value(prop, pred)
@@ -141,14 +142,15 @@ def expand_camel_case(name: str) -> str:
 
 
 def build_embeddings(classes: list[dict], model: SentenceTransformer) -> tuple[np.ndarray, np.ndarray]:
-    # description embeddings — label + comment, for Step 2 semantic retrieval
+    # Description embeddings: label + comment, used for Step 2 semantic retrieval
     desc_texts = [f"{c['label']} {c['comment']}".strip() for c in classes]
     desc_embs  = model.encode(desc_texts, batch_size=64, show_progress_bar=True,
                                normalize_embeddings=True, convert_to_numpy=True)
 
-    # name embeddings - CamelCase expanded to natural words, for Step 3 concept mapping
-    # "DataSubject" -> "Data Subject", "PersonalData" -> "Personal Data"
-    # This ensures semantic similarity works correctly against LLM natural language terms
+    # Name embeddings: CamelCase expanded to natural words, for Step 3 concept
+    # mapping. "DataSubject" -> "Data Subject", "PersonalData" -> "Personal
+    # Data", so semantic similarity works correctly against the LLM's natural
+    # language terms.
     name_texts = [expand_camel_case(c["name"]) for c in classes]
     name_embs  = model.encode(name_texts, batch_size=64, show_progress_bar=True,
                                normalize_embeddings=True, convert_to_numpy=True)

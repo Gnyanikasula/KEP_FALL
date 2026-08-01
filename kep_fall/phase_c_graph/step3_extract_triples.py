@@ -1,13 +1,11 @@
-
 # Step 3 — Schema-Constrained Triple Extraction (LLM-as-Typer)
-# Correct architecture:
-#   - Embeddings RETRIEVE candidate classes (top-K per article)
-#   - LLM SELECTS the exact class from candidates, or marks concept as NEW
-#   - No blind nearest-neighbor mapping, no forced bad matches
-
+# Embeddings retrieve candidate classes per article; the LLM picks the exact
+# class from those candidates or marks the concept as NEW. No blind nearest-
+# neighbor mapping, no forced bad matches.
+#
 # Each triple node is either:
-#   typed=true   -> matched a real ontology class (has URI)
-#   typed=false  -> new organic node (no URI, source="extracted")
+#   typed=true  -> matched a real ontology class (has URI)
+#   typed=false -> new organic node (no URI, source="extracted")
 
 
 
@@ -50,7 +48,7 @@ MIN_CONFIDENCE  = 0.7
 MAX_TRIPLES     = 12
 CANDIDATE_K     = 30          # candidate classes shown to LLM per article
 
-# Base DPV classes — always injected into every candidate list so common
+# Base DPV classes, always injected into every candidate list so common
 # legal concepts (Processing, DataSubject, etc.) always have a clean target.
 ALWAYS_INCLUDE = {
     "Processing", "PersonalData", "DataSubject", "DataController",
@@ -83,7 +81,7 @@ class RawTriple(BaseModel):
 
 
 
-# Candidate retrieval - embeddings choose what LLM sees
+# Candidate retrieval - embeddings choose what the LLM sees
 
 def build_candidates(article: dict, vocab_classes: list[dict]) -> list[dict]:
     """
@@ -192,7 +190,7 @@ def parse_response(raw: str) -> list[RawTriple]:
     return out
 
 
-# Validation — LLM's type choice is trusted, only verified against candidates
+# Validation - trusts the LLM's type choice, only verifies it against candidates
 
 def normalize(s: str) -> str:
     return s.lower().replace(" ", "").replace("_", "").replace("-", "")
@@ -207,8 +205,9 @@ def slugify(concept: str) -> str:
 def resolve_node(concept: str, node_type: str,
                  cand_by_norm: dict, vocab_by_norm: dict) -> dict:
     """
-    Resolve a node to either a typed ontology class or a new organic node.
-    LLM's type selection is the primary signal; we verify it's a real class.
+    Resolves a node to either a typed ontology class or a new organic node.
+    The LLM's type selection is the primary signal; we just verify it's a
+    real class.
     """
     if node_type and node_type.upper() != "NEW":
         key = normalize(node_type)
@@ -221,7 +220,7 @@ def resolve_node(concept: str, node_type: str,
                 "typed": True,
             }
 
-    # New organic node - no ontology match
+    # New organic node, no ontology match
     return {
         "label": slugify(concept),
         "uri"  : None,

@@ -2,47 +2,45 @@
 kep_fall.phase_d_engine.graph_store — pluggable graph backend with fallback.
 
 Why this exists
----------------
-The runtime graph is 618 triples / 545 nodes. That is small enough to hold in
-process, which means Neo4j Aura is a *convenience* on the read path, not a
-necessity. On the Free tier Aura auto-pauses after 72h of inactivity and cannot
-be resumed programmatically, so a paused instance would otherwise degrade the
-system to rag_only silently — the worst possible failure, because it keeps
+The runtime graph is 618 triples / 545 nodes, small enough to hold in
+process, which means Neo4j Aura is a convenience on the read path, not a
+necessity. The Free tier auto-pauses after 72h of inactivity and can't be
+resumed programmatically, so a paused instance would otherwise silently
+degrade the system to rag_only, the worst kind of failure, because it keeps
 answering.
 
 Design
-------
-Neo4j remains the system of record and the exploration surface. `LocalGraphStore`
-is a *derived read-model* built from the same artefact that populates Aura
+Neo4j stays the system of record and the exploration surface. `LocalGraphStore`
+is a derived read-model built from the same artefact that populates Aura
 (`config.TRIPLES_CLEAN` + gold deontic annotations), reusing
-`step5_load_graph.build_rows()` verbatim. Parity therefore holds by
-construction: both stores are projections of one function's output, not two
-independent implementations of the same idea.
+`step5_load_graph.build_rows()` verbatim. Parity holds by construction: both
+stores are projections of one function's output, not two independent
+implementations of the same idea.
 
-A circuit breaker sits in front. Three consecutive Neo4j failures trip it to the
-local store; a half-open probe every RECOVER_AFTER seconds tries to come back.
-The active backend is always reported via `mode()` so the UI can show it —
-degradation is never silent.
+A circuit breaker sits in front. Three consecutive Neo4j failures trip it to
+the local store; a half-open probe every RECOVER_AFTER seconds tries to come
+back. The active backend is always reported via `mode()` so the UI can show
+it, degradation is never silent.
 
 Determinism note
-----------------
-Neo4j's original ORDER BY (confidence DESC, typed DESC only) has no tiebreak,
+Neo4j's original ORDER BY (confidence DESC, typed DESC only) had no tiebreak,
 and confidences are coarse (0.9 / 0.85 / 0.8 / 0.7), so tie groups are large.
 The first version of this module tried to guess Aura's implicit tie order
-(assumed = relationship creation order) and mirror it locally — that guess was
-tested against a live parity run and falsified: Neo4j's actual tie resolution
-did not match creation order, and is not documented or guaranteed to be stable
-across query plans. Guessing an undocumented internal order is not a fix.
+(assumed to be relationship creation order) and mirror it locally, that guess
+was tested against a live parity run and turned out wrong: Neo4j's actual tie
+resolution didn't match creation order, and isn't documented or guaranteed
+stable across query plans. Guessing an undocumented internal order isn't a
+real fix.
 
-The real fix is to stop relying on implicit order at all: every ORDER BY below
-carries an explicit tiebreak — (article_id, predicate, subject label, object
-label) — added directly to the Cypher run against Neo4j. LocalGraphStore
-sorts by the identical tuple. Both stores are now deterministic *by
-construction*, not by inference about Aura's internals. Parity is asserted on
-article sets in tests/test_graph_parity.py, and should now hold exactly rather
-than needing a tolerant exemption — re-run scripts/snapshot_kg_baseline.py
-after this change, since the previous baseline was captured under the old,
-un-tiebroken ORDER BY and no longer reflects what Neo4j returns.
+The real fix is to stop relying on implicit order at all: every ORDER BY
+below carries an explicit tiebreak, (article_id, predicate, subject label,
+object label), added directly to the Cypher run against Neo4j.
+LocalGraphStore sorts by the identical tuple. Both stores are now
+deterministic by construction rather than by guessing at Aura's internals.
+Parity is asserted on article sets in tests/test_graph_parity.py, and should
+hold exactly now instead of needing a tolerant exemption, re-run
+scripts/snapshot_kg_baseline.py after this change since the previous
+baseline was captured under the old, un-tiebroken ORDER BY.
 """
 
 from __future__ import annotations
@@ -61,12 +59,11 @@ from kep_fall import config
 log = logging.getLogger(__name__)
 
 
-# --------------------------------------------------------------------------
 # Row contract
-# --------------------------------------------------------------------------
-# Every store returns dicts with exactly these keys, matching the RETURN clause
-# of the Cypher in engine.py. Downstream (_rank_triples, _bridge_hop consumers,
-# _diversify_by_article, build_context) is store-agnostic and untouched.
+# Every store returns dicts with exactly these keys, matching the RETURN
+# clause of the Cypher in engine.py. Downstream (_rank_triples, the
+# _bridge_hop consumers, _diversify_by_article, build_context) is
+# store-agnostic and untouched.
 ROW_KEYS = (
     "subject", "subject_uri", "subject_typed", "object_typed", "typed",
     "predicate", "object", "object_uri", "regulation", "article_id",
@@ -98,9 +95,7 @@ class GraphStore(Protocol):
         ...
 
 
-# --------------------------------------------------------------------------
-# Neo4j — the system of record. Cypher lifted unchanged from engine.py.
-# --------------------------------------------------------------------------
+# Neo4j - the system of record. Cypher lifted unchanged from engine.py.
 _MATCH_CYPHER = """
     MATCH (s:Concept)-[r:REL]->(o:Concept)
     WHERE any(kw IN $keywords
@@ -147,10 +142,11 @@ class Neo4jGraphStore:
         self._by_article = by_article_cypher
 
     def _run(self, cypher: str, **params) -> List[dict]:
-        # Phase 0 (survival): a server-side transaction timeout so a query that
-        # reaches Aura but stalls (e.g. instance waking, contention) fails fast
-        # and the breaker falls back, instead of holding the request thread.
-        # Complements the driver-level connect/acquisition timeouts.
+        # Phase 0 (survival): a server-side transaction timeout so a query
+        # that reaches Aura but stalls (instance waking, contention, etc.)
+        # fails fast and the breaker falls back, instead of holding the
+        # request thread. Complements the driver-level connect/acquisition
+        # timeouts.
         recs = self._driver_factory().execute_query(
             Query(cypher, timeout=config.NEO4J_TIMEOUT),
             database_=self._database, **params
@@ -176,40 +172,70 @@ class Neo4jGraphStore:
             return False
 
 
-# --------------------------------------------------------------------------
-# Local read-model — derived from the SAME artefact that populates Aura.
-# --------------------------------------------------------------------------
+# Local read-model - derived from the same artefact that populates Aura.
 class LocalGraphStore:
     """
     In-process projection of the graph.
 
-    Built by reusing step5_load_graph.build_rows(), which is the function whose
+    Built by reusing step5_load_graph.build_rows(), the same function whose
     output was written to Neo4j. Node identity, canonical_id, deontic and
-    deontic_source are therefore not re-derived here — they are the same values,
-    from the same code, over the same input file.
+    deontic_source aren't re-derived here, they're the same values, from the
+    same code, over the same input file.
 
     Edge identity mirrors the Neo4j MERGE key:
         (s_key, predicate, article_id, o_key)
-    so an edge that collapsed to one relationship in the graph collapses to one
-    row here.
+    so an edge that collapsed to one relationship in the graph collapses to
+    one row here too.
     """
 
     name = "local"
 
     def __init__(self, triples_path=None, gold_path=None):
-        from kep_fall.phase_c_graph.step5_load_graph import (
-            build_rows, load_gold_deontic,
-        )
+        # Lazy by design. The runtime image ships only chroma_db + Neo4j
+        # creds (see .dockerignore: `data/` is build-time only), so the
+        # triples file this fallback reads is deliberately absent in
+        # production. Reading it in __init__ used to crash get_store()
+        # before the Neo4j primary was even constructed, turning a missing
+        # fallback file into a total graph outage. Construction is now cheap
+        # and can't fail; the file is read on first query, and a missing
+        # file just degrades to an empty store (0 edges) with a single
+        # warning instead of raising.
         from pathlib import Path
-
-        triples_path = Path(triples_path or config.TRIPLES_CLEAN)
-        gold_path = Path(gold_path or config.GOLD_STANDARD)
-
-        triples = json.load(open(triples_path, encoding="utf-8"))
-        gold = load_gold_deontic(gold_path)
-        rows = build_rows(triples, gold)
-
+        self._triples_path = Path(triples_path or config.TRIPLES_CLEAN)
+        self._gold_path = Path(gold_path or config.GOLD_STANDARD)
+        self._loaded = False
+        self._load_failed = False
         self._edges: List[dict] = []
+        self._hay: List[dict] = []
+        self._by_article: dict[str, List[int]] = {}
+
+    def _ensure_loaded(self) -> None:
+        """Loads and indexes the read-model on first use. Idempotent, never raises.
+
+        A missing/unreadable triples file (expected on a Space that doesn't
+        ship `data/`) is caught once, logged, and leaves the store empty so
+        callers uniformly get [] instead of an exception bubbling up through
+        the breaker.
+        """
+        if self._loaded or self._load_failed:
+            return
+        try:
+            from kep_fall.phase_c_graph.step5_load_graph import (
+                build_rows, load_gold_deontic,
+            )
+            triples = json.load(open(self._triples_path, encoding="utf-8"))
+            gold = load_gold_deontic(self._gold_path)
+            rows = build_rows(triples, gold)
+        except Exception as exc:
+            # Mark failed so we don't re-attempt (and re-log) on every query.
+            self._load_failed = True
+            log.warning(
+                "LocalGraphStore unavailable (%s): fallback will serve 0 edges. "
+                "Expected when the runtime image omits data/graph/clean_triples.json.",
+                exc,
+            )
+            return
+
         seen = set()
         for r in rows:
             key = (r["s_key"], r["pred"], r["art"], r["o_key"])
@@ -234,9 +260,10 @@ class LocalGraphStore:
                 "deontic_source": r["deon_src"],
             })
 
-        # Precomputed lowercase haystacks. Substring matching over 618 edges is
-        # a linear scan either way; caching the casefold is the only thing worth
-        # doing, and it keeps match_by_keywords well under a millisecond.
+        # Precomputed lowercase haystacks. Substring matching over 618 edges
+        # is a linear scan either way, caching the casefold is the only
+        # thing worth doing, and it keeps match_by_keywords well under a
+        # millisecond.
         self._hay = [{
             "s_label": (e["subject"] or "").lower(),
             "o_label": (e["object"] or "").lower(),
@@ -245,14 +272,14 @@ class LocalGraphStore:
             "pred":    (e["predicate"] or "").lower(),
         } for e in self._edges]
 
-        self._by_article: dict[str, List[int]] = {}
         for i, e in enumerate(self._edges):
             self._by_article.setdefault(e["article_id"], []).append(i)
 
+        self._loaded = True
         log.info("LocalGraphStore ready: %d edges, %d articles",
                  len(self._edges), len(self._by_article))
 
-    # -- ordering ---------------------------------------------------------
+    # ordering
     def _sort_key(self, i: int):
         """
         Mirrors the Neo4j ORDER BY exactly:
@@ -260,9 +287,9 @@ class LocalGraphStore:
             article_id, predicate, subject label, object label
 
         An earlier version tried to guess Neo4j's implicit tie order
-        (assumed = file/creation order) instead of using an explicit
+        (assumed to be file/creation order) instead of using an explicit
         tiebreak. That guess was tested against a live parity run and was
-        wrong — Neo4j's actual tie resolution isn't documented or provably
+        wrong, Neo4j's actual tie resolution isn't documented or provably
         stable. Rather than reverse-engineer Aura's internals, the Cypher
         itself (graph_store._MATCH_CYPHER, engine._BRIDGE_CYPHER,
         engine._BY_ARTICLE_CYPHER) now carries this same explicit tiebreak,
@@ -281,8 +308,9 @@ class LocalGraphStore:
     def _ordered(self, idxs) -> List[dict]:
         return [self._edges[i] for i in sorted(idxs, key=self._sort_key)]
 
-    # -- queries ----------------------------------------------------------
+    # queries
     def match_by_keywords(self, keywords: List[str]) -> List[dict]:
+        self._ensure_loaded()
         kws = [k.lower() for k in keywords if k]
         if not kws:
             return []
@@ -297,7 +325,7 @@ class LocalGraphStore:
                 pass_b.append(i)
 
         # Cypher UNION applies each LIMIT to its own branch, then dedupes on
-        # the full returned row — which, since both branches project the same
+        # the full returned row, which, since both branches project the same
         # columns off the same relationship, means dedupe on edge identity.
         out, seen = [], set()
         for e in [*self._ordered(pass_a)[:30], *self._ordered(pass_b)[:20]]:
@@ -309,6 +337,7 @@ class LocalGraphStore:
 
     def bridge_hop(self, anchor_labels: List[str],
                    seen_regs: List[str]) -> List[dict]:
+        self._ensure_loaded()
         wanted = {a.lower() for a in anchor_labels if a}
         blocked = set(seen_regs or [])
         if not wanted:
@@ -321,28 +350,28 @@ class LocalGraphStore:
         return self._ordered(hits)[:25]
 
     def fetch_by_article(self, article_ids: List[str]) -> List[dict]:
+        self._ensure_loaded()
         idxs = []
         for aid in article_ids or []:
             idxs.extend(self._by_article.get(aid, []))
         return self._ordered(idxs)
 
     def healthy(self) -> bool:
+        self._ensure_loaded()
         return bool(self._edges)
 
 
-# --------------------------------------------------------------------------
 # Circuit breaker
-# --------------------------------------------------------------------------
 class BreakerGraphStore:
     """
     Primary with automatic fallback.
 
-    CLOSED  -> all calls to primary. FAIL_THRESHOLD consecutive failures trip.
-    OPEN    -> all calls to fallback. After RECOVER_AFTER seconds, half-open.
+    CLOSED  -> all calls go to primary. FAIL_THRESHOLD consecutive failures trip it.
+    OPEN    -> all calls go to fallback. After RECOVER_AFTER seconds, half-open.
     HALF    -> next call probes the primary. Success closes; failure re-opens.
 
-    A per-call failure never propagates: the fallback answers instead. This is
-    deliberate — kg_retrieve must not raise, because rag must still run.
+    A per-call failure never propagates, the fallback answers instead. This
+    is deliberate: kg_retrieve must not raise, because rag still has to run.
     """
 
     FAIL_THRESHOLD = 3
@@ -357,7 +386,7 @@ class BreakerGraphStore:
         self._opened_at = 0.0
         self._lock = threading.Lock()
 
-    # -- state ------------------------------------------------------------
+    # state
     def mode(self) -> str:
         """'full' when serving from the primary, 'replica' when not."""
         if self._forced == "local":
@@ -392,7 +421,7 @@ class BreakerGraphStore:
                         "graph_store: breaker OPEN after %d failures — "
                         "serving from local read-model", self._fails)
 
-    # -- dispatch ---------------------------------------------------------
+    # dispatch
     def _call(self, method: str, *args) -> List[dict]:
         store = self._active()
         try:
@@ -428,9 +457,7 @@ class BreakerGraphStore:
         return self._active().healthy()
 
 
-# --------------------------------------------------------------------------
-# Startup self-check — the guard against a rotting cold standby
-# --------------------------------------------------------------------------
+# Startup self-check - guards against a rotting cold standby
 _PROBE_KEYWORDS = [
     ["healthdata", "health"],
     ["consent", "explicit"],
@@ -440,7 +467,7 @@ _PROBE_KEYWORDS = [
 
 def self_check(breaker: BreakerGraphStore) -> dict:
     """
-    Run three canned queries against BOTH stores and compare article sets.
+    Runs three canned queries against both stores and compares article sets.
 
     Called at startup. Costs ~50ms and answers the question a cold standby
     otherwise only answers at the worst possible moment: does the fallback
@@ -481,16 +508,14 @@ def self_check(breaker: BreakerGraphStore) -> dict:
     return report
 
 
-# --------------------------------------------------------------------------
 # Singleton
-# --------------------------------------------------------------------------
 _STORE: Optional[BreakerGraphStore] = None
 
 
 def get_store(driver_factory=None, database=None,
               bridge_cypher="", by_article_cypher="") -> BreakerGraphStore:
     """
-    Build (once) the breaker-wrapped store.
+    Builds (once) the breaker-wrapped store.
 
     STORE=local  -> never touch Neo4j (test the fallback, or demo it deliberately)
     STORE=neo4j  -> never fall back (prove the primary is really being used)
@@ -505,11 +530,16 @@ def get_store(driver_factory=None, database=None,
         log.warning("graph_store: ignoring unknown STORE=%r", forced)
         forced = None
 
-    local = LocalGraphStore()
+    # Build the primary first. LocalGraphStore construction is cheap now and
+    # can't throw, but ordering the primary ahead keeps a future eager
+    # fallback from ever blocking the Neo4j path during assembly.
     primary = Neo4jGraphStore(
         driver_factory, database,
         bridge_cypher=bridge_cypher, by_article_cypher=by_article_cypher,
-    ) if driver_factory else local
+    ) if driver_factory else None
+    local = LocalGraphStore()
+    if primary is None:
+        primary = local
 
     _STORE = BreakerGraphStore(primary, local, forced=forced)
     if forced:

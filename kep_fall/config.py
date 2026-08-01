@@ -1,18 +1,15 @@
 """
 kep_fall.config — single source of truth for filesystem paths and environment.
 
-Every module imports its paths from here. Nothing anywhere else in the codebase
-should contain a string literal that is a path. Two reasons this matters:
-
-  1. Paths were previously written two incompatible ways — Path("data/x.json"),
-     which resolves against the *current working directory*, and
-     os.path.join(BASE_DIR, ...), which resolves against the *file's own
-     location*. Scripts therefore worked only when launched from the repo root,
-     and broke silently the moment a file moved. Anchoring everything to ROOT
-     removes that class of bug entirely.
-
-  2. It documents the pipeline. Reading this file top to bottom tells you what
-     Phase A produces, what Phase B consumes, and so on.
+Every module imports its paths from here; nothing else in the codebase should
+hardcode a path string. That matters for two reasons: paths used to be
+written two incompatible ways (Path("data/x.json"), which resolves against
+the current working directory, vs os.path.join(BASE_DIR, ...), which
+resolves against the file's own location), so scripts only worked when
+launched from the repo root and broke silently the moment a file moved,
+anchoring everything to ROOT removes that bug entirely; and this file
+documents the pipeline, reading it top to bottom tells you what Phase A
+produces, what Phase B consumes, and so on.
 
 Naming convention: <PHASE>_<ARTEFACT>. Directories are plural, files singular.
 """
@@ -24,15 +21,11 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# --------------------------------------------------------------------------
 # Anchor. kep_fall/config.py -> parents[1] is the repository root.
-# --------------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
 
-# --------------------------------------------------------------------------
 # Top-level directories
-# --------------------------------------------------------------------------
 DATA_DIR    = ROOT / "data"
 RESULTS_DIR = ROOT / "results"
 
@@ -47,10 +40,8 @@ EVAL_RESULTS_DIR  = RESULTS_DIR / "evaluation"
 AUDIT_RESULTS_DIR = RESULTS_DIR / "context_audit"
 BUILD_LOGS_DIR    = RESULTS_DIR / "build_logs"
 
-# --------------------------------------------------------------------------
 # Phase A — corpus construction
-#   in : five regulation PDFs      out: article/sub-point provision chunks
-# --------------------------------------------------------------------------
+# in: five regulation PDFs, out: article/sub-point provision chunks
 PDF_GDPR   = RAW_DIR / "GDPR.pdf"
 PDF_EU_AI  = RAW_DIR / "EU_AI_ACT.pdf"
 PDF_EU_MDR = RAW_DIR / "consolidated_EUMDR.pdf"
@@ -59,17 +50,15 @@ PDF_DUAA   = RAW_DIR / "DUAA.pdf"
 
 CORPUS_CHUNKS = CORPUS_DIR / "regulatory_chunks.json"   # 559 chunks
 
-# --------------------------------------------------------------------------
 # Phase B — ontology engineering
-#   in : corpus + DPV              out: validated OWL ontology (v4)
-#   The ontology is versioned across the four construction steps; each version
-#   is retained as build evidence, and each passed the HermiT reasoner.
-# --------------------------------------------------------------------------
+# in: corpus + DPV, out: validated OWL ontology (v4)
+# The ontology is versioned across the four construction steps; each version
+# is kept as build evidence, and each passed the HermiT reasoner.
 DPV_BASE = Path(os.getenv("DPV_BASE", ROOT / "vendor" / "dpv-2.2.1"))
 
 # The six DPV/OWL modules every Phase B step loads. They must all exist under
-# DPV_BASE or owlready2 fails at load. Import this list instead of re-declaring
-# it in each step (it was copy-pasted into all four before).
+# DPV_BASE or owlready2 fails at load. Import this list instead of
+# re-declaring it in each step (it used to be copy-pasted into all four).
 DPV_MODULES = [
     DPV_BASE / "dpv"   / "dpv-owl.rdf",
     DPV_BASE / "pd"    / "pd-owl.rdf",
@@ -93,10 +82,8 @@ ONTOLOGY_V3 = ONTOLOGY_DIR / "dpv-fallrisk-ext-v3.rdf"  # step 3  port restricti
 ONTOLOGY_V4 = ONTOLOGY_DIR / "dpv-fallrisk-ext-v4.rdf"  # step 4  LLM restrictions
 ONTOLOGY    = ONTOLOGY_V4                               # the one downstream uses
 
-# --------------------------------------------------------------------------
 # Phase C — knowledge-graph population
-#   in : corpus + ontology         out: typed triples loaded into Neo4j
-# --------------------------------------------------------------------------
+# in: corpus + ontology, out: typed triples loaded into Neo4j
 VOCAB_INDEX          = GRAPH_DIR / "vocab_index.json"              # step 1
 CLASS_EMBEDDINGS     = GRAPH_DIR / "class_embeddings.npy"          # step 1 (regenerable)
 CLASS_NAME_EMBEDDING = GRAPH_DIR / "class_name_embeddings.npy"     # step 1 (regenerable)
@@ -106,27 +93,21 @@ TRIPLES_CLEAN        = GRAPH_DIR / "clean_triples.json"            # step 4 -> N
 
 EXTRACTION_CHECKPOINT = CACHE_DIR / "triple_extraction_checkpoint.json"
 
-# --------------------------------------------------------------------------
 # Phase D — retrieval and synthesis engine
-# --------------------------------------------------------------------------
 CHROMA_PATH       = str(ROOT / "chroma_db")   # chromadb wants a str, not Path
 CHROMA_COLLECTION = "regulations"
 SUMMARY_CACHE     = CACHE_DIR / "article_summaries.json"
 WEB_DIR           = ROOT / "kep_fall" / "phase_d_engine" / "web"
 HISTORY_DB        = Path(os.getenv("HISTORY_DB_PATH", CACHE_DIR / "kep_fall_history.db"))
 
-# --------------------------------------------------------------------------
 # Phase E — evaluation
-# --------------------------------------------------------------------------
 COMPETENCY_QUESTIONS = EVAL_DIR / "competency_questions.json"   # 65 questions
 GOLD_STANDARD        = EVAL_DIR / "gold_standard.json"          # 55 annotations
 
 ABLATION_RESULTS    = EVAL_RESULTS_DIR / "ablation_results.json"
 ABLATION_CHECKPOINT = EVAL_RESULTS_DIR / "ablation_checkpoint.json"
 
-# --------------------------------------------------------------------------
 # Models and credentials
-# --------------------------------------------------------------------------
 LLM_MODEL   = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-ai/nomic-embed-text-v1.5")
 
@@ -137,12 +118,13 @@ NEO4J_USER     = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "")
 NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
 
-# Phase 0 (survival): fail-fast timeout, in seconds, for every Neo4j interaction
-# — socket connect, pool acquisition, transaction retry budget, and per-query
-# execution. On the Aura Free tier a paused instance would otherwise let a
-# connection hang for the driver's 30-60s defaults, blocking a request thread
-# and delaying the circuit breaker's trip to the local read-model. 3s means a
-# paused/unreachable Aura fails fast and the fallback serves almost immediately.
+# Phase 0 (survival): fail-fast timeout, in seconds, for every Neo4j
+# interaction, socket connect, pool acquisition, transaction retry budget,
+# and per-query execution. On the Aura Free tier a paused instance would
+# otherwise let a connection hang for the driver's 30-60s defaults, blocking
+# a request thread and delaying the circuit breaker's trip to the local
+# read-model. 3s means a paused/unreachable Aura fails fast and the fallback
+# serves almost immediately.
 NEO4J_TIMEOUT  = float(os.getenv("NEO4J_TIMEOUT", "3.0"))
 
 

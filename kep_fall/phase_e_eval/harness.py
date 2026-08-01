@@ -1,32 +1,28 @@
 """
-eval_p5.py — KEP_FALL Phase 5 evaluation harness.  FINAL / FROZEN.
+eval_p5.py — KEP_FALL Phase 5 evaluation harness. FINAL / FROZEN.
 
-Design commitments (do not change these mid-thesis):
-  * One canonical article id everywhere (citation_norm). No prose regex on
-    the primary path.
-  * Ablation arms live in a registry. Adding an arm is one dict entry.
-  * Every metric is defined so that a perfect retriever scores 1.0 and a
-    degenerate one does not. (kg_hit_rate failed this and is gone.)
-  * Every headline claim gets a paired bootstrap CI. Seeded, reproducible.
+Design commitments (don't change these mid-thesis): one canonical article id
+everywhere (citation_norm), no prose regex on the primary path; ablation
+arms live in a registry, adding one is a single dict entry; every metric is
+defined so a perfect retriever scores 1.0 and a degenerate one doesn't
+(kg_hit_rate failed this and is gone); every headline claim gets a paired
+bootstrap CI, seeded and reproducible.
 
-Metrics
--------
+Metrics:
   citation_f1     P/R/F1 over canonical article ids vs gold.
-  answerability   Does the KG return a triple on the GOLD article?
-                  (Replaces kg_hit_rate, which asked "did Cypher return any
-                   row" and saturated at 1.000 — a metric with no
-                   discriminative power.)
-  hallucination   Fraction of cited articles that appear in NO retrieved
+  answerability   Does the KG return a triple on the gold article? Replaces
+                  kg_hit_rate, which asked "did Cypher return any row" and
+                  saturated at 1.000, a metric with no discriminative power.
+  hallucination   Fraction of cited articles that appear in no retrieved
                   context. A cited article the retriever never surfaced was
                   invented.
-  concept_cov     Embedding cosine, not substring. "lawful basis" ≈ "legal
-                  basis"; the old lexical scorer gave those 0.
+  concept_cov     Embedding cosine, not substring. "lawful basis" is close
+                  to "legal basis"; the old lexical scorer gave those 0.
   deontic_align   Reads r.deontic off the KG edge, so kg_only is scorable.
   regulation_f1   Scenario questions only: did we name the right statutes?
                   Article F1 is the wrong instrument for "which laws apply".
 
-Usage
------
+Usage:
   python eval_p5.py                       # all arms, all questions
   python eval_p5.py --arms hybrid kg_only rag_only
   python eval_p5.py --groups A B --reset
@@ -71,7 +67,7 @@ def embedder():
     return _embedder
 
 
-# ── ablation registry ────────────────────────────────────────────────────
+# Ablation registry
 
 def _run(payload, question, use_kg, use_rag, typed_only=None,
          conf_min=None, strip_provenance=False, top_k=12):
@@ -118,7 +114,7 @@ ARMS = {
 }
 
 
-# ── helpers ──────────────────────────────────────────────────────────────
+# helpers
 
 def _kg_articles(trace) -> set:
     return {canonical_from_kg(t.get("article_id") or "")
@@ -151,7 +147,7 @@ def _predicted(trace, cq) -> set:
     return extract_from_prose(_answer_text(v), cq["regulation"])
 
 
-# ── scorers ──────────────────────────────────────────────────────────────
+# scorers
 
 def _prf(exp: set, found: set) -> tuple:
     tp = len(exp & found)
@@ -322,7 +318,7 @@ def score_regulation_set(trace, cq):
                 expected=sorted(exp), found=sorted(found))
 
 
-# ── paired bootstrap ─────────────────────────────────────────────────────
+# paired bootstrap
 
 def bootstrap_ci(a, b, n=N_BOOTSTRAP, seed=SEED):
     """
@@ -339,7 +335,7 @@ def bootstrap_ci(a, b, n=N_BOOTSTRAP, seed=SEED):
     return mean(deltas), lo, hi, min(p, 1.0)
 
 
-# ── main ─────────────────────────────────────────────────────────────────
+# main
 
 def main(arms=None, groups=None):
     cqs = json.load(open(CQ_PATH, encoding="utf-8"))
