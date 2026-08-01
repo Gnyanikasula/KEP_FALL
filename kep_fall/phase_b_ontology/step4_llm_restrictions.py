@@ -63,6 +63,7 @@ CHUNKS_JSON  = config.CORPUS_CHUNKS
 OUT_V4       = config.ONTOLOGY_V4
 OUT_LOG      = config.BUILD_LOGS_DIR / "phase_b_step4_llm_restrictions.md"
 OUT_RAW      = config.ONTO_LLM_RAW
+OUT_DIR = config.ONTOLOGY_DIR
 FALLRISK_NS   = "https://w3id.org/kep/fallrisk#"
 DPV_NS        = "https://w3id.org/dpv/owl#"
 DPV_RISK_NS   = "https://w3id.org/dpv/risk/owl#"

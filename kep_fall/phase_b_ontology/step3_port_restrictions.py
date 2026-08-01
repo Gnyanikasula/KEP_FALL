@@ -47,6 +47,7 @@ IN_V1    = config.ONTOLOGY_V1          # was dpv-fallrisk-ext.rdf
 IN_V2    = config.ONTOLOGY_V2
 OUT_V3   = config.ONTOLOGY_V3
 OUT_LOG  = config.BUILD_LOGS_DIR / "phase_b_step3_port_restrictions.md"
+OUT_DIR = config.ONTOLOGY_DIR
 
 FALLRISK_NS = "https://w3id.org/kep/fallrisk#"
 DPV_NS      = "https://w3id.org/dpv/owl#"
