@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: Ping /health/deep twice, fail only if both fail
         env:
-          SPACE_URL: ${{ vars.HF_SPACE_URL || 'https://gnyani007-shield.hf.space' }}
+          SPACE_URL: ${{ vars.HF_SPACE_URL || 'https://gnyani007-kep-fall.hf.space' }}
         run: |
           set -u
           URL="${SPACE_URL%/}/health/deep"
